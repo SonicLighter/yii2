@@ -5,6 +5,7 @@ namespace frontend\models;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use Yii;
+use common\models\User;
 //use bupy7\bbcode\BBCodeBehavior;
 
 /**

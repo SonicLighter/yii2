@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
-
+use common\models\User;
 /**
  * This is the model class for table "comments".
  *

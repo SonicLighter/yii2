@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-
+use common\models\User;
 /**
  * This is the model class for table "friends".
  *

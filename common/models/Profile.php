@@ -1,10 +1,9 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\User;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use borales\extensions\phoneInput\PhoneInputValidator;
@@ -36,11 +35,9 @@ class Profile extends \yii\db\ActiveRecord
 
      public function __construct(){
 
-
-          if(!file_exists(Yii::getAlias('@profilePictures'))){     // create images/profile directory to store profile pictures
-               FileHelper::createDirectory(Yii::getAlias('@profilePictures'), '0777');
+          if(!file_exists('..\..'.Yii::getAlias('@profilePictures'))){     // create images/profile directory to store profile pictures
+               FileHelper::createDirectory('..\..'.Yii::getAlias('@profilePictures'), '0777');
           }
-
           /*
           if(!file_exists('images/profile/')){     // create images/profile directory to store profile pictures
                FileHelper::createDirectory('images/profile/', '0777');

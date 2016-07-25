@@ -5,9 +5,9 @@ namespace frontend\models\search;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\base\Model;
-use app\models\User;
-use app\models\Friends;
-use app\models\Posts;
+use common\models\User;
+use frontend\models\Friends;
+use frontend\models\Posts;
 use yii\helpers\ArrayHelper;
 use Yii;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace app\modules\admin\controllers;
+namespace backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
-use app\models\Role;
+use frontend\models\LoginForm;
+use frontend\models\ContactForm;
+use common\models\Role;
 use yii\data\Pagination;
 
 class RolesController extends Controller{

@@ -14,4 +14,8 @@ return [
            'datetimeFormat' => 'd.MM.yyyy H:mm',
         ],
     ],
+    'aliases' => [
+          '@profilePictures' => '/frontend/web/images/profile/',
+          '@noAvatar' => '/frontend/web/images/default/no-avatar.jpg',
+     ],
 ];
