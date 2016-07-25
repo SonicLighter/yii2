@@ -52,3 +52,22 @@ environments/            contains environment-based overrides
 tests                    contains various tests for the advanced application
     codeception/         contains tests developed with Codeception PHP Testing Framework
 ```
+### Getting Started
+
+Before you can go on you need to use following command, which allows you to create table for storing users data:
+
+~~~
+yii migrate
+~~~
+
+After that you should prepare some tables for DbManager to store its data. Use following command:
+
+~~~
+yii migrate --migrationPath=@yii/rbac/migrations
+~~~
+
+To build authorization data you should use this command:
+
+~~~
+yii rbac/init
+~~~
