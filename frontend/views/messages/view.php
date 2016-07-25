@@ -13,6 +13,7 @@ use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
 use \kop\y2sp\ScrollPager;
 use yii\widgets\Pjax;
+use dosamigos\tinymce\TinyMce;
 
 $this->title = 'Dialog with '.$modelUser->username;
 ?>
@@ -28,10 +29,19 @@ $this->title = 'Dialog with '.$modelUser->username;
                     'action' => ['messages/add', 'id' => $modelUser->id],
                     'method' => 'post',
                ]); ?>
-               <div class='sendMessage'>
-                    <?= $form->field($model, 'message')->textInput(['autofocus' => true]) ?>
-               </div>
-                    <?= Html::submitButton('Send', ['class' => 'btn btn-send', 'name' => 'posts-button']) ?>
+                    <?= $form->field($model, 'message')->widget(TinyMce::className(), [
+                     'options' => ['rows' => 5],
+                     'language' => 'en_GB',
+                     'clientOptions' => [
+                         'plugins' => [
+                              "advlist autolink lists link charmap print preview anchor",
+                              "searchreplace visualblocks code fullscreen",
+                              "insertdatetime media table contextmenu paste"
+                         ],
+                         'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    ],
+                   ]); ?>
+                    <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button']) ?>
 
                <?php ActiveForm::end(); ?>
 
