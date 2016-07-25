@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use app\models\User;
+use common\models\User;
 
 class m160705_115716_profilePicture extends Migration
 {

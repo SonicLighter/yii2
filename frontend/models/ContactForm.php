@@ -18,7 +18,7 @@ class ContactForm extends Model
 
 
     /**
-     * @inheritdoc
+     * @return array the validation rules.
      */
     public function rules()
     {
@@ -33,7 +33,7 @@ class ContactForm extends Model
     }
 
     /**
-     * @inheritdoc
+     * @return array customized attribute labels
      */
     public function attributeLabels()
     {
@@ -44,17 +44,21 @@ class ContactForm extends Model
 
     /**
      * Sends an email to the specified email address using the information collected by this model.
-     *
      * @param string $email the target email address
-     * @return boolean whether the email was sent
+     * @return boolean whether the model passes validation
      */
-    public function sendEmail($email)
+    public function contact($email)
     {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
+        if ($this->validate()) {
+            Yii::$app->mailer->compose()
+                ->setTo($email)
+                ->setFrom([$this->email => $this->name])
+                ->setSubject($this->subject)
+                ->setTextBody($this->body)
+                ->send();
+
+            return true;
+        }
+        return false;
     }
 }

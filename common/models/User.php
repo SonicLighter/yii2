@@ -1,48 +1,29 @@
 <?php
+
 namespace common\models;
 
+use yii\data\ActiveDataProvider;
+use yii\validators\EmailValidator;
+use yii\data\Pagination;
+use yii\base\Model;
+use frontend\models\Posts;
+use frontend\models\Comments;
+use frontend\models\Messages;
+use frontend\models\Friends;
 use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 
-/**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- */
-class User extends ActiveRecord implements IdentityInterface
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
 
+     public $newRole; // it's contains role from create user page
+     public $verifyCode;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%user}}';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
+        return 'users';
     }
 
     /**
@@ -51,9 +32,179 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['email', 'validateEmail'],
+            ['email', 'validateUpdate'],
+            ['newRole', 'validateRole', 'on' => 'update'],
+            ['email', 'unique', 'message' => 'Such e-mail address already exists!', 'on' => 'create'],   // username
+            [['email','username','password','newRole'], 'required', 'on' => 'create'],
+            [['email','username','password','newRole'], 'required', 'on' => 'update'],
+            [['username', 'password', 'authKey', 'accessToken','email'], 'string', 'max' => 255],
+            [['email','username','password'], 'required', 'on' => 'registration'],
+            ['verifyCode', 'captcha', 'on' => 'registration'],
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'password' => 'Password',
+            'authKey' => 'Auth Key',
+            'accessToken' => 'Access Token',
+            'userRole' => 'User Role',
+            'postCount' => 'Posts Count',
+            'email' => 'E-mail',
+            //'verifyCode' => 'Verification Code',
+            //'admin' => 'Admin',
+        ];
+    }
+
+    public function validateEmail(){
+
+         $validator = new EmailValidator();
+         if(!$validator->validate($this->email, $error)){
+              $this->addError('email', $error);
+         }
+
+    }
+
+    public function validateUpdate(){
+
+         $anotherUser = User::find()->where(['email' => $this->email])->one();
+         if(!empty($anotherUser)){
+              if($anotherUser->id != $this->id){
+                   $this->addError('email', 'There is another user which has the same e-mail address!');
+              }
+         }
+
+    }
+
+    public function validateRole(){
+
+       if($this->id == Yii::$app->user->getId()){ // this is your user record
+            $yourRole = key(Yii::$app->authManager->getRolesByUser(Yii::$app->user->getId()));
+            if($yourRole != $this->newRole){
+                 $this->addError('newRole', 'You cant change your role!');
+            }
+       }
+
+    }
+
+    public function beforeSave($insert){
+
+         if(!preg_match('/^[a-f0-9]{64}$/', $this->password)){   // if password is not hash
+             $this->password = hash('sha256', $this->password);
+         }
+
+         return parent::beforeSave($insert);
+
+    }
+
+    public function afterSave($insert, $changedAttributes){
+
+         //$role = Roles::getRoles()[$this->role];
+         $auth = YII::$app->authManager;
+         $auth->revokeAll($this->id);
+         $userRole = $auth->getRole($this->newRole);
+         $auth->assign($userRole, $this->id);
+
+         if(empty($this->profile)){
+              $profile = new Profile();
+              $profile->userId = $this->id;
+              $profile->active = 0;
+              $profile->commentPermission = 0;
+              $profile->save();
+         }
+
+         return parent::afterSave($insert, $changedAttributes);
+
+    }
+
+    public function beforeDelete(){
+
+         if(parent::beforeDelete()){
+             Comments::deleteAll(['userId' => $this->id]);
+             Posts::deleteAll(['userId' => $this->id]);     // deleting all posts by userId
+             Friends::deleteAll(['senderId' => $this->id]); // deleting from friends
+             Friends::deleteAll(['receiverId' => $this->id]);
+             Messages::deleteAll(['senderId' => $this->id]); // deleting from Messages
+             Messages::deleteAll(['receiverId' => $this->id]);
+             Profile::deleteAll(['userId' => $this->id]);   // deleting from profile
+             return true;
+         }
+         else{
+              return false;
+         }
+
+    }
+
+    // Post
+    public function getPosts(){
+
+          return $this->hasMany(Posts::className(), ['userId' => 'id'])->count();
+
+    }
+
+    public function getPostCount(){
+
+         return $this->posts;
+
+    }
+
+    // Messages
+    public function getMessages(){
+
+          return $this->hasMany(Messages::className(), ['senderId' => 'id'])->where(['receiverId' => Yii::$app->user->id, 'opened' => 0])->count();
+
+    }
+
+    public function getNewMessages(){
+
+         return $this->messages;
+
+    }
+
+    // Roles
+    public function getRole(){
+
+         //return Roles::getRoles();
+         return $this->hasOne(Role::className(), ['user_id' => 'id']);
+
+    }
+
+    public function getUserRole(){
+
+         return $this->role->item_name;
+
+    }
+
+    // Friends
+    public function getSender(){
+         return $this->hasOne(Friends::className(),['receiverId' => 'id'])->where(['senderId' => Yii::$app->user->id]);
+    }
+
+    public function getReceiver(){
+         return $this->hasOne(Friends::className(),['senderId' => 'id'])->where(['receiverId' => Yii::$app->user->id]);
+    }
+
+    public static function getNotAcceptedCount(){
+         return Friends::find()->where(['senderId' => Yii::$app->user->id, 'accepted' => 0])->count();
+    }
+
+    public static function getWaitingCount(){
+         return Friends::find()->where(['receiverId' => Yii::$app->user->id, 'accepted' => 0])->count();
+    }
+
+
+    // Profile
+    public function getProfile(){
+
+         return $this->hasOne(Profile::className(),['userId' => 'id']);
+
     }
 
     /**
@@ -61,7 +212,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+         return User::find()->where(['id' => $id])->one();
     }
 
     /**
@@ -69,7 +220,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+         return User::find()->where(['accessToken' => $token])->one();
     }
 
     /**
@@ -80,42 +231,12 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+         return User::find()->where(['username' => $username])->one();
     }
 
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
+    public static function findByEmail($email)
     {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return boolean
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
-        return $timestamp + $expire >= time();
+         return User::find()->where(['email' => $email])->one();
     }
 
     /**
@@ -123,7 +244,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getId()
     {
-        return $this->getPrimaryKey();
+        return $this->id;
     }
 
     /**
@@ -131,7 +252,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->auth_key;
+        return $this->authKey;
     }
 
     /**
@@ -139,7 +260,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->getAuthKey() === $authKey;
+        return $this->authKey === $authKey;
     }
 
     /**
@@ -150,40 +271,73 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return $this->password === hash("sha256",$password);
     }
 
-    /**
-     * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    public static function getDataProvider(){
+
+          $query = User::find()->orderBy("id");
+          $dataProvider = new ActiveDataProvider([
+              'query' => $query,
+          ]);
+
+          return $dataProvider;
+
     }
 
-    /**
-     * Generates "remember me" authentication key
-     */
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+    public static function getActiveUsers(){
+
+          $query = User::find()->where(['active' => 1])->orderBy("id");
+          $dataProvider = new ActiveDataProvider([
+              'query' => $query,
+              'pagination' => [
+                   'pageSize' => 10,
+              ],
+          ]);
+
+          return $dataProvider;
+
     }
 
-    /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    public static function isExists($username){
+
+         if(User::find()->where(['username' => $username])->count() > 0){
+              return true;   // user already exists
+         }
+
+         return false;
+
     }
 
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
+    public function getFriend(){
+
+         return Friends::findFriend($this->id);
+
     }
+
+    public function getProfilePicture(){
+
+         if(file_exists(Yii::getAlias('@profilePictures')."/".$this->id.".jpg")){
+              $resultPicture = Yii::getAlias('@profilePictures')."/".$this->id.".jpg";
+         }
+         else{
+              $resultPicture = Yii::getAlias('@noAvatar');
+         }
+
+         return $resultPicture;
+
+    }
+
+    public static function getMyMessages(){
+
+         return Messages::find()->where(['receiverId' => Yii::$app->user->id, 'opened' => 0])->count();
+
+    }
+
+    public static function getDialogLoading(){
+
+         return count(Messages::getUserDialogs())/10;
+
+    }
+
 }

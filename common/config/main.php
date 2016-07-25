@@ -8,5 +8,10 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+        'formatter' => [
+           'dateFormat' => 'd.MM.yyyy',
+           'timeFormat' => 'H:mm:ss',
+           'datetimeFormat' => 'd.MM.yyyy H:mm',
+        ],
     ],
 ];

@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use app\models\User;
+use common\models\User;
 
 class m160703_123333_e_mail extends Migration
 {

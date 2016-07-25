@@ -54,10 +54,20 @@ tests                    contains various tests for the advanced application
 ```
 ### Getting Started
 
+Open common/config/main-local.php, and edit db connection.
+
 Before you can go on you need to use following command, which allows you to create table for storing users data:
 
 ~~~
 yii migrate
+~~~
+
+Open common/config/main.php and add to components, if it's not exists:
+
+~~~
+'authManager' => [
+   'class' => 'yii\rbac\DbManager',
+],
 ~~~
 
 After that you should prepare some tables for DbManager to store its data. Use following command:
@@ -66,8 +76,14 @@ After that you should prepare some tables for DbManager to store its data. Use f
 yii migrate --migrationPath=@yii/rbac/migrations
 ~~~
 
-To build authorization data you should use this command:
+Create RbacController.php in console/controllers, if it's not exists. To build authorization data you should use this command:
 
 ~~~
 yii rbac/init
+~~~
+
+Then you have to update composer, usage:
+
+~~~
+composer update
 ~~~

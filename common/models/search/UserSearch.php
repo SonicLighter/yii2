@@ -1,15 +1,15 @@
 <?php
 
-namespace app\models\search;
+namespace common\models\search;
 
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\base\Model;
-use app\models\User;
-use app\models\Friends;
-use app\models\Profile;
-use app\models\Posts;
-use app\models\Messages;
+use common\models\User;
+use frontend\models\Friends;
+use common\models\Profile;
+use frontend\models\Posts;
+use frontend\models\Messages;
 use yii\helpers\ArrayHelper;
 use Yii;
 

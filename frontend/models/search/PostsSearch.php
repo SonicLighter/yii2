@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\search;
+namespace frontend\models\search;
 
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;

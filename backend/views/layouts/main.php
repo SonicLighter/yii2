@@ -3,12 +3,13 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use backend\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use common\widgets\Alert;
+use backend\assets\AppAsset;
+use bluezed\scrollTop\ScrollTop;
 
 AppAsset::register($this);
 ?>
@@ -26,33 +27,44 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+<?= ScrollTop::widget() ?>
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => 'ADMINPANEL',
+        'brandUrl' => (Yii::$app->user->isGuest)?(Yii::$app->homeUrl):(Url::toRoute(['main/index'])),
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+           // 'class' => 'nav nav-tabs nav-justified',
+           'class' => 'navbar navbar-default navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
+        'items' => [
+            [
+                  'label' => 'View sait',
+                  'url' => ['../'],
+                  'visible' =>  Yii::$app->user->can("openUsers"),
+                  'title' => 'Open website',
+            ],
+            [
+                 'label' => 'Users',
+                 'url' => ['users/index'],
+                 'visible' =>  Yii::$app->user->can("openUsers"),
+            ],
+            [
+                 'label' => 'Roles',
+                 'url' => ['roles/index'],
+                 'visible' => Yii::$app->user->can("openRoles"),
+            ],
+            [
+                 'label' => 'Logout',
+                 'url' => ['../site/logout'],
+                 'visible' => Yii::$app->user->can("openUsers"),
+            ],
+        ],
     ]);
+
     NavBar::end();
     ?>
 
@@ -60,16 +72,15 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; SOCIALNETWORK <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"></p>
     </div>
 </footer>
 

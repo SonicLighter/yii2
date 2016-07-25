@@ -4,9 +4,220 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "914f9194a4d021de88b285b03e683984",
-    "content-hash": "e1929a97e872bdbaacc8530468eccb67",
+    "hash": "ebbe4521eaa9212cc2e32dac1056cb1f",
+    "content-hash": "93611ad3bac81ebd94e51dfa6f6c4497",
     "packages": [
+        {
+            "name": "2amigos/yii2-date-picker-widget",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-date-picker-widget.git",
+                "reference": "89cd0d7f00785b608b4a9670016f2795f2e3984d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-date-picker-widget/zipball/89cd0d7f00785b608b4a9670016f2795f2e3984d",
+                "reference": "89cd0d7f00785b608b4a9670016f2795f2e3984d",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap-datepicker": "1.4.0",
+                "yiisoft/yii2": "~2.0.0",
+                "yiisoft/yii2-bootstrap": "~2.0.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\datepicker\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Bootstrap DatePicker widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/bootstrap-datepicker",
+            "keywords": [
+                "2amigos",
+                "datepicker",
+                "extension",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2015-04-02 11:48:05"
+        },
+        {
+            "name": "2amigos/yii2-tinymce-widget",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-tinymce-widget.git",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-tinymce-widget/zipball/d58bad3ede450f86acd475fb4ecda982b980132b",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b",
+                "shasum": ""
+            },
+            "require": {
+                "tinymce/tinymce": ">=4",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\tinymce\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TinyMCE widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/tinymce-widget",
+            "keywords": [
+                "2amigos",
+                "extension",
+                "tinymce",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2015-03-28 21:53:43"
+        },
+        {
+            "name": "bluezed/yii2-scroll-top",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bluezed/yii2-scroll-top.git",
+                "reference": "3e3ca28df6762df92770a99a5af3b0df3e26e91c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bluezed/yii2-scroll-top/zipball/3e3ca28df6762df92770a99a5af3b0df3e26e91c",
+                "reference": "3e3ca28df6762df92770a99a5af3b0df3e26e91c",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "bluezed\\scrollTop\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Geppert",
+                    "email": "bluezed.apps@gmail.com"
+                }
+            ],
+            "description": "This Yii 2 widget adds a simple scroll-to-top button to your site.",
+            "keywords": [
+                "button",
+                "extension",
+                "scroll",
+                "scroll-to",
+                "scroll-to-top",
+                "top",
+                "yii2"
+            ],
+            "time": "2016-05-11 16:49:46"
+        },
+        {
+            "name": "borales/yii2-phone-input",
+            "version": "0.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Borales/yii2-phone-input.git",
+                "reference": "1f4eeb6b2d4fdc282ef44a2c354227b18aa3cceb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Borales/yii2-phone-input/zipball/1f4eeb6b2d4fdc282ef44a2c354227b18aa3cceb",
+                "reference": "1f4eeb6b2d4fdc282ef44a2c354227b18aa3cceb",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/intl-tel-input": "*",
+                "giggsey/libphonenumber-for-php": "^7",
+                "yiisoft/yii2": ">=2.0.1"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "borales\\extensions\\phoneInput\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Borales (Alexandr Bordun)",
+                    "email": "bordun.alexandr@gmail.com"
+                }
+            ],
+            "description": "Yii2 International telephone numbers - Asset Bundle, Behavior, Validator, Widget",
+            "homepage": "https://github.com/Borales/yii2-phone-input",
+            "keywords": [
+                "international telephone numbers",
+                "intl-tel-input",
+                "libphonenumber",
+                "yii2"
+            ],
+            "time": "2016-06-05 13:53:38"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.5",
@@ -57,6 +268,65 @@
             ]
         },
         {
+            "name": "bower-asset/bootstrap-datepicker",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eternicode/bootstrap-datepicker.git",
+                "reference": "e7ca6bb94dc483817f2ff10fc2b723b2b935e016"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eternicode/bootstrap-datepicker/zipball/e7ca6bb94dc483817f2ff10fc2b723b2b935e016",
+                "reference": "e7ca6bb94dc483817f2ff10fc2b723b2b935e016",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/bootstrap": ">=2.0.4,<4.0",
+                "bower-asset/jquery": ">=1.7.1"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/css/bootstrap-datepicker.css",
+                    "dist/css/bootstrap-datepicker3.css",
+                    "js/bootstrap-datepicker.js"
+                ],
+                "bower-asset-ignore": []
+            },
+            "license": [
+                "Apache-2.0"
+            ]
+        },
+        {
+            "name": "bower-asset/intl-tel-input",
+            "version": "v9.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jackocnr/intl-tel-input.git",
+                "reference": "33725c619187e039bb715a2d5e4b3393aff9c43e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jackocnr/intl-tel-input/zipball/33725c619187e039bb715a2d5e4b3393aff9c43e",
+                "reference": "33725c619187e039bb715a2d5e4b3393aff9c43e",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./build/js/intlTelInput.js",
+                    "./build/js/utils.js",
+                    "./build/img/flags.png",
+                    "./build/img/flags@2x.png",
+                    "./build/css/intlTelInput.css"
+                ]
+            }
+        },
+        {
             "name": "bower-asset/jquery",
             "version": "2.2.4",
             "source": {
@@ -86,6 +356,31 @@
                 "jquery",
                 "library"
             ]
+        },
+        {
+            "name": "bower-asset/jquery-ui",
+            "version": "1.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jqueryui.git",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "jquery-ui.js"
+                ],
+                "bower-asset-ignore": []
+            }
         },
         {
             "name": "bower-asset/jquery.inputmask",
@@ -300,6 +595,369 @@
             "time": "2016-07-16 12:58:58"
         },
         {
+            "name": "giggsey/libphonenumber-for-php",
+            "version": "7.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/giggsey/libphonenumber-for-php.git",
+                "reference": "a138adeb07233059c2a8d3caea7b6a6bcbee6765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/a138adeb07233059c2a8d3caea7b6a6bcbee6765",
+                "reference": "a138adeb07233059c2a8d3caea7b6a6bcbee6765",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "pear/pear-core-minimal": "^1.9",
+                "pear/pear_exception": "^1.0",
+                "pear/versioncontrol_git": "dev-master",
+                "phing/phing": "~2.7",
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/console": "^2.5"
+            },
+            "suggest": {
+                "ext-intl": "To use the geocoder and carrier mapping"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "libphonenumber": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Gigg",
+                    "email": "giggsey@gmail.com",
+                    "homepage": "http://giggsey.com/"
+                }
+            ],
+            "description": "PHP Port of Google's libphonenumber",
+            "homepage": "https://github.com/giggsey/libphonenumber-for-php",
+            "keywords": [
+                "geocoding",
+                "geolocation",
+                "libphonenumber",
+                "mobile",
+                "phonenumber",
+                "validation"
+            ],
+            "time": "2016-07-14 10:56:47"
+        },
+        {
+            "name": "kartik-v/bootstrap-checkbox-x",
+            "version": "v1.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/bootstrap-checkbox-x.git",
+                "reference": "af83ff5293a79551cbb2fc38473318e6c5d25854"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-checkbox-x/zipball/af83ff5293a79551cbb2fc38473318e6c5d25854",
+                "reference": "af83ff5293a79551cbb2fc38473318e6c5d25854",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\plugins\\checkbox\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An extended checkbox plugin for bootstrap with three states and additional styles.",
+            "homepage": "https://github.com/kartik-v/bootstrap-checkbox-x",
+            "keywords": [
+                "bootstrap",
+                "checkbox",
+                "indeterminate",
+                "jquery",
+                "null",
+                "state",
+                "three"
+            ],
+            "time": "2015-09-22 02:28:53"
+        },
+        {
+            "name": "kartik-v/bootstrap-fileinput",
+            "version": "v4.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
+                "reference": "8c14423e41cfe6c6e0c1935a6c31a1136240d5d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/8c14423e41cfe6c6e0c1935a6c31a1136240d5d9",
+                "reference": "8c14423e41cfe6c6e0c1935a6c31a1136240d5d9",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\plugins\\fileinput\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An enhanced HTML 5 file input for Bootstrap 3.x with features for file preview for many file types, multiple selection, ajax uploads, and more.",
+            "homepage": "https://github.com/kartik-v/bootstrap-fileinput",
+            "keywords": [
+                "ajax",
+                "bootstrap",
+                "delete",
+                "file",
+                "image",
+                "input",
+                "jquery",
+                "multiple",
+                "preview",
+                "progress",
+                "upload"
+            ],
+            "time": "2016-07-09 12:56:05"
+        },
+        {
+            "name": "kartik-v/yii2-checkbox-x",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-checkbox-x.git",
+                "reference": "b08e866dc5fe9323757e570d189afb1476da79a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-checkbox-x/zipball/b08e866dc5fe9323757e570d189afb1476da79a5",
+                "reference": "b08e866dc5fe9323757e570d189afb1476da79a5",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/bootstrap-checkbox-x": "~1.5",
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kartik\\checkbox\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Extended checkbox widget for bootstrap with three states and additional styles.",
+            "homepage": "https://github.com/kartik-v/yii2-checkbox-x",
+            "keywords": [
+                "bootstrap",
+                "checkbox",
+                "indeterminate",
+                "jquery",
+                "null",
+                "state",
+                "three"
+            ],
+            "time": "2016-01-11 06:41:52"
+        },
+        {
+            "name": "kartik-v/yii2-krajee-base",
+            "version": "1.8.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-krajee-base.git",
+                "reference": "7f7a45ffe193fe673f72b9effc01b08499f2a454"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/7f7a45ffe193fe673f72b9effc01b08499f2a454",
+                "reference": "7f7a45ffe193fe673f72b9effc01b08499f2a454",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2-bootstrap": "@dev"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\base\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Base library and foundation components for all Yii2 Krajee extensions.",
+            "homepage": "https://github.com/kartik-v/yii2-krajee-base",
+            "keywords": [
+                "base",
+                "extension",
+                "foundation",
+                "krajee",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-05-07 19:45:52"
+        },
+        {
+            "name": "kartik-v/yii2-widget-fileinput",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
+                "reference": "6fc8922716bf0b3638c67ff0895a9ff688b6c027"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/6fc8922716bf0b3638c67ff0895a9ff688b6c027",
+                "reference": "6fc8922716bf0b3638c67ff0895a9ff688b6c027",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/bootstrap-fileinput": "~4.2",
+                "kartik-v/yii2-krajee-base": "~1.7"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\file\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An enhanced FileInput widget for Bootstrap 3.x with file preview, multiple selection, and more features (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-fileinput",
+            "keywords": [
+                "extension",
+                "file",
+                "form",
+                "input",
+                "jquery",
+                "plugin",
+                "upload",
+                "widget",
+                "yii2"
+            ],
+            "time": "2016-07-23 15:30:48"
+        },
+        {
+            "name": "kop/yii2-scroll-pager",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kop/yii2-scroll-pager.git",
+                "reference": "9b9727ce441fbfc487044535ab6ce0b7694d810b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kop/yii2-scroll-pager/zipball/9b9727ce441fbfc487044535ab6ce0b7694d810b",
+                "reference": "9b9727ce441fbfc487044535ab6ce0b7694d810b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "webcreate/jquery-ias": "^2.2.1",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kop\\y2sp\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Koptiev",
+                    "email": "ivan.koptiev@codex.systems",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Infinite AJAX scrolling for Yii2 ListView widget",
+            "homepage": "http://kop.github.io/yii2-scroll-pager/",
+            "keywords": [
+                "pager",
+                "pagination",
+                "scroll",
+                "scrolling",
+                "yii",
+                "yii2"
+            ],
+            "time": "2016-07-06 19:56:33"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.3",
             "source": {
@@ -351,6 +1009,92 @@
                 "mailer"
             ],
             "time": "2016-07-08 11:51:25"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "4.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "cd0c565c2b4c8c784fbb6e3117858eb14843b8e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/cd0c565c2b4c8c784fbb6e3117858eb14843b8e0",
+                "reference": "cd0c565c2b4c8c784fbb6e3117858eb14843b8e0",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "skins/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "http://www.tinymce.com",
+            "keywords": [
+                "editor",
+                "html",
+                "javascript",
+                "richtext",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "time": "2016-06-30 10:33:37"
+        },
+        {
+            "name": "webcreate/jquery-ias",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webcreate/infinite-ajax-scroll.git",
+                "reference": "7380f74fca64180a4c5da18d01065a8aef0494b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webcreate/infinite-ajax-scroll/zipball/7380f74fca64180a4c5da18d01065a8aef0494b7",
+                "reference": "7380f74fca64180a4c5da18d01065a8aef0494b7",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary",
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "fieg",
+                    "email": "jeroen@fieg.nl",
+                    "homepage": "http://webcreate.nl"
+                }
+            ],
+            "description": "Infinite AJAX Scroll: A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
+            "homepage": "http://infiniteajaxscroll.com",
+            "keywords": [
+                "ajax",
+                "ias",
+                "infinite",
+                "jquery",
+                "pagination",
+                "scroll",
+                "scrolling"
+            ],
+            "time": "2015-05-08 14:58:16"
         },
         {
             "name": "yiisoft/yii2",
@@ -542,6 +1286,56 @@
                 "yii2"
             ],
             "time": "2016-02-06 00:49:24"
+        },
+        {
+            "name": "yiisoft/yii2-jui",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-jui.git",
+                "reference": "843a2160cfe30f5c8b0cb2e9dbd8ee6bcf97e71d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/843a2160cfe30f5c8b0cb2e9dbd8ee6bcf97e71d",
+                "reference": "843a2160cfe30f5c8b0cb2e9dbd8ee6bcf97e71d",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery-ui": "1.11.*@stable",
+                "yiisoft/yii2": ">=2.0.4"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\jui\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Qiang Xue",
+                    "email": "qiang.xue@gmail.com"
+                }
+            ],
+            "description": "The Jquery UI extension for the Yii framework",
+            "keywords": [
+                "jQuery UI",
+                "yii2"
+            ],
+            "time": "2016-07-22 22:26:59"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -903,7 +1697,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kartik-v/yii2-widget-fileinput": 20,
+        "kop/yii2-scroll-pager": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

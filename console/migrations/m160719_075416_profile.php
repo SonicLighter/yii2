@@ -1,8 +1,8 @@
 <?php
 
 use yii\db\Migration;
-use app\models\User;
-use app\models\Profile;
+use common\models\User;
+use common\models\Profile;
 
 class m160719_075416_profile extends Migration
 {
