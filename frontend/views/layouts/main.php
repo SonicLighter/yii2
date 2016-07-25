@@ -4,11 +4,12 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
-use common\widgets\Alert;
+use bluezed\scrollTop\ScrollTop;
 
 AppAsset::register($this);
 ?>
@@ -25,37 +26,82 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap" style="background: #DDDDDD">
+<?= ScrollTop::widget() ?>
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandLabel' => 'SOCIALNETWORK.COM',
+        'brandUrl' => (Yii::$app->user->isGuest)?(Yii::$app->homeUrl):(Url::toRoute(['profile/index', 'id' => Yii::$app->user->id])),
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
+        'items' => [
+            [
+                 'label' => 'AdminPanel',
+                 'url' => ['/admin'],
+                 'visible' =>  Yii::$app->user->can("openUsers"),
+            ],
+            [
+                 'label' => 'Search',
+                 'url' => ['/profile/search'],
+                 'visible' => !Yii::$app->user->isGuest,
+            ],
+            /*
+            [
+                  'label' => 'Posts',
+                  'url' => ['/posts/index'],
+                  'visible' => !Yii::$app->user->isGuest,
+            ],
+            */
+            /*
+            [
+                 'label' => 'Home',
+                 'url' => ['/site/index']
+             ],
+            [
+                 'label' => 'About',
+                 'url' => ['/site/about']
+            ],
+            [
+                 'label' => 'Contact',
+                 'url' => ['/site/contact']
+            ],
+            */
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Login', 'url' => ['/site/login']]
+            ) : (
+                //'<a href="#">Пункт с подпунктами 1<span class="navbar-nav navbar-right"></span></a>'
+
+                [
+                     'label' => Yii::$app->user->identity->username,
+                     'options' => ['class' => 'navbar-nav navbar-right'],
+                     'items' => [
+                         ['label' => 'My Profile', 'url' => Url::toRoute(['/profile/index', 'id' => Yii::$app->user->id])],
+                         ['label' => 'Friends', 'url' => '/profile/friends'],
+                         ['label' => 'Messages ('.Yii::$app->user->identity->myMessages.')', 'url' => '/messages/index'],
+                         ['label' => 'Settings', 'url' => '/profile/edit'],
+                         ['label' => 'Logout (' . Yii::$app->user->identity->email . ')', 'url' => '/site/logout'],
+                     ],
+                ]
+
+               /*
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link']
+                )
+                . Html::endForm()
+                . '</li>'
+                */
+            )
+        ],
     ]);
+
     NavBar::end();
     ?>
 
@@ -63,16 +109,15 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; SOCIALNETWORK <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"></p>
     </div>
 </footer>
 

@@ -317,7 +317,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getProfilePicture(){
 
-         if(file_exists(Yii::getAlias('@profilePictures')."/".$this->id.".jpg")){
+         if(file_exists("..\..".Yii::getAlias('@profilePictures')."/".$this->id.".jpg")){
               $resultPicture = Yii::getAlias('@profilePictures')."/".$this->id.".jpg";
          }
          else{

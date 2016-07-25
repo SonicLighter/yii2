@@ -59,7 +59,7 @@ AppAsset::register($this);
             ],
             [
                  'label' => 'Logout',
-                 'url' => ['../site/logout'],
+                 'url' => ['site/logout'],
                  'visible' => Yii::$app->user->can("openUsers"),
             ],
         ],

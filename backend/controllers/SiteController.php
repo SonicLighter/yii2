@@ -26,20 +26,18 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'error'],
+                        'actions' => ['index', 'error', 'login'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+                    [
+                         'actions' => ['logout'],
+                         'allow' => !Yii::$app->user->isGuest,
+                    ],
                 ],
             ],
         ];
@@ -81,6 +79,19 @@ class SiteController extends Controller
          return $this->render('index', [
              'model' => $model,
          ]);
+
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
+    }
+
+    public function actionLogin(){
+
+         return $this->redirect('index');
 
     }
 
