@@ -100,6 +100,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
              $this->password = hash('sha256', $this->password);
          }
 
+         if(empty($this->profile)){
+              $this->accessToken = hash('sha256', $this->email.rand(0,100000));
+         }
+
          return parent::beforeSave($insert);
 
     }
@@ -117,6 +121,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
               $profile->userId = $this->id;
               $profile->active = 0;
               $profile->commentPermission = 0;
+              $profile->access = 0;
               $profile->save();
          }
 

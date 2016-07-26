@@ -8,6 +8,7 @@ use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use borales\extensions\phoneInput\PhoneInputValidator;
 use borales\extensions\phoneInput\PhoneInputBehavior;
+use common\models\User;
 
 /**
  * This is the model class for table "profile".

@@ -34,7 +34,17 @@ class LoginForm extends Model
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
             ['email', 'validateAdmin', 'on' => 'adminpanel'],
+            ['email', 'validateAccess'],
         ];
+    }
+
+    public function validateAccess(){
+
+         $user = User::findByEmail($this->email);
+         if($user->profile->access == 0){
+              $this->addError('email', 'You should activate your profile via email at first!');
+         }
+
     }
 
     // this method for adminpanel

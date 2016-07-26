@@ -62,6 +62,7 @@ class SiteController extends Controller
     public function beforeAction($action){
 
          switch ($action->controller->action->id) {
+              case 'email':
               case 'index':
               case 'login':{
                    if (!Yii::$app->user->isGuest) {
@@ -85,7 +86,7 @@ class SiteController extends Controller
         $model->scenario = 'registration';
         $model->newRole = 'user';
         if($model->load(Yii::$app->request->post()) && $model->validate() && $model->save(false)){
-             return $this->redirect(['site/login']);
+             return $this->redirect(['site/email', 'key' => $model->email]);
         }
 
         return $this->render('index',[
@@ -139,9 +140,28 @@ class SiteController extends Controller
          return $this->render("say",["target" => $target]);
     }
 
+    public function actionEmail($key = ''){
+
+         $result = false;
+         $user = User::findByEmail($key);
+         if(!empty($user) && ($user->profile->access != 1)){
+              echo $user->accessToken;
+              die();
+         }
+
+         return $this->render('email', ['result' => $result]);
+
+    }
+
     // database
     public function actionDatabase()
     {
+             Yii::$app->mail->compose()
+                  ->setFrom('pashkevich.s.d@gmail.com')
+                  ->setTo('sonic_lighter@tut.by')
+                  ->setSubject('Advanced email from Yii2-SwiftMailer')
+                  ->send();
+             echo "sended!";
          //$user = User::findIdentity(225);
          //echo $user->userRole;
          //die();
