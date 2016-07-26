@@ -87,3 +87,28 @@ Then you have to update composer, usage:
 ~~~
 composer update
 ~~~
+
+Open common/config/main-local.php and add following settings to components:
+
+~~~
+'mailer' => [
+     'class' => 'yii\swiftmailer\Mailer',
+     'viewPath' => '@common/mail',
+     'transport' => [
+          'class' => 'Swift_MailTransport',
+     ],
+     'useFileTransport' => false,
+],
+'mail' => [
+   'class' => 'yii\swiftmailer\Mailer',
+   'transport' => [
+        'class' => 'Swift_SmtpTransport',
+        'viewPath' => '@common/mail',
+        'host' => 'smtp.gmail.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+        'username' => '',
+        'password' => '',
+        'port' => '587', // Port 25 is a very common port too
+        'encryption' => 'tls', // It is often used, check your provider or mail server specs
+   ],
+],
+~~~

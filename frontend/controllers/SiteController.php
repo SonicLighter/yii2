@@ -134,19 +134,28 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    // test
-    public function actionSay($target = "World"){
-          echo "Hello world!";
-         return $this->render("say",["target" => $target]);
-    }
+    public function actionEmail($key = '', $token = ''){
 
-    public function actionEmail($key = ''){
-
-         $result = false;
+         $result = 0;
          $user = User::findByEmail($key);
+         $userActive = User::findIdentityByAccessToken($token);
+
          if(!empty($user) && ($user->profile->access != 1)){
-              echo $user->accessToken;
-              die();
+              Yii::$app->mail->compose('registration', ['user' => $user])
+                  ->setFrom('pashkevich.s.d@gmail.com')
+                  ->setTo($user->email)
+                  ->setSubject('Registration on SocialNetwork.com!')
+                  ->send();
+              $result = 1;
+         }
+         else if(!empty($userActive) && ($userActive->profile->access != 1)){
+              $userActive->profile->access = 1;
+              $userActive->profile->save();
+              $result = 2;
+         }
+
+         if($result == 0){
+              return $this->redirect('index');
          }
 
          return $this->render('email', ['result' => $result]);
@@ -156,10 +165,10 @@ class SiteController extends Controller
     // database
     public function actionDatabase()
     {
-             Yii::$app->mail->compose()
+             Yii::$app->mail->compose('registration', ['user' => User::findByEmail('sergei@yii.by')])
                   ->setFrom('pashkevich.s.d@gmail.com')
                   ->setTo('sonic_lighter@tut.by')
-                  ->setSubject('Advanced email from Yii2-SwiftMailer')
+                  ->setSubject('Registration on SocialNetwork.com!')
                   ->send();
              echo "sended!";
          //$user = User::findIdentity(225);
