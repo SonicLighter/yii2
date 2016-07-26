@@ -38,6 +38,7 @@ class Posts extends \yii\db\ActiveRecord
             [['userId', 'title', 'content', 'dateCreate', 'dateUpdate'], 'required'],
             [['userId'], 'integer'],
             [['title', 'dateCreate', 'dateUpdate'], 'string', 'max' => 255],
+            ['title', 'validateUpdate'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
@@ -55,6 +56,19 @@ class Posts extends \yii\db\ActiveRecord
             'dateCreate' => 'Date Create',
             'dateUpdate' => 'Date Update',
         ];
+    }
+
+    public function validateUpdate(){
+
+         if($this->commentsCount > 0){
+            $this->addError('title', 'You can\'t update this post, because there is one or more comments!');
+         }
+
+         $currentDate = Yii::$app->getFormatter()->asDateTime(time());
+         if(((int)((strtotime($currentDate) - strtotime($this->dateCreate))/3550)) >= 1){
+            $this->addError('title', 'You can\'t update this post, because it published more than hour ago!');
+         }
+
     }
 
     /**

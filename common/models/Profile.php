@@ -135,7 +135,7 @@ class Profile extends \yii\db\ActiveRecord
          }
          else{
              //echo 'Max int: '.PHP_INT_MAX.' Calculated: '.(strtotime($currentDate) - strtotime($this->dob)).' Calc: '.(PHP_INT_MAX-(strtotime($currentDate) - strtotime($this->dob)));
-             //$years = (int)((strtotime($currentDate) - strtotime($this->dob))/31104000);
+             //$years = (int)((strtotime($currentDate) - strtotime($this->dob))/31104000); 3550 - hours
 
              if((strlen($currentDate) < 15) || (strlen($currentDate) > 16)){
                   $this->addError('dob', 'Incorrect date format, usage: dd-mm-gggg (01-01-2016)!');

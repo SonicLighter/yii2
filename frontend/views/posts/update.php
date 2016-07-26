@@ -15,7 +15,18 @@ $this->title = 'Update Post';
 
      <div class="row">
          <div class='postCreate'>
-            <h4><?= Html::encode($this->title) ?></h4>
+            <h4><?= Html::encode($this->title) ?>
+          <?php
+               $currentDate = Yii::$app->getFormatter()->asDateTime(time());
+               if($model->commentsCount > 0){
+                 echo '<br/>You can\'t update this post, because there is one or more comments!';
+               }
+               else if(((int)((strtotime($currentDate) - strtotime($model->dateCreate))/3550)) >= 1){
+                 echo '<br/>You can\'t update this post, because it published more than hour ago!';
+               }
+          ?>
+
+            </h4>
             <?php $form = ActiveForm::begin(['id' => 'posts-form']); ?>
 
                 <?= $form->field($model, 'userId')->hiddenInput(['value' => $model->userId])->label(false) ?>
