@@ -271,15 +271,37 @@
      PROFILE
 */
 
+.profile-current{
+     margin: auto;
+     width: 100%;
+     min-width: 500px;
+}
+
+.profile-column{
+     padding: 0px;
+     padding-left: 10px;
+}
+
+.profile-column-without-paddings{
+     padding: 0px;
+}
+
 .profile-left_column{
+     /*
      float: left;
      width: 16%;
-     padding-right: 10px;
+     */
+     width: 100%;
+     margin-left: -10px;
+     padding-right: 5px;
 }
 
 .profile-middle_column{
+     /*
      float: left;
      width: 20%;
+
+     margin-right: 10px;*/
      padding: 10px;
      background: #FFFFFF;
      border-radius: 6px;
@@ -287,8 +309,11 @@
 }
 
 .profile-right_column{
+     /*
      width: 64%;
+     min-width: 390px;
      float: left;
+     */
 }
 
 .profile-right_item{
@@ -297,7 +322,6 @@
      background: #FFFFFF;
      border-radius: 6px;
      border: 1px solid rgba(196,194,194,1);
-     margin-left: 10px;
 }
 
 .profile-right_item-news{
@@ -306,7 +330,7 @@
      background: #FFFFFF;
      border-radius: 6px;
      border: 1px solid rgba(196,194,194,1);
-     margin-left: 10px;
+     margin-left: 0px;
      margin-bottom: 20px;
      margin-top: -10px;
      word-break: break-all;
