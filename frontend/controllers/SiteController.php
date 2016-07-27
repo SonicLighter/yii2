@@ -165,11 +165,11 @@ class SiteController extends Controller
     // database
     public function actionDatabase()
     {
-             Yii::$app->mail->compose('registration', ['user' => User::findByEmail('sergei@yii.by')])
+             var_dump(Yii::$app->mail->compose('registration', ['user' => User::findByEmail('sergei@yii.by')])
                   ->setFrom('pashkevich.s.d@gmail.com')
                   ->setTo('sonic_lighter@tut.by')
                   ->setSubject('Registration on SocialNetwork.com!')
-                  ->send();
+                  ->send());
              echo "sended!";
          //$user = User::findIdentity(225);
          //echo $user->userRole;
