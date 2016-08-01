@@ -92,7 +92,7 @@ $this->title = 'Users';
                        'header' => 'Confirm',
                        'format' => 'raw',
                         'value' => function ($model, $index, $widget) {
-                            return Html::checkbox('checkbox', $model->profile->access, ['id' => 'checkbox'.$index, 'onclick' => 'checkAccess('.$index.')','value' => $index, 'disabled' => false]);
+                            return Html::checkbox('checkbox', $model->profile->access, ['id' => 'checkbox'.$index, 'onclick' => 'users.checkAccess('.$index.')','value' => $index, 'disabled' => false]);
                         },
                         /*
                         'value' => function($model, $index, $widget){

@@ -59,6 +59,7 @@ class UsersController extends Controller{
 
      public function actionIndex(){
 
+          Url::remember();
           $searchModel = new UserSearch();
           $dataProvider = $searchModel->search(Yii::$app->request->get());
           $roles = Role::getRoles();
@@ -122,8 +123,18 @@ class UsersController extends Controller{
 
      public function actionAccess($id){
 
-          echo $id;
-          die();
+          $user = User::findIdentity($id);
+          if(!empty($user)){
+               if($user->profile->access == 0){
+                    $user->profile->access = 1;
+               }
+               else{
+                    $user->profile->access = 0;
+               }
+               $user->profile->save();
+          }
+
+          return $this->redirect(['users/index']);
 
      }
 
