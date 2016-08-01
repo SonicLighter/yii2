@@ -57,7 +57,7 @@ class UsersController extends Controller{
         ];
     }
 
-     public function actionIndex(){
+     public function actionIndex($id = ''){
 
           Url::remember();
           $searchModel = new UserSearch();
@@ -65,6 +65,19 @@ class UsersController extends Controller{
           $roles = Role::getRoles();
           //var_dump($searchModel);
           //die();
+
+          /*
+          $user = User::findIdentity($id);
+          if(!empty($user)){
+               if($user->profile->access == 0){
+                    $user->profile->access = 1;
+               }
+               else{
+                    $user->profile->access = 0;
+               }
+               $user->profile->save();
+          }
+          */
 
           return $this->render("index", [
               'dataProvider' => $dataProvider,
