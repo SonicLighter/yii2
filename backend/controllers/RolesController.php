@@ -10,6 +10,7 @@ use frontend\models\LoginForm;
 use frontend\models\ContactForm;
 use common\models\Role;
 use yii\data\Pagination;
+use yii\helpers\Url;
 
 class RolesController extends Controller{
 
@@ -24,7 +25,7 @@ class RolesController extends Controller{
                     [
                         'actions' => ['index', 'create', 'delete'],
                         'allow' => true,
-                        'roles' => ['openRoles'], // admin and moderator
+                        'roles' => ['admin'],
                     ],
                 ],
             ],

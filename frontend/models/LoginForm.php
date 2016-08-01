@@ -41,7 +41,7 @@ class LoginForm extends Model
     public function validateAccess(){
 
          $user = User::findByEmail($this->email);
-         if($user->profile->access == 0){
+         if((!empty($user)) && $user->profile->access == 0){
               $this->addError('email', 'You should activate your profile via email at first!');
          }
 

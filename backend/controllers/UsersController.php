@@ -12,6 +12,7 @@ use common\models\User;
 use common\models\Role;
 use yii\data\Pagination;
 use common\models\search\UserSearch;
+use yii\helpers\Url;
 
 class UsersController extends Controller{
 

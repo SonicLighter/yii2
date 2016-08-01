@@ -26,11 +26,25 @@ class MainController extends Controller
                      [
                           'actions' => ['index'],
                           'allow' => !Yii::$app->user->isGuest,
-                          'roles' => ['@'],
+                          'roles' => ['openUsers'],
                      ],
                  ],
             ],
          ];
+     }
+
+     public function beforeAction($action){
+
+
+         if(!Yii::$app->user->isGuest && ((Yii::$app->user->identity->userRole != 'admin') && (Yii::$app->user->identity->userRole != 'moderator'))){
+              return $this->redirect(Url::toRoute(['../profile/index', 'id' => Yii::$app->user->id]))->send();
+         }
+         else if(Yii::$app->user->isGuest){
+              return $this->redirect(Url::toRoute(['../site/index']))->send();
+         }
+
+         return true;
+
      }
 
      public function actionIndex(){
