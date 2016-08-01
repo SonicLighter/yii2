@@ -13,8 +13,10 @@ use yii\grid\DataColumn;
 use common\models\User;
 use common\models\Roles;
 use \kop\y2sp\ScrollPager;
+use kartik\checkbox\CheckboxX;
 
 $this->title = 'Users';
+//$this->registerJsFile('@web/js/users.js');
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -76,6 +78,36 @@ $this->title = 'Users';
                        'label' => 'Posts count',
                        'value' => 'postCount',
                        'filter' => false,
+                  ],
+                  [
+
+                       /*
+                       'header' => 'Confirm',
+                       'class' => 'yii\grid\CheckboxColumn',
+                       'checkboxOptions' => function($model) {
+                            return ['checked' => $model->profile->access];
+                       },
+                       'visible' => Yii::$app->user->can("openRoles"),
+                       */
+                       'header' => 'Confirm',
+                       'format' => 'raw',
+                        'value' => function ($model, $index, $widget) {
+                            return Html::checkbox('checkbox', $model->profile->access, ['id' => 'checkbox'.$index, 'onclick' => 'checkAccess('.$index.')','value' => $index, 'disabled' => false]);
+                        },
+                        /*
+                        'value' => function($model, $index, $widget){
+
+                           return CheckboxX::widget([
+                                  'name'=>'checkbox'.$index,
+                                  'value'=>$model->profile->access,
+                                  'options'=>['value' => $index, 'disabled' => false],
+                                  'autoLabel'=>true,
+                                  'pluginOptions'=>['threeState'=>false],
+                              ]);
+
+                        }
+                        */
+
                   ],
                   [
                        'header' => 'Options',

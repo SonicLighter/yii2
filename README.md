@@ -54,6 +54,18 @@ tests                    contains various tests for the advanced application
 ```
 ### Getting Started
 
+Info:
+
+~~~
+https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/start-installation.md
+~~~
+
+To generate index.php files in frontend and backend, you should use following command and then select dev:
+
+~~~
+/path/to/php-bin/php /path/to/yii-application/init
+~~~
+
 Open common/config/main-local.php, and edit db connection.
 
 Before you can go on you need to use following command, which allows you to create table for storing users data:

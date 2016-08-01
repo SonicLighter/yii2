@@ -30,7 +30,7 @@ class UsersController extends Controller{
                         'roles' => ['openUsers'], // admin and moderator
                     ],
                     [
-                        'actions' => ['create', 'update','delete'],
+                        'actions' => ['create', 'update','delete', 'access'],
                         'allow' => true,
                         'roles' => ['admin'], // admin
                     ],
@@ -117,6 +117,13 @@ class UsersController extends Controller{
           }
 
           return $this->redirect(['users/index']);
+
+     }
+
+     public function actionAccess($id){
+
+          echo $id;
+          die();
 
      }
 
