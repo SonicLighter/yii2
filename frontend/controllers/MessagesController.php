@@ -84,6 +84,9 @@ class MessagesController extends Controller{
                    'model' => $model,
                    'dataProvider' => $dataProvider,
                    'loadPage' => Messages::getMessagePages($id),
+                   'notAcceptedCount' => User::getNotAcceptedCount(),
+                   'waitingCount' => User::getWaitingCount(),
+                   'userModel' => User::findIdentity(Yii::$app->user->id),
               ]);
          }
 

@@ -24,8 +24,8 @@ use yii\bootstrap\Button;
 
 <?= Html::a("<i class='glyphicon glyphicon-user'></i> &nbsp My Friends", Url::toRoute(['profile/friends']), ['class'=>'btn btn-profile-menu']); ?>
 
-<?= Html::a("<i class='glyphicon glyphicon-time'></i> &nbsp New Friends (".$waitingCount.")", [Url::toRoute(['waiting'])], ['class' => 'btn btn-profile-menu']); ?>
+<?= Html::a("<i class='glyphicon glyphicon-time'></i> &nbsp New Friends (".$waitingCount.")", [Url::toRoute(['profile/waiting'])], ['class' => 'btn btn-profile-menu']); ?>
 
-<?= Html::a("<i class='glyphicon glyphicon-star'></i> &nbsp My Requests (".$notAcceptedCount.")", [Url::toRoute(['requests'])], ['class' => 'btn btn-profile-menu']); ?>
+<?= Html::a("<i class='glyphicon glyphicon-star'></i> &nbsp My Requests (".$notAcceptedCount.")", [Url::toRoute(['profile/requests'])], ['class' => 'btn btn-profile-menu']); ?>
 
-<?= Html::a("<i class='glyphicon glyphicon-cog'></i> &nbsp Settings", [Url::toRoute(['edit'])], ['class' => 'btn btn-profile-menu']); ?>
+<?= Html::a("<i class='glyphicon glyphicon-cog'></i> &nbsp Settings", [Url::toRoute(['profile/edit'])], ['class' => 'btn btn-profile-menu']); ?>

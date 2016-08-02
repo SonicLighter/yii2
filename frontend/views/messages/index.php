@@ -49,7 +49,8 @@ $this->title = 'Dialogs';
                          <div class='profile-right_item-active'>
                          </div>
                          <br/>
-                         <br/>
+                         <hr/>
+                         You can use search to find the dialog or sort dialogs by new messages.
                     </div>
                     <hr/>
                     <div class='profile-right_item'>
