@@ -16,45 +16,27 @@ $this->title = $model->username;
 //$this->params['breadcrumbs'][] = $this->title;
 
 ?>
-     <div class='col-md-2 col-sm-3 profile-column'>
+     <div class='col-md-2 col-sm-3 hidden-sm hidden-xs profile-column'>
           <div class='profile-left_column'>
-               <?php
-
-                  //echo Html::a("<i class='glyphicon glyphicon-eye-close'></i> My Profile", 'options' => [ 'url' => 'profile/index', 'class' => 'btn btn-profile-menu']);
-                  echo Html::a("<i class='glyphicon glyphicon-home'></i> &nbsp My Profile", Url::toRoute(['profile/index', 'id' => Yii::$app->user->id]), ['class'=>'btn btn-profile-menu']);
-                  echo Html::a("<i class='glyphicon glyphicon-envelope'></i> &nbsp Messages (".Yii::$app->user->identity->myMessages.")", [Url::toRoute(['/messages/index'])], ['class' => 'btn btn-profile-menu']);
-                  echo Html::a("<i class='glyphicon glyphicon-user'></i> &nbsp My Friends", Url::toRoute(['profile/friends']), ['class'=>'btn btn-profile-menu']);
-                  echo Html::a("<i class='glyphicon glyphicon-time'></i> &nbsp New Friends (".$waitingCount.")", [Url::toRoute(['waiting'])], ['class' => 'btn btn-profile-menu']);
-                  echo Html::a("<i class='glyphicon glyphicon-star'></i> &nbsp My Requests (".$notAcceptedCount.")", [Url::toRoute(['requests'])], ['class' => 'btn btn-profile-menu']);
-
-              ?>
+               <?=
+                    $this->render('user/menu', [
+                         'id' => Yii::$app->user->id,
+                         'myMessages' => Yii::$app->user->identity->myMessages,
+                         'waitingCount' => $waitingCount,
+                         'notAcceptedCount' => $notAcceptedCount,
+                    ]);
+               ?>
          </div>
      </div>
      <div class='col-md-10 col-sm-8 profile-column-without-paddings'>
           <div class='row'>
                <div class='col-md-3 col-sm-12 profile-column'>
                     <div class='profile-middle_column'>
-
-                         <?= Html::img(Url::toRoute($model->profilePicture), ['width' => '100%']) ?>
-                         <br/><br/>
-                         <?php
-                             if($model->id == Yii::$app->user->id){
-                                  echo Html::a("Settings", [Url::toRoute(['edit'])], ['class' => 'btn btn-profile-menu-selected']);
-                             }
-                             else{
-                                  echo Html::a("Send message", [Url::toRoute(['messages/view', 'id' => $model->id])] , ['class' => 'btn btn-profile-menu-selected']);
-                                  if(empty($model->friend)){
-                                       echo Html::a("Add to friends", [Url::toRoute(['invite', 'id' => $model->id])], ['class' => 'btn btn-profile-menu-selected']);
-                                  }
-                                  else{
-                                       if(!empty($model->receiver) && ($model->receiver->accepted == 0)){
-                                            echo Html::a("Accept user&nbsp", [Url::toRoute(['accept', 'id' => $model->id])], ['class' => 'btn btn-profile-menu-selected']);
-                                       }
-                                       echo Html::a("Delete friend", [Url::toRoute(['remove', 'id' => $model->id])], ['class' => 'btn btn-profile-menu-selected']);
-                                  }
-                             }
+                         <?=
+                              $this->render('user/picture', [
+                                   'model' => $model,
+                              ]);
                          ?>
-
                     </div>
                </div>
                <div class='col-md-9 col-sm-12 profile-column'>

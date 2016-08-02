@@ -10,10 +10,11 @@ use yii\bootstrap\Tabs;
 
 ?>
 <br/><hr/>
+<!--
 <p>
      Current picture:
 </p>
-<?= Html::img(Url::toRoute($model->user->profilePicture), ['width' => '150px']) ?><br/><br/>
+<?= Html::img(Url::toRoute($model->user->profilePicture), ['width' => '150px']) ?><br/><br/> -->
 <p>
      Select and upload your new profile picture:
 </p>

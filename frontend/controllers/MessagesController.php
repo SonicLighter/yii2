@@ -65,6 +65,9 @@ class MessagesController extends Controller{
               'searchModel' => $searchModel,
               'pageType' => $pageType,
               'loadPage' => User::getDialogLoading(),
+              'notAcceptedCount' => User::getNotAcceptedCount(),
+              'waitingCount' => User::getWaitingCount(),
+              'userModel' => User::findIdentity(Yii::$app->user->id),
          ]);
 
     }

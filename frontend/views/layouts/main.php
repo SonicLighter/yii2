@@ -44,41 +44,19 @@ AppAsset::register($this);
                  'label' => 'AdminPanel',
                  'url' => ['/admin'],
                  'visible' =>  Yii::$app->user->can("openUsers"),
+                 'class' => 'navbar-btn',
             ],
             [
                  'label' => 'Search',
                  'url' => ['/profile/search'],
                  'visible' => !Yii::$app->user->isGuest,
             ],
-            /*
-            [
-                  'label' => 'Posts',
-                  'url' => ['/posts/index'],
-                  'visible' => !Yii::$app->user->isGuest,
-            ],
-            */
-            /*
-            [
-                 'label' => 'Home',
-                 'url' => ['/site/index']
-             ],
-            [
-                 'label' => 'About',
-                 'url' => ['/site/about']
-            ],
-            [
-                 'label' => 'Contact',
-                 'url' => ['/site/contact']
-            ],
-            */
+
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
-                //'<a href="#">Пункт с подпунктами 1<span class="navbar-nav navbar-right"></span></a>'
-
                 [
                      'label' => Yii::$app->user->identity->username,
-                     'options' => ['class' => 'navbar-nav navbar-right'],
                      'items' => [
                          ['label' => 'My Profile', 'url' => Url::toRoute(['/profile/index', 'id' => Yii::$app->user->id])],
                          ['label' => 'Friends', 'url' => '/profile/friends'],
@@ -87,17 +65,6 @@ AppAsset::register($this);
                          ['label' => 'Logout (' . Yii::$app->user->identity->email . ')', 'url' => '/site/logout'],
                      ],
                 ]
-
-               /*
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-                */
             )
         ],
     ]);
