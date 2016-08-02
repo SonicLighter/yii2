@@ -20,6 +20,8 @@ use yii\bootstrap\Button;
 
 <?= Html::a("<i class='glyphicon glyphicon-home'></i> &nbsp My Profile", Url::toRoute(['profile/index', 'id' => $id]), ['class'=>'btn btn-profile-menu']); ?>
 
+<?= Html::a("<i class='glyphicon glyphicon-search'></i> &nbsp Search", [Url::toRoute(['profile/search'])], ['class' => 'btn btn-profile-menu']); ?>
+
 <?= Html::a("<i class='glyphicon glyphicon-envelope'></i> &nbsp Messages (".$myMessages.")", [Url::toRoute(['/messages/index'])], ['class' => 'btn btn-profile-menu']);?>
 
 <?= Html::a("<i class='glyphicon glyphicon-user'></i> &nbsp My Friends", Url::toRoute(['profile/friends']), ['class'=>'btn btn-profile-menu']); ?>

@@ -62,7 +62,13 @@ class PostsController extends Controller{
              return $this->redirect([Url::previous()]);
          }
 
-         return $this->render('create', ['model' => $model,'date' => Yii::$app->getFormatter()->asDateTime(time())]);
+         return $this->render('create', [
+              'model' => $model,
+              'date' => Yii::$app->getFormatter()->asDateTime(time()),
+              'notAcceptedCount' => User::getNotAcceptedCount(),
+              'waitingCount' => User::getWaitingCount(),
+              'userModel' => User::findIdentity(Yii::$app->user->id),
+         ]);
 
     }
 
@@ -71,7 +77,13 @@ class PostsController extends Controller{
          $model = Posts::getCurrentPost($id);
          if(!empty($model)){
              if(!($model->load(Yii::$app->request->post()) && $model->validate() && $model->save())){
-                 return $this->render('update', ['model' => $model,'date' => Yii::$app->getFormatter()->asDateTime(time())]);
+                 return $this->render('update', [
+                      'model' => $model,
+                      'date' => Yii::$app->getFormatter()->asDateTime(time()),
+                      'notAcceptedCount' => User::getNotAcceptedCount(),
+                      'waitingCount' => User::getWaitingCount(),
+                      'userModel' => User::findIdentity(Yii::$app->user->id),
+                 ]);
              }
          }
 

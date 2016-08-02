@@ -37,31 +37,80 @@ AppAsset::register($this);
         ],
     ]);
 
+
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
+        'encodeLabels' => false,
         'items' => [
-            [
-                 'label' => 'AdminPanel',
-                 'url' => ['/admin'],
-                 'visible' =>  Yii::$app->user->can("openUsers"),
-                 'class' => 'navbar-btn',
-            ],
-            [
-                 'label' => 'Search',
-                 'url' => ['/profile/search'],
-                 'visible' => !Yii::$app->user->isGuest,
-            ],
+             /*<?= Html::a("<i class='glyphicon glyphicon-home'></i> &nbsp My Profile", Url::toRoute(['profile/index', 'id' => $id]), ['class'=>'btn btn-profile-menu']); ?>
 
+             <?= Html::a("<i class='glyphicon glyphicon-search'></i> nbsp Search", [Url::toRoute(['profile/search'])], ['class' => 'btn btn-profile-menu']); ?>
+
+             <?= Html::a("<i class='glyphicon glyphicon-envelope'></i> &nbsp Messages (".$myMessages.")", [Url::toRoute(['/messages/index'])], ['class' => 'btn btn-profile-menu']);?>
+
+             <?= Html::a("<i class='glyphicon glyphicon-user'></i> &nbsp My Friends", Url::toRoute(['profile/friends']), ['class'=>'btn btn-profile-menu']); ?>
+
+             <?= Html::a("<i class='glyphicon glyphicon-time'></i> &nbsp New Friends (".$waitingCount.")", [Url::toRoute(['profile/waiting'])], ['class' => 'btn btn-profile-menu']); ?>
+
+             <?= Html::a("<i class='glyphicon glyphicon-star'></i> &nbsp My Requests (".$notAcceptedCount.")", [Url::toRoute(['profile/requests'])], ['class' => 'btn btn-profile-menu']); ?>
+
+             <?= Html::a("<i class='glyphicon glyphicon-cog'></i> &nbsp Settings", [Url::toRoute(['profile/edit'])], ['class' => 'btn btn-profile-menu']); ?>
+             */
+             [
+                  'label' => '<span class="glyphicon glyphicon-home"></span> &nbsp My Profile',
+                  'url' => ['profile/index', 'id' => Yii::$app->user->id],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
+             [
+                  'label' => '<span class="glyphicon glyphicon-search"></span> &nbsp Search',
+                  'url' => ['/profile/search'],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
+             [
+                  'label' => '<span class="glyphicon glyphicon-envelope"></span> &nbsp Messages',
+                  'url' => ['messages/index'],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
+             [
+                  'label' => '<span class="glyphicon glyphicon-user"></span> &nbsp My Friends',
+                  'url' => ['profile/friends'],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
+             [
+                  'label' => '<span class="glyphicon glyphicon-time"></span> &nbsp New Friends',
+                  'url' => ['profile/waiting'],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
+             [
+                  'label' => '<span class="glyphicon glyphicon-star"></span> &nbsp My Requests',
+                  'url' => ['profile/requests'],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
+             [
+                  'label' => '<span class="glyphicon glyphicon-cog"></span> &nbsp Settings',
+                  'url' => ['profile/edit'],
+                  'visible' => !Yii::$app->user->isGuest,
+                  'options' => ['class' => 'visible-xs'],
+             ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 [
                      'label' => Yii::$app->user->identity->username,
                      'items' => [
-                         ['label' => 'My Profile', 'url' => Url::toRoute(['/profile/index', 'id' => Yii::$app->user->id])],
-                         ['label' => 'Friends', 'url' => '/profile/friends'],
-                         ['label' => 'Messages ('.Yii::$app->user->identity->myMessages.')', 'url' => '/messages/index'],
-                         ['label' => 'Settings', 'url' => '/profile/edit'],
+                         [
+                               'label' => 'AdminPanel',
+                               'url' => ['/admin'],
+                               'visible' =>  Yii::$app->user->can("openUsers"),
+                               'class' => 'navbar-btn',
+                         ],
                          ['label' => 'Logout (' . Yii::$app->user->identity->email . ')', 'url' => '/site/logout'],
                      ],
                 ]

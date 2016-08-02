@@ -277,7 +277,7 @@ class ProfileController extends Controller{
                    'loadCount' => Comments::find()->where(['postId' => $id])->count(),
                    'notAcceptedCount' => User::getNotAcceptedCount(),
                    'waitingCount' => User::getWaitingCount(),
-                   'userModel' => User::findIdentity(Yii::$app->user->id),
+                   'userModel' => $modelPosts->user,
               ]);
          }
 

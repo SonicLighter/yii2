@@ -19,7 +19,7 @@ $this->title = 'Dialog with '.$modelUser->username;
 ?>
 
 <div class="site-about">
-     <div class='col-md-2 col-sm-3 hidden-sm hidden-xs profile-column'>
+     <div class='col-md-2 col-sm-3 hidden-xs profile-column'>
           <div class='profile-left_column'>
                <?=
                     $this->render('../profile/user/menu', [
