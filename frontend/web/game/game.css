@@ -1,0 +1,38 @@
+.game-container{
+     margin: auto;
+     width: 500px;
+     height: 500px;
+     padding-top: 15px;
+     padding-left: 15px;
+     padding-bottom: 15px;
+     background: rgb(187,173,160);
+     border-radius: 7px;
+}
+
+.game-container-row{
+     float: left;
+     margin: auto;
+     margin-bottom: 15px;
+}
+
+.game-container-cell{
+     float: left;
+     margin-right: 15px;
+     width: 106px;
+     height: 106px;
+     background: rgb(205,193,180);
+     border-radius: 3px;
+}
+
+.game-container-cell-digit{
+     float: left;
+     margin-right: 15px;
+     width: 106px;
+     height: 106px;
+     background: rgb(238,228,218);
+     border-radius: 3px;
+     vertical-align: middle;
+     text-align: center;
+     font-weight: bold;
+     font-size: 60px;
+}

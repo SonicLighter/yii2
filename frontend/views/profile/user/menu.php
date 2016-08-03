@@ -31,3 +31,5 @@ use yii\bootstrap\Button;
 <?= Html::a("<i class='glyphicon glyphicon-star'></i> &nbsp My Requests (".$notAcceptedCount.")", [Url::toRoute(['profile/requests'])], ['class' => 'btn btn-profile-menu']); ?>
 
 <?= Html::a("<i class='glyphicon glyphicon-cog'></i> &nbsp Settings", [Url::toRoute(['profile/edit'])], ['class' => 'btn btn-profile-menu']); ?>
+
+<?= Html::a("<i class='glyphicon glyphicon-tower'></i> &nbsp Games", [Url::toRoute(['games/index'])], ['class' => 'btn btn-profile-menu']); ?>
