@@ -14,7 +14,7 @@ use yii\helpers\Url;
 use \kop\y2sp\ScrollPager;
 
 $this->title = '2048';
-$this->registerJsFile('../game/game.js');
+Yii::$app->view->registerJsFile('../game/game.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile('../game/game.css');
 ?>
 
@@ -52,30 +52,22 @@ $this->registerCssFile('../game/game.css');
                          <br/>
                          <hr/>
                          <div class='game-container'>
-                              <div class='game-container-row'>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                              </div>
-                              <div class='game-container-row'>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                              </div>
-                              <div class='game-container-row'>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell-digit'>2</div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                              </div>
-                              <div class='game-container-row'>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                                   <div class='game-container-cell'></div>
-                              </div>
+                              <!--<div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell-digit'>2</div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>
+                              <div class='game-container-cell'></div>-->
                          </div>
                     </div>
                </div>

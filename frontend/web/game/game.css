@@ -18,6 +18,8 @@
 .game-container-cell{
      float: left;
      margin-right: 15px;
+     margin-bottom: 15px;
+     line-height: 106px;
      width: 106px;
      height: 106px;
      background: rgb(205,193,180);
@@ -27,12 +29,14 @@
 .game-container-cell-digit{
      float: left;
      margin-right: 15px;
+     margin-bottom: 15px;
      width: 106px;
      height: 106px;
+     line-height: 106px;
      background: rgb(238,228,218);
      border-radius: 3px;
-     vertical-align: middle;
      text-align: center;
      font-weight: bold;
      font-size: 60px;
+     opacity: 0.9;
 }
