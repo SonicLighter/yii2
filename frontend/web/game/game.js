@@ -3,10 +3,10 @@ $(document).ready(function(){
      function Game(){
 
           this.fieldArray = [
-               [8, 0, 0, 8],
-               [8, 0, 0, 4],
-               [4, 0, 0, 2],
-               [4, 0, 0, 2],
+               [0, 2, 2, 2],
+               [2, 2, 2, 2],
+               [2, 2, 2, 2],
+               [4, 2, 2, 2],
           ];
 
           this.keyMap = {
@@ -27,7 +27,7 @@ $(document).ready(function(){
           this.initial = function(){
 
                //this.newArray();
-               //this.randomPositions(9);
+               //this.randomPositions(15);
                this.print();
 
           }
@@ -38,13 +38,17 @@ $(document).ready(function(){
                     case 0:{  // up
                          //alert('0');
                          for(var i = 1; i < this.fieldArray.length; i++){
+                              //var stepsFlag = true;
+                              var steps = 0;
                               for(var j = 0; j < this.fieldArray[i].length; j++){
+                                   steps = this.takeSteps(direction, j); // 8 4 2 2, 8 4 4, 8 8, 16.
                                    if(this.fieldArray[i][j] != 0){
                                         //alert('yes');
                                         var tempI = i;
-                                        while(((this.fieldArray[tempI-1][j] == 0) || (this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j])) && (tempI > 0)){
+                                        while(((this.fieldArray[tempI-1][j] == 0) || ((this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]) && (steps > 0))) && (tempI > 0)){
                                              if(this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]){
                                                   this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j] * 2;
+                                                  steps = steps - 1;
                                              }
                                              else{
                                                   this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j];
@@ -54,7 +58,6 @@ $(document).ready(function(){
                                              //alert('Array:' + this.fieldArray[tempI][j]);
                                              if(tempI == 0) break;
                                         }
-                                        //this.print();
                                    }
                               }
                          }
@@ -66,6 +69,60 @@ $(document).ready(function(){
 
                //alert('<move>');
                this.print();
+
+          }
+
+          // following logic: 8 4 2 2 -> 8 4 4 -> 8 8 -> 16.
+          this.takeSteps = function(direction, col){
+
+               var steps = 0;
+               var count = 0;
+               var arr = [];
+               switch (direction) {
+                    case 0:{  // up
+                         for(var i = 0; i < this.fieldArray.length; i++){
+                              //if(this.fieldArray[i][col] != 0){
+                                   if(arr.indexOf(this.fieldArray[i][col]) == -1){
+                                        arr[arr.length] = this.fieldArray[i][col];
+                                   }
+                              //}
+                         }
+                         break;
+                    }
+                    case 1:{  // right
+
+                         break;
+                    }
+                    case 2:{  // down
+
+                         break;
+                    }
+                    case 3:{  // left
+
+                         break;
+                    }
+                    default:
+                         break;
+               }
+
+               switch (arr.length) {
+                    case 0:
+                         steps = 0;
+                         break;
+                    case 1:        // 8 8 8 8
+                    case 2:        // 8 8 4 4 | 8 4 8 4 | 0 2 2 4
+                         steps = 2;
+                         break;
+                    case 3:        // 8 4 4 2 | 8 4 2 2
+                         steps = 1;
+                         break;
+                    case 4:
+                         steps = 0;
+                         break;
+               }
+
+               alert(steps + ' ' + col);
+               return steps;
 
           }
 
