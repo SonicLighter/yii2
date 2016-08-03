@@ -3,10 +3,10 @@ $(document).ready(function(){
      function Game(){
 
           this.fieldArray = [
-               [1, 1, 1, 2],
-               [1, 3, 1, 3],
-               [1, 3, 0, 1],
-               [3, 1, 3, 4],
+               [8, 0, 0, 8],
+               [8, 0, 0, 4],
+               [4, 0, 0, 2],
+               [4, 0, 0, 2],
           ];
 
           this.keyMap = {
@@ -26,8 +26,45 @@ $(document).ready(function(){
 
           this.initial = function(){
 
-               this.newArray();
-               this.randomPositions(1);
+               //this.newArray();
+               //this.randomPositions(9);
+               this.print();
+
+          }
+
+          this.move = function(direction){
+               //alert('move');
+               switch (direction) {
+                    case 0:{  // up
+                         //alert('0');
+                         for(var i = 1; i < this.fieldArray.length; i++){
+                              for(var j = 0; j < this.fieldArray[i].length; j++){
+                                   if(this.fieldArray[i][j] != 0){
+                                        //alert('yes');
+                                        var tempI = i;
+                                        while(((this.fieldArray[tempI-1][j] == 0) || (this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j])) && (tempI > 0)){
+                                             if(this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]){
+                                                  this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j] * 2;
+                                             }
+                                             else{
+                                                  this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j];
+                                             }
+                                             this.fieldArray[tempI][j] = 0;
+                                             tempI = tempI - 1;
+                                             //alert('Array:' + this.fieldArray[tempI][j]);
+                                             if(tempI == 0) break;
+                                        }
+                                        //this.print();
+                                   }
+                              }
+                         }
+                         break;
+                    }
+                    default:
+                         break;
+               }
+
+               //alert('<move>');
                this.print();
 
           }
@@ -87,7 +124,7 @@ $(document).ready(function(){
           }
 
           this.print = function(){
-
+               //alert('print');
                $('.game-container').empty();
                for(var i = 0; i < this.fieldArray.length; i++){
                     for(var j = 0; j < this.fieldArray[i].length; j++){
@@ -112,27 +149,33 @@ $(document).ready(function(){
 
      $('body').keydown(function(eventObject){
 
-          if(game.emptyCount() > 0){
+          //if(game.emptyCount() > 0){
                switch (game.keyMap[eventObject.which]) {
                     case 0:{  // up
-
+                         game.move(0);
                          break;
                     }
                     case 1:{  // right
-
+                         game.move(1);
                          break;
                     }
                     case 2:{  // down
-
+                         game.move(2);
                          break;
                     }
                     case 3:{  // left
-
+                         game.move(3);
                          break;
                     }
                }
-          }
+          //}
 
+     });
+
+     // New game
+
+     $('#newGameButton').click(function(){
+          game.initial();
      });
 
 });
