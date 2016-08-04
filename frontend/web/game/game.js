@@ -3,9 +3,16 @@ $(document).ready(function(){
      function Game(){
 
           this.fieldArray = [
-               [0, 2, 2, 2],
-               [2, 2, 2, 2],
-               [2, 2, 2, 2],
+               [16, 2, 4, 4],
+               [2, 2, 2, 4],
+               [2, 2, 2, 0],
+               [4, 2, 2, 2],
+          ];
+
+          this.tempFieldArray = [
+               [16, 2, 4, 4],
+               [2, 2, 2, 4],
+               [2, 2, 2, 0],
                [4, 2, 2, 2],
           ];
 
@@ -26,22 +33,24 @@ $(document).ready(function(){
 
           this.initial = function(){
 
-               //this.newArray();
-               //this.randomPositions(15);
+               this.newArray();
+               this.randomPositions(2);
                this.print();
 
           }
 
           this.move = function(direction){
                //alert('move');
+               this.getTempArray();
                switch (direction) {
                     case 0:{  // up
                          //alert('0');
-                         for(var i = 1; i < this.fieldArray.length; i++){
-                              //var stepsFlag = true;
+                         var i = 1;
+                         for(var j = 0; j < this.fieldArray.length; j++){
+                              var stepsFlag = true;
                               var steps = 0;
-                              for(var j = 0; j < this.fieldArray[i].length; j++){
-                                   steps = this.takeSteps(direction, j); // 8 4 2 2, 8 4 4, 8 8, 16.
+                              steps = this.takeSteps(direction, j); // 8 4 2 2, 8 4 4, 8 8, 16.
+                              for(i = 1; i < this.fieldArray.length; i++){
                                    if(this.fieldArray[i][j] != 0){
                                         //alert('yes');
                                         var tempI = i;
@@ -59,6 +68,7 @@ $(document).ready(function(){
                                              if(tempI == 0) break;
                                         }
                                    }
+                                   this.print();
                               }
                          }
                          break;
@@ -67,7 +77,9 @@ $(document).ready(function(){
                          break;
                }
 
-               //alert('<move>');
+               if(this.getChanges()){
+                    this.randomPositions(1);
+               }
                this.print();
 
           }
@@ -75,17 +87,33 @@ $(document).ready(function(){
           // following logic: 8 4 2 2 -> 8 4 4 -> 8 8 -> 16.
           this.takeSteps = function(direction, col){
 
-               var steps = 0;
+               var steps = 2;
                var count = 0;
                var arr = [];
                switch (direction) {
                     case 0:{  // up
+                         /*
                          for(var i = 0; i < this.fieldArray.length; i++){
-                              //if(this.fieldArray[i][col] != 0){
+                              if(this.fieldArray[i][col] == 0) count++;
+                               //if(this.fieldArray[i][col] != 0){
                                    if(arr.indexOf(this.fieldArray[i][col]) == -1){
                                         arr[arr.length] = this.fieldArray[i][col];
                                    }
                               //}
+                         }
+                         */
+                         for(var i = 0; i < this.fieldArray.length; i++){
+                              if(this.fieldArray[i][col] == 0){
+                                   steps = steps - 1;
+                              }
+                              else{
+                                   count++;
+                              }
+                              if(arr.indexOf(this.fieldArray[i][col]) == -1){
+                                   if(this.fieldArray[i][col] != 0){
+                                        arr[arr.length] = this.fieldArray[i][col];
+                                   }
+                              }
                          }
                          break;
                     }
@@ -105,6 +133,7 @@ $(document).ready(function(){
                          break;
                }
 
+               /*
                switch (arr.length) {
                     case 0:
                          steps = 0;
@@ -120,10 +149,50 @@ $(document).ready(function(){
                          steps = 0;
                          break;
                }
-
-               alert(steps + ' ' + col);
+               */
+               //if(count == 0) steps = 1;
+               //alert(steps + ' ' + col);
+               /*
+               var printString = '';
+               for(var i = 0; i < arr.length; i++){
+                    printString = printString + ' ' + arr[i];
+               }
+               */
+               //alert(printString);
+               if((arr.length == 1) && (count == 2)){
+               //     alert('sd');
+                    steps = 1;
+               }
+               else if((arr.length == 2) && (count == 2)){
+                    steps = 2;
+               }
+               else if((arr.length == 2) && (count == 4)){
+                    steps = 1;
+               }
+               else if((arr.length == 3) && ((count == 4))){
+                    steps = 1;
+               }
                return steps;
 
+          }
+
+          this.getChanges = function(){
+               for(var i = 0; i < this.fieldArray.length; i++){
+                    for(var j = 0; j < this.fieldArray[i].length; j++){
+                         if(this.fieldArray[i][j] != this.tempFieldArray[i][j]){
+                              return true;
+                         }
+                    }
+               }
+               return false;
+          }
+
+          this.getTempArray = function(){
+               for(var i = 0; i < this.fieldArray.length; i++){
+                    for(var j = 0; j < this.fieldArray[i].length; j++){
+                         this.tempFieldArray[i][j] = this.fieldArray[i][j];
+                    }
+               }
           }
 
           this.newArray = function(){
