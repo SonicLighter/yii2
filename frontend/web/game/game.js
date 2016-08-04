@@ -5,11 +5,18 @@ $(document).ready(function(){
           this.score = 0;
 
           this.fieldArray = [
-               [16, 2, 4, 4],
-               [2, 2, 4, 4],
+               [4, 0, 2, 2],
+               [4, 4, 2, 2],
                [2, 2, 2, 2],
-               [4, 2, 2, 2],
+               [16, 2, 2, 4],
           ];
+
+/*
+[16, 2, 4, 4],
+[2, 2, 4, 4],
+[2, 2, 2, 2],
+[4, 2, 2, 2],
+*/
 
           this.tempFieldArray = [
                [16, 2, 4, 4],
@@ -37,8 +44,8 @@ $(document).ready(function(){
 
                this.score = 0;
                this.printGameScore();
-               //this.newArray();
-               //this.randomPositions(10);
+               this.newArray();
+               this.randomPositions(10);
                this.print();
 
           }
@@ -202,10 +209,8 @@ $(document).ready(function(){
                     case 1:{  // right
                          for(var i = 0; i < this.fieldArray.length; i++){
                               if(arr.indexOf(this.fieldArray[col][i]) == -1){
-                                   if(this.fieldArray[col][i] != 0){
-                                        arr[arr.length] = this.fieldArray[col][i];
-                                        steps = steps - 1;
-                                   }
+                                   arr[arr.length] = this.fieldArray[col][i];
+                                   steps = steps - 1;
                               }
                          }
                          break;
