@@ -2,6 +2,8 @@ $(document).ready(function(){
 
      function Game(){
 
+          this.score = 0;
+
           this.fieldArray = [
                [16, 2, 4, 4],
                [2, 2, 2, 4],
@@ -33,6 +35,7 @@ $(document).ready(function(){
 
           this.initial = function(){
 
+               this.score = 0;
                this.newArray();
                this.randomPositions(2);
                this.print();
@@ -57,6 +60,8 @@ $(document).ready(function(){
                                         while(((this.fieldArray[tempI-1][j] == 0) || ((this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]) && (steps > 0))) && (tempI > 0)){
                                              if(this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]){
                                                   this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j] * 2;
+                                                  this.score = this.score + this.fieldArray[tempI-1][j];
+                                                  this.printGameScore();
                                                   steps = steps - 1;
                                              }
                                              else{
@@ -263,6 +268,13 @@ $(document).ready(function(){
                          }
                     }
                }
+
+          }
+
+          this.printGameScore = function(){
+
+               $('#gameScore').empty();
+               $('#gameScore').append('Score: ' + this.score);
 
           }
 
