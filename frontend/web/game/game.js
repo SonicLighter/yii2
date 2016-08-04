@@ -5,9 +5,9 @@ $(document).ready(function(){
           this.score = 0;
 
           this.fieldArray = [
-               [4, 0, 2, 2],
-               [4, 4, 2, 2],
-               [2, 2, 2, 2],
+               [16, 2, 4, 4],
+               [4, 4, 2, 16],
+               [2, 2, 2, 4],
                [16, 2, 2, 4],
           ];
 
@@ -20,7 +20,7 @@ $(document).ready(function(){
 
           this.tempFieldArray = [
                [16, 2, 4, 4],
-               [2, 2, 2, 4],
+               [4, 2, 2, 2],
                [2, 2, 2, 0],
                [4, 2, 2, 2],
           ];
@@ -45,7 +45,7 @@ $(document).ready(function(){
                this.score = 0;
                this.printGameScore();
                this.newArray();
-               this.randomPositions(10);
+               this.randomPositions(2);
                this.print();
 
           }
@@ -70,8 +70,13 @@ $(document).ready(function(){
                                                   this.score = this.score + this.fieldArray[tempI-1][j];
                                                   this.printGameScore();
                                                   steps = steps - 1;
-                                                  this.fieldArray[tempI][j] = this.fieldArray[tempI+1][j];
-                                                  this.fieldArray[tempI+1][j] = 0;
+                                                  if((tempI+1) <= this.fieldArray.length-1){
+                                                       this.fieldArray[tempI][j] = this.fieldArray[tempI+1][j];
+                                                       this.fieldArray[tempI+1][j] = 0;
+                                                  }
+                                                  else{
+                                                       this.fieldArray[tempI][j] = 0;
+                                                  }
                                                   //i = i + steps;
                                              }
                                              else{
@@ -104,8 +109,13 @@ $(document).ready(function(){
                                                   this.score = this.score + this.fieldArray[i][tempI+1];
                                                   this.printGameScore();
                                                   steps = steps - 1;
-                                                  this.fieldArray[i][tempI] = this.fieldArray[i][tempI-1];
-                                                  this.fieldArray[i][tempI-1] = 0;
+                                                  if((tempI-1) >= 0){
+                                                       this.fieldArray[i][tempI] = this.fieldArray[i][tempI-1];
+                                                       this.fieldArray[i][tempI-1] = 0;
+                                                  }
+                                                  else{
+                                                       this.fieldArray[i][tempI] = 0;
+                                                  }
                                              }
                                              else{
                                                   this.fieldArray[i][tempI+1] = this.fieldArray[i][tempI];
@@ -116,7 +126,7 @@ $(document).ready(function(){
                                              tempI = tempI + 1;
                                              if(tempI == this.fieldArray.length-1) break;
                                         }
-                                        alert('step');
+                                        //alert('step');
                                         this.print();
                                    }
                               }
@@ -138,8 +148,13 @@ $(document).ready(function(){
                                                   this.score = this.score + this.fieldArray[tempI+1][j];
                                                   this.printGameScore();
                                                   steps = steps - 1;
-                                                  this.fieldArray[tempI][j] = this.fieldArray[tempI-1][j];
-                                                  this.fieldArray[tempI-1][j] = 0;
+                                                  if((tempI-1) >= 0){
+                                                       this.fieldArray[tempI][j] = this.fieldArray[tempI-1][j];
+                                                       this.fieldArray[tempI-1][j] = 0;
+                                                  }
+                                                  else{
+                                                       this.fieldArray[tempI][j] = 0;
+                                                  }
                                                   //i = i - steps;
                                              }
                                              else{
@@ -158,12 +173,53 @@ $(document).ready(function(){
                          }
                          break;
                     }
+                    case 3:{  // left
+                         for(var i = 0; i < this.fieldArray.length; i++){
+                              var steps = 0;
+                              steps = this.takeSteps(direction, i);
+                              for(var j = 1; j < this.fieldArray.length; j++){
+                                   if(this.fieldArray[i][j] != 0){
+                                        //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
+                                        var tempI = j;
+                                        //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
+                                        while(((this.fieldArray[i][tempI-1] == 0) || ((this.fieldArray[i][tempI-1] == this.fieldArray[i][tempI]) && (steps > 0))) && (tempI > 0)){
+                                             //alert('d');
+                                             if(this.fieldArray[i][tempI-1] == this.fieldArray[i][tempI]){
+                                                  this.fieldArray[i][tempI-1] = this.fieldArray[i][tempI] * 2;
+                                                  this.score = this.score + this.fieldArray[i][tempI-1];
+                                                  this.printGameScore();
+                                                  steps = steps - 1;
+                                                  if((tempI+1) <= this.fieldArray.length-1){
+                                                       this.fieldArray[i][tempI] = this.fieldArray[i][tempI+1];
+                                                       this.fieldArray[i][tempI+1] = 0;
+                                                  }
+                                                  else {
+                                                       this.fieldArray[i][tempI] = 0;
+                                                  }
+                                                  //alert(this.fieldArray[i][0] + ' ' + this.fieldArray[i][1] + ' ' + this.fieldArray[i][2] + ' ' + this.fieldArray[i][3] + ' j:' + tempI);
+                                             }
+                                             else{
+                                                  this.fieldArray[i][tempI-1] = this.fieldArray[i][tempI];
+                                                  this.fieldArray[i][tempI] = 0;
+                                             }
+
+                                             //alert('[' + (tempI+1) + ' : ' + j + ']: ' + this.fieldArray[tempI+1][j]);
+                                             tempI = tempI - 1;
+                                             if(tempI == 0) break;
+                                        }
+                                        //alert('step');
+                                        this.print();
+                                   }
+                              }
+                         }
+                         break;
+                    }
                     default:
                          break;
                }
                //console.log(this.fieldArray);
                if(this.getChanges()){
-                    //this.randomPositions(1);
+                    this.randomPositions(1);
                }
                this.print();
 
@@ -178,27 +234,11 @@ $(document).ready(function(){
                switch (direction) {
                     case 0:
                     case 2:
-                    {  // up
-                         /*
+                    {  // up, down
                          for(var i = 0; i < this.fieldArray.length; i++){
-                              if(this.fieldArray[i][col] == 0) count++;
-                               //if(this.fieldArray[i][col] != 0){
-                                   if(arr.indexOf(this.fieldArray[i][col]) == -1){
-                                        arr[arr.length] = this.fieldArray[i][col];
-                                   }
-                              //}
-                         }
-                         */
-                         for(var i = 0; i < this.fieldArray.length; i++){
-
-                              /*
-                              if(this.fieldArray[i][col] == 0){
-                                   steps = steps - 1;
-                              }
-                              else{
+                              if(this.fieldArray[i][col] != 0){
                                    count++;
                               }
-                              */
                               if(arr.indexOf(this.fieldArray[i][col]) == -1){
                                    arr[arr.length] = this.fieldArray[i][col];
                                    steps = steps - 1;
@@ -206,8 +246,14 @@ $(document).ready(function(){
                          }
                          break;
                     }
-                    case 1:{  // right
+                    case 1:
+                    case 3:
+                    {  // right, left
                          for(var i = 0; i < this.fieldArray.length; i++){
+                              if(this.fieldArray[col][i] != 0){
+                                   count++;
+                                   //alert(count);
+                              }
                               if(arr.indexOf(this.fieldArray[col][i]) == -1){
                                    arr[arr.length] = this.fieldArray[col][i];
                                    steps = steps - 1;
@@ -215,59 +261,11 @@ $(document).ready(function(){
                          }
                          break;
                     }
-                    case 3:{  // left
-
-                         break;
-                    }
-                    default:
-                         break;
                }
-
-               /*
-               switch (arr.length) {
-                    case 0:
-                         steps = 0;
-                         break;
-                    case 1:        // 8 8 8 8
-                    case 2:        // 8 8 4 4 | 8 4 8 4 | 0 2 2 4
-                         steps = 2;
-                         break;
-                    case 3:        // 8 4 4 2 | 8 4 2 2
-                         steps = 1;
-                         break;
-                    case 4:
-                         steps = 0;
-                         break;
-               }
-               */
-               //if(count == 0) steps = 1;
-               //alert(steps + ' ' + col);
-               /*
-               var printString = '';
-               for(var i = 0; i < arr.length; i++){
-                    printString = printString + ' ' + arr[i];
-               }
-               */
-               //alert(printString);
-
-               /*
-               if((arr.length == 1) && (count == 2)){
-               //     alert('sd');
-                    steps = 1;
-               }
-               else if((arr.length == 2) && (count == 2)){
-                    steps = 2;
-               }
-               else if((arr.length == 2) && (count == 4)){
-                    steps = 1;
-               }
-               else if((arr.length == 3) && ((count == 4))){
-                    steps = 1;
-               }
-               */
 
                if(steps == 3) steps--;
-               alert(steps);
+               if(arr.length == 2 && count == 4) steps--;
+               //alert(steps);
                return steps;
 
           }
