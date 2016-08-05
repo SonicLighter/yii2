@@ -391,7 +391,7 @@ $(document).ready(function(){
                          break;
                     }
                     case 3:{  // left
-                         game.move(3);
+                         game.move(3); //
                          break;
                     }
                }
