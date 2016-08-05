@@ -5,10 +5,10 @@ $(document).ready(function(){
           this.score = 0;
 
           this.fieldArray = [
-               [16, 2, 4, 4],
-               [4, 4, 2, 16],
-               [2, 2, 2, 4],
-               [16, 2, 2, 4],
+               [0, 0, 0, 2],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
           ];
 
           this.tempFieldArray = [
@@ -37,9 +37,9 @@ $(document).ready(function(){
 
                this.score = 0;
                this.printGameScore();
-               this.newArray();
-               this.randomPositions(2);
-               this.print();
+               //this.newArray();
+               //this.randomPositions(2);
+               printField(this.fieldArray);
 
           }
 
@@ -70,7 +70,7 @@ $(document).ready(function(){
                     this.randomPositions(1);
                }
 
-               this.print();
+               //printField(this.fieldArray);
 
           }
 
@@ -109,7 +109,7 @@ $(document).ready(function(){
                                    if(tempI == 0) break;
                               }
                          }
-                         this.print();
+                         //this.print();
                     }
                }
 
@@ -148,9 +148,10 @@ $(document).ready(function(){
                                    //alert('[' + (tempI+1) + ' : ' + j + ']: ' + this.fieldArray[tempI+1][j]);
                                    tempI = tempI + 1;
                                    if(tempI == this.fieldArray.length-1) break;
+                                   //this.printRight(i);
                               }
                               //alert('step');
-                              this.print();
+                              //this.print();
                          }
                     }
                }
@@ -193,7 +194,7 @@ $(document).ready(function(){
                               //alert('step');
                               //this.print();
                          }
-                         this.print();
+                         //this.print();
                     }
                }
 
@@ -219,6 +220,7 @@ $(document).ready(function(){
                                         if((tempI+1) <= this.fieldArray.length-1){
                                              this.fieldArray[i][tempI] = this.fieldArray[i][tempI+1];
                                              this.fieldArray[i][tempI+1] = 0;
+
                                         }
                                         else {
                                              this.fieldArray[i][tempI] = 0;
@@ -228,14 +230,17 @@ $(document).ready(function(){
                                    else{
                                         this.fieldArray[i][tempI-1] = this.fieldArray[i][tempI];
                                         this.fieldArray[i][tempI] = 0;
+                                        this.moveAnimation(i, tempI);
                                    }
+                                   //alert('d');
+                                   //this.print();
 
                                    //alert('[' + (tempI+1) + ' : ' + j + ']: ' + this.fieldArray[tempI+1][j]);
                                    tempI = tempI - 1;
                                    if(tempI == 0) break;
                               }
                               //alert('step');
-                              this.print();
+                              //this.print();
                          }
                     }
                }
@@ -305,6 +310,7 @@ $(document).ready(function(){
                for(var i = 0; i < this.fieldArray.length; i++){
                     for(var j = 0; j < this.fieldArray[i].length; j++){
                          this.setValue(i, j, 0);
+                         this.tempFieldArray[i][j] = 0;
                     }
                }
 
@@ -354,21 +360,51 @@ $(document).ready(function(){
                return Math.random() < 0.9 ? 2 : 4;
           }
 
-          this.print = function(){
-               //alert('print');
+
+          var printField = function(array){
+               $('.game-container').empty();
+               for(var i = 0; i < array.length; i++){
+                    for(var j = 0; j < array[i].length; j++){
+                         var container = $('.game-container');
+                         if(array[i][j] === 0){
+                              container.append("<div class='game-container-cell'></div>");
+                         }
+                         else{
+                              container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                         }
+                    }
+               }
+          }
+
+
+          /*
+          this.initialPrint = function(){
                $('.game-container').empty();
                for(var i = 0; i < this.fieldArray.length; i++){
                     for(var j = 0; j < this.fieldArray[i].length; j++){
                          var container = $('.game-container');
                          if(this.fieldArray[i][j] === 0){
-                              container.append("<div class='game-container-cell'></div>");
+                              container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'></div></div>");
                          }
                          else{
-                              container.append("<div class='game-container-cell-digit'>" + this.fieldArray[i][j] + "</div>");
+                              container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + this.fieldArray[i][j] + "</div></div>");
+                              var id = "#" + i + "_" + j +"";
+                              $(id).fadeToggle('slow');
                          }
                     }
                }
+          }
+          */
 
+          var callPrintFunction = function(){
+               printField(game.fieldArray);
+          }
+
+          this.moveAnimation = function(x, y){
+                    var id = "#" + x + "_" + y +"";
+                    $(id).animate({'margin-left':'-=121px'}, 1000, (function(){
+                         callPrintFunction();
+                    }));
           }
 
           this.printGameScore = function(){
@@ -387,6 +423,7 @@ $(document).ready(function(){
 
      $('body').keydown(function(eventObject){
 
+          //$('.0_0').animate({"left": "+=50px"}, "slow");
           game.move(game.keyMap[eventObject.which]);
 
      });
