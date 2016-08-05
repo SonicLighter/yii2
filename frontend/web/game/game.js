@@ -3,9 +3,14 @@ $(document).ready(function(){
      function Game(){
 
           this.score = 0;
+          this.printPermission = true;
+
+          // new values
+          this.newRandomX = -1;
+          this.newRandomY = -1;
 
           this.fieldArray = [
-               [0, 0, 0, 2],
+               [0, 2, 2, 2],
                [0, 0, 0, 0],
                [0, 0, 0, 0],
                [0, 0, 0, 0],
@@ -37,8 +42,8 @@ $(document).ready(function(){
 
                this.score = 0;
                this.printGameScore();
-               //this.newArray();
-               //this.randomPositions(2);
+               this.newArray();
+               this.randomPositions(2);
                printField(this.fieldArray);
 
           }
@@ -70,8 +75,9 @@ $(document).ready(function(){
                     this.randomPositions(1);
                }
 
-               //printField(this.fieldArray);
-
+               if(this.printPermission){
+                    printField(this.fieldArray);
+               }
           }
 
           this.moveUp = function(direction){
@@ -85,6 +91,10 @@ $(document).ready(function(){
                          if(this.fieldArray[i][j] != 0){
                               //alert('yes');
                               var tempI = i;
+                              var stepsCountBool = true;
+                              var stepsCount = 0;
+                              var stepI = 0;
+                              var stepJ = 0;
                               while(((this.fieldArray[tempI-1][j] == 0) || ((this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]) && (steps > 0))) && (tempI > 0)){
                                    if(this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]){
                                         this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j] * 2;
@@ -103,13 +113,27 @@ $(document).ready(function(){
                                    else{
                                         this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j];
                                         this.fieldArray[tempI][j] = 0;
+
+                                        if(stepsCountBool){
+                                             stepI = tempI;
+                                             stepJ = j;
+                                             stepsCountBool = false;
+                                        }
+                                        stepsCount++;
+
                                    }
                                    tempI = tempI - 1;
                                    //alert('Array:' + this.fieldArray[tempI][j]);
                                    if(tempI == 0) break;
                               }
+
+                              if(!stepsCountBool){
+                                   this.printPermission = false;
+                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                              }
+                              else printField(this.fieldArray);
+
                          }
-                         //this.print();
                     }
                }
 
@@ -124,7 +148,10 @@ $(document).ready(function(){
                          if(this.fieldArray[i][j] != 0){
                               //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
                               var tempI = j;
-                              //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
+                              var stepsCountBool = true;
+                              var stepsCount = 0;
+                              var stepI = 0;
+                              var stepJ = 0;
                               while(((this.fieldArray[i][tempI+1] == 0) || ((this.fieldArray[i][tempI+1] == this.fieldArray[i][tempI]) && (steps > 0))) && (tempI < this.fieldArray.length)){
                                    //alert('d');
                                    if(this.fieldArray[i][tempI+1] == this.fieldArray[i][tempI]){
@@ -143,6 +170,14 @@ $(document).ready(function(){
                                    else{
                                         this.fieldArray[i][tempI+1] = this.fieldArray[i][tempI];
                                         this.fieldArray[i][tempI] = 0;
+
+                                        if(stepsCountBool){
+                                             stepI = i;
+                                             stepJ = tempI;
+                                             stepsCountBool = false;
+                                        }
+                                        stepsCount++;
+
                                    }
 
                                    //alert('[' + (tempI+1) + ' : ' + j + ']: ' + this.fieldArray[tempI+1][j]);
@@ -151,7 +186,11 @@ $(document).ready(function(){
                                    //this.printRight(i);
                               }
                               //alert('step');
-                              //this.print();
+                              if(!stepsCountBool){
+                                   this.printPermission = false;
+                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                              }
+                              else printField(this.fieldArray);
                          }
                     }
                }
@@ -166,7 +205,10 @@ $(document).ready(function(){
                     for(var i = this.fieldArray.length-2; i >= 0; i--){
                          if(this.fieldArray[i][j] != 0){
                               var tempI = i;
-                              //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
+                              var stepsCountBool = true;
+                              var stepsCount = 0;
+                              var stepI = 0;
+                              var stepJ = 0;
                               while(((this.fieldArray[tempI+1][j] == 0) || ((this.fieldArray[tempI+1][j] == this.fieldArray[tempI][j]) && (steps > 0))) && (tempI < this.fieldArray.length)){
                                    //alert('d');
                                    if(this.fieldArray[tempI+1][j] == this.fieldArray[tempI][j]){
@@ -186,15 +228,27 @@ $(document).ready(function(){
                                    else{
                                         this.fieldArray[tempI+1][j] = this.fieldArray[tempI][j];
                                         this.fieldArray[tempI][j] = 0;
+
+                                        if(stepsCountBool){
+                                             stepI = tempI;
+                                             stepJ = j;
+                                             stepsCountBool = false;
+                                        }
+                                        stepsCount++;
+
                                    }
                                    //alert('[' + (tempI+1) + ' : ' + j + ']: ' + this.fieldArray[tempI+1][j]);
                                    tempI = tempI + 1;
                                    if(tempI == this.fieldArray.length-1) break;
                               }
-                              //alert('step');
-                              //this.print();
+
+                              if(!stepsCountBool){
+                                   this.printPermission = false;
+                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                              }
+                              else printField(this.fieldArray);
+
                          }
-                         //this.print();
                     }
                }
 
@@ -209,7 +263,10 @@ $(document).ready(function(){
                          if(this.fieldArray[i][j] != 0){
                               //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
                               var tempI = j;
-                              //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
+                              var stepsCountBool = true;
+                              var stepsCount = 0;
+                              var stepI = 0;
+                              var stepJ = 0;
                               while(((this.fieldArray[i][tempI-1] == 0) || ((this.fieldArray[i][tempI-1] == this.fieldArray[i][tempI]) && (steps > 0))) && (tempI > 0)){
                                    //alert('d');
                                    if(this.fieldArray[i][tempI-1] == this.fieldArray[i][tempI]){
@@ -230,18 +287,26 @@ $(document).ready(function(){
                                    else{
                                         this.fieldArray[i][tempI-1] = this.fieldArray[i][tempI];
                                         this.fieldArray[i][tempI] = 0;
-                                        this.moveAnimation(i, tempI);
-                                   }
-                                   //alert('d');
-                                   //this.print();
 
-                                   //alert('[' + (tempI+1) + ' : ' + j + ']: ' + this.fieldArray[tempI+1][j]);
+                                        if(stepsCountBool){
+                                             stepI = i;
+                                             stepJ = tempI;
+                                             stepsCountBool = false;
+                                        }
+                                        stepsCount++;
+
+                                   }
                                    tempI = tempI - 1;
                                    if(tempI == 0) break;
                               }
-                              //alert('step');
-                              //this.print();
+                              if(!stepsCountBool){
+                                   this.printPermission = false;
+                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                              }
+                              else printField(this.fieldArray);
+
                          }
+
                     }
                }
 
@@ -330,6 +395,8 @@ $(document).ready(function(){
                     } while ((this.fieldArray[x][y] != 0) && (this.emptyCount() > 0));
                     if(this.emptyCount() > 0){
                          //alert('RESULT : ' + x + ':' + y);
+                         this.newRandomX = x;
+                         this.newRandomY = y;
                          this.setValue(x, y, this.getRandomValue());
                     }
                }
@@ -357,9 +424,12 @@ $(document).ready(function(){
           }
 
           this.getRandomValue = function(){
+               //alert('hi');
                return Math.random() < 0.9 ? 2 : 4;
           }
 
+
+          // PRINTS
 
           var printField = function(array){
                $('.game-container').empty();
@@ -370,41 +440,26 @@ $(document).ready(function(){
                               container.append("<div class='game-container-cell'></div>");
                          }
                          else{
-                              container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                              //alert(game.newRandomX);
+                              //if(((game.newRandomX == i) && (game.newRandomY == j)) && game.printPermission){
+                              //     container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                                   //$('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
+                                   //game.newRandomX = -1;
+                                   //game.newRandomY = -1;
+                              //}
+                              //else{
+                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                              //}
                          }
                     }
                }
-          }
 
 
-          /*
-          this.initialPrint = function(){
-               $('.game-container').empty();
-               for(var i = 0; i < this.fieldArray.length; i++){
-                    for(var j = 0; j < this.fieldArray[i].length; j++){
-                         var container = $('.game-container');
-                         if(this.fieldArray[i][j] === 0){
-                              container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'></div></div>");
-                         }
-                         else{
-                              container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + this.fieldArray[i][j] + "</div></div>");
-                              var id = "#" + i + "_" + j +"";
-                              $(id).fadeToggle('slow');
-                         }
-                    }
-               }
-          }
-          */
+               //if(game.newRandomX > -1){
+               //     $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
+               //     game.newRandomX = -1;
+               //}
 
-          var callPrintFunction = function(){
-               printField(game.fieldArray);
-          }
-
-          this.moveAnimation = function(x, y){
-                    var id = "#" + x + "_" + y +"";
-                    $(id).animate({'margin-left':'-=121px'}, 1000, (function(){
-                         callPrintFunction();
-                    }));
           }
 
           this.printGameScore = function(){
@@ -412,6 +467,50 @@ $(document).ready(function(){
                $('#gameScore').empty();
                $('#gameScore').append('Score: ' + this.score);
 
+          }
+
+          // ANIMATION
+
+          var callPrintFunction = function(){
+               printField(game.fieldArray);
+          }
+
+          var changePrintPermission = function(){
+               game.printPermission = true;
+          }
+
+          var afterAnimation = function(){
+               callPrintFunction();
+               changePrintPermission();
+          }
+
+          this.moveAnimation = function(x, y, count, direction){
+               var id = "#" + x + "_" + y +"";
+               var distance = 121 * count;
+               switch (direction) {
+                    case 'move up':
+                         $(id).animate({'margin-top':'-='+ distance +'px'}, 100, (function(){
+                              afterAnimation();
+                         }));
+                         break;
+                    case 'move right':
+                         $(id).animate({'margin-left':'+='+ distance +'px'}, 100, (function(){
+                              afterAnimation();
+                         }));
+                         break;
+                    case 'move down':
+                         $(id).animate({'margin-top':'+='+ distance +'px'}, 100, (function(){
+                              afterAnimation();
+                         }));
+                         break;
+                    case 'move left':
+                         $(id).animate({'margin-left':'-='+ distance +'px'}, 100, (function(){
+                              afterAnimation();
+                         }));
+                         break;
+                    default:
+                         break;
+               }
           }
 
      }
@@ -423,7 +522,6 @@ $(document).ready(function(){
 
      $('body').keydown(function(eventObject){
 
-          //$('.0_0').animate({"left": "+=50px"}, "slow");
           game.move(game.keyMap[eventObject.which]);
 
      });
