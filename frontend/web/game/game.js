@@ -8,11 +8,12 @@ $(document).ready(function(){
           // new values
           this.newRandomX = -1;
           this.newRandomY = -1;
+          this.showNewPermisson = true;
 
           this.fieldArray = [
-               [0, 2, 2, 2],
+               [8, 16, 0, 32],
                [0, 0, 0, 0],
-               [0, 0, 0, 0],
+               [8, 0, 0, 0],
                [0, 0, 0, 0],
           ];
 
@@ -42,8 +43,8 @@ $(document).ready(function(){
 
                this.score = 0;
                this.printGameScore();
-               this.newArray();
-               this.randomPositions(2);
+               //this.newArray();
+               //this.randomPositions(2);
                printField(this.fieldArray);
 
           }
@@ -72,6 +73,7 @@ $(document).ready(function(){
                }
 
                if(this.getChanges()){
+                    this.showNewPermisson = true;
                     this.randomPositions(1);
                }
 
@@ -131,7 +133,9 @@ $(document).ready(function(){
                                    this.printPermission = false;
                                    this.moveAnimation(stepI, stepJ, stepsCount, direction);
                               }
-                              else printField(this.fieldArray);
+                              else if(this.printPermission){
+                                   printField(this.fieldArray);
+                              }
 
                          }
                     }
@@ -190,7 +194,9 @@ $(document).ready(function(){
                                    this.printPermission = false;
                                    this.moveAnimation(stepI, stepJ, stepsCount, direction);
                               }
-                              else printField(this.fieldArray);
+                              else if(this.printPermission){
+                                   printField(this.fieldArray);
+                              }
                          }
                     }
                }
@@ -246,7 +252,9 @@ $(document).ready(function(){
                                    this.printPermission = false;
                                    this.moveAnimation(stepI, stepJ, stepsCount, direction);
                               }
-                              else printField(this.fieldArray);
+                              else if(this.printPermission){
+                                   printField(this.fieldArray);
+                              }
 
                          }
                     }
@@ -303,7 +311,9 @@ $(document).ready(function(){
                                    this.printPermission = false;
                                    this.moveAnimation(stepI, stepJ, stepsCount, direction);
                               }
-                              else printField(this.fieldArray);
+                              else if(this.printPermission){
+                                   printField(this.fieldArray);
+                              }
 
                          }
 
@@ -441,23 +451,30 @@ $(document).ready(function(){
                          }
                          else{
                               //alert(game.newRandomX);
-                              //if(((game.newRandomX == i) && (game.newRandomY == j)) && game.printPermission){
-                              //     container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
-                                   //$('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
-                                   //game.newRandomX = -1;
-                                   //game.newRandomY = -1;
-                              //}
-                              //else{
+                              if(((game.newRandomX == i) && (game.newRandomY == j))){
+                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                                   $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
+                                   $('#' + game.newRandomX + '_' + game.newRandomY).css({'display',''});
+                              }
+                              else{
                                    container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
-                              //}
+                              }
+                              //$('#' + i + '_' + j).fadeToggle('slow');
                          }
                     }
                }
 
-
-               //if(game.newRandomX > -1){
+               if(game.showNewPermisson){
+                    //$('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
+                    game.newRandomX = -1;
+                    game.newRandomY = -1;
+                    //
+                    game.showNewPermisson = false;
+               }
+               //if(game.newRandomX != -1 && game.printPermission){
+                    //alert('sdasdas');
                //     $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
-               //     game.newRandomX = -1;
+               //       game.newRandomX = -1;
                //}
 
           }
