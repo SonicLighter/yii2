@@ -5,16 +5,18 @@ $(document).ready(function(){
           this.score = 0;
           this.printPermission = true;
 
+          this.threadsFinished = 0;
+
           // new values
           this.newRandomX = -1;
           this.newRandomY = -1;
           this.showNewPermisson = true;
 
           this.fieldArray = [
-               [8, 8, 16, 16],
-               [0, 2, 4, 4],
-               [2, 2, 4, 4],
-               [2, 2, 2, 4],
+               [0, 0, 0, 4],
+               [0, 0, 0, 4],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
           ];
 
           this.tempFieldArray = [
@@ -54,7 +56,7 @@ $(document).ready(function(){
           this.move = function(direction){
 
                this.getTempArray();
-
+               this.threadsFinished = 0;
                switch (direction) {
                     case 'move up':
                          this.moveUp(direction);
@@ -72,7 +74,10 @@ $(document).ready(function(){
                          break;
                }
 
+               /*
                if(this.getChanges()){
+                    sleep(100);    // wait until animation not finished
+                    alert('new digit');
                     this.showNewPermisson = true;
                     this.randomPositions(1);
                }
@@ -80,6 +85,8 @@ $(document).ready(function(){
                if(this.printPermission){
                     printField(this.fieldArray);
                }
+               */
+
           }
 
           this.moveUp = function(direction){
@@ -90,13 +97,13 @@ $(document).ready(function(){
                     steps = this.takeSteps(direction, j); // 8 4 2 2, 8 4 4, 8 8, 16.
                     for(var i = 1; i < this.fieldArray.length; i++){
 
+                         var stepsCountBool = true;
+                         var stepsCount = 0;
+                         var stepI = 0;
+                         var stepJ = 0;
                          if(this.fieldArray[i][j] != 0){
                               //alert('yes');
                               var tempI = i;
-                              var stepsCountBool = true;
-                              var stepsCount = 0;
-                              var stepI = 0;
-                              var stepJ = 0;
                               while(((this.fieldArray[tempI-1][j] == 0) || ((this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]) && (steps > 0))) && (tempI > 0)){
                                    if(this.fieldArray[tempI-1][j] == this.fieldArray[tempI][j]){
                                         this.fieldArray[tempI-1][j] = this.fieldArray[tempI][j] * 2;
@@ -129,15 +136,23 @@ $(document).ready(function(){
                                    if(tempI == 0) break;
                               }
 
-                              if(!stepsCountBool){
-                                   this.printPermission = false;
-                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
-                              }
-                              else if(this.printPermission){
+                         }
+
+                         if(!stepsCountBool){
+                              //alert('with animation');
+                              this.printPermission = false;
+                              this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                         }
+                         else{
+                              if(this.printPermission){
                                    printField(this.fieldArray);
                               }
-
+                              this.threadsFinished++;
+                              if(this.threadsFinished == 12){
+                                   this.printNewDigits();
+                              }
                          }
+
                     }
                }
 
@@ -149,13 +164,13 @@ $(document).ready(function(){
                     var steps = 0;
                     steps = this.takeSteps(direction, i);
                     for(var j = this.fieldArray.length - 2; j >= 0; j--){
+                         var stepsCountBool = true;
+                         var stepsCount = 0;
+                         var stepI = 0;
+                         var stepJ = 0;
                          if(this.fieldArray[i][j] != 0){
                               //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
                               var tempI = j;
-                              var stepsCountBool = true;
-                              var stepsCount = 0;
-                              var stepI = 0;
-                              var stepJ = 0;
                               while(((this.fieldArray[i][tempI+1] == 0) || ((this.fieldArray[i][tempI+1] == this.fieldArray[i][tempI]) && (steps > 0))) && (tempI < this.fieldArray.length)){
                                    //alert('d');
                                    if(this.fieldArray[i][tempI+1] == this.fieldArray[i][tempI]){
@@ -190,12 +205,18 @@ $(document).ready(function(){
                                    //this.printRight(i);
                               }
                               //alert('step');
-                              if(!stepsCountBool){
-                                   this.printPermission = false;
-                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
-                              }
-                              else if(this.printPermission){
+                         }
+                         if(!stepsCountBool){
+                              this.printPermission = false;
+                              this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                         }
+                         else{
+                              if(this.printPermission){
                                    printField(this.fieldArray);
+                              }
+                              this.threadsFinished++;
+                              if(this.threadsFinished == 12){
+                                   this.printNewDigits();
                               }
                          }
                     }
@@ -209,12 +230,12 @@ $(document).ready(function(){
                     var steps = 0;
                     steps = this.takeSteps(direction, j);
                     for(var i = this.fieldArray.length-2; i >= 0; i--){
+                         var stepsCountBool = true;
+                         var stepsCount = 0;
+                         var stepI = 0;
+                         var stepJ = 0;
                          if(this.fieldArray[i][j] != 0){
                               var tempI = i;
-                              var stepsCountBool = true;
-                              var stepsCount = 0;
-                              var stepI = 0;
-                              var stepJ = 0;
                               while(((this.fieldArray[tempI+1][j] == 0) || ((this.fieldArray[tempI+1][j] == this.fieldArray[tempI][j]) && (steps > 0))) && (tempI < this.fieldArray.length)){
                                    //alert('d');
                                    if(this.fieldArray[tempI+1][j] == this.fieldArray[tempI][j]){
@@ -247,15 +268,19 @@ $(document).ready(function(){
                                    tempI = tempI + 1;
                                    if(tempI == this.fieldArray.length-1) break;
                               }
-
-                              if(!stepsCountBool){
-                                   this.printPermission = false;
-                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
-                              }
-                              else if(this.printPermission){
+                         }
+                         if(!stepsCountBool){
+                              this.printPermission = false;
+                              this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                         }
+                         else{
+                              if(this.printPermission){
                                    printField(this.fieldArray);
                               }
-
+                              this.threadsFinished++;
+                              if(this.threadsFinished == 12){
+                                   this.printNewDigits();
+                              }
                          }
                     }
                }
@@ -268,13 +293,13 @@ $(document).ready(function(){
                     var steps = 0;
                     steps = this.takeSteps(direction, i);
                     for(var j = 1; j < this.fieldArray.length; j++){
+                         var stepsCountBool = true;
+                         var stepsCount = 0;
+                         var stepI = 0;
+                         var stepJ = 0;
                          if(this.fieldArray[i][j] != 0){
                               //alert('[' + i + ' : ' + j + ']: ' + this.fieldArray[i][j]);
                               var tempI = j;
-                              var stepsCountBool = true;
-                              var stepsCount = 0;
-                              var stepI = 0;
-                              var stepJ = 0;
                               while(((this.fieldArray[i][tempI-1] == 0) || ((this.fieldArray[i][tempI-1] == this.fieldArray[i][tempI]) && (steps > 0))) && (tempI > 0)){
                                    //alert('d');
                                    if(this.fieldArray[i][tempI-1] == this.fieldArray[i][tempI]){
@@ -307,14 +332,20 @@ $(document).ready(function(){
                                    tempI = tempI - 1;
                                    if(tempI == 0) break;
                               }
-                              if(!stepsCountBool){
-                                   this.printPermission = false;
-                                   this.moveAnimation(stepI, stepJ, stepsCount, direction);
-                              }
-                              else if(this.printPermission){
+                         }
+
+                         if(!stepsCountBool){
+                              this.printPermission = false;
+                              this.moveAnimation(stepI, stepJ, stepsCount, direction);
+                         }
+                         else{
+                              if(this.printPermission){
                                    printField(this.fieldArray);
                               }
-
+                              this.threadsFinished++;
+                              if(this.threadsFinished == 12){
+                                   this.printNewDigits();
+                              }
                          }
 
                     }
@@ -458,6 +489,7 @@ $(document).ready(function(){
           // PRINTS
 
           var printField = function(array){
+               //alert('print | printPermission: ' + game.printPermission);
                $('.game-container').empty();
                for(var i = 0; i < array.length; i++){
                     for(var j = 0; j < array[i].length; j++){
@@ -471,6 +503,8 @@ $(document).ready(function(){
                                    container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
                                    $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
                                    //$('#' + game.newRandomX + '_' + game.newRandomY).css({'display':''});
+                                   game.newRandomX = -1;
+                                   game.newRandomY = -1;
                               }
                               else{
                                    container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
@@ -480,13 +514,6 @@ $(document).ready(function(){
                     }
                }
 
-               if(game.showNewPermisson){
-                    //$('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
-                    game.newRandomX = -1;
-                    game.newRandomY = -1;
-                    //
-                    game.showNewPermisson = false;
-               }
                //if(game.newRandomX != -1 && game.printPermission){
                     //alert('sdasdas');
                //     $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
@@ -502,6 +529,17 @@ $(document).ready(function(){
 
           }
 
+          this.printNewDigits = function(){
+               if(game.getChanges()){
+                    //alert('new digit');
+                    game.showNewPermisson = true;
+                    game.randomPositions(1);
+               }
+               game.threadsFinished = 0;
+               //if(game.printPermission){
+               printField(game.fieldArray);
+          }
+
           // ANIMATION
 
           var callPrintFunction = function(){
@@ -509,12 +547,28 @@ $(document).ready(function(){
           }
 
           var changePrintPermission = function(){
+               //alert('Changin print permission...');
                game.printPermission = true;
           }
 
           var afterAnimation = function(){
+
                callPrintFunction();
                changePrintPermission();
+               game.threadsFinished++;
+               //alert(game.threadsFinished);
+               if(game.threadsFinished == 12){    // 16 - one row or column
+                    if(game.getChanges()){
+                         //alert('new digit');
+                         game.showNewPermisson = true;
+                         game.randomPositions(1);
+                    }
+                    //if(game.printPermission){
+                         printField(game.fieldArray);
+                    //}
+                    game.threadsFinished = 0;
+               }
+
           }
 
           this.moveAnimation = function(x, y, count, direction){
@@ -543,6 +597,17 @@ $(document).ready(function(){
                          break;
                     default:
                          break;
+               }
+          }
+
+          // CALCULATIONS
+
+          function sleep(milliseconds) {
+               var start = new Date().getTime();
+               for (var i = 0; i < 1e7; i++) {
+                    if ((new Date().getTime() - start) > milliseconds){
+                         break;
+                    }
                }
           }
 
