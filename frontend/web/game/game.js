@@ -11,10 +11,10 @@ $(document).ready(function(){
           this.showNewPermisson = true;
 
           this.fieldArray = [
-               [8, 16, 0, 32],
-               [0, 0, 0, 0],
-               [8, 0, 0, 0],
-               [0, 0, 0, 0],
+               [8, 8, 16, 16],
+               [0, 2, 4, 4],
+               [2, 2, 4, 4],
+               [2, 2, 2, 4],
           ];
 
           this.tempFieldArray = [
@@ -43,8 +43,8 @@ $(document).ready(function(){
 
                this.score = 0;
                this.printGameScore();
-               //this.newArray();
-               //this.randomPositions(2);
+               this.newArray();
+               this.randomPositions(2);
                printField(this.fieldArray);
 
           }
@@ -327,11 +327,18 @@ $(document).ready(function(){
           this.takeSteps = function(direction, col){
 
                var steps = 4;
+               var equalDigits = 0;
                var count = 0;
                var arr = [];
 
                if((direction == 'move up') || (direction == 'move down')){
                     for(var i = 0; i < this.fieldArray.length; i++){
+
+                         if(this.fieldArray[i][col] == this.fieldArray[0][col]){
+                              equalDigits++;
+                         }
+                         else equalDigits--;
+
                          if(this.fieldArray[i][col] != 0){
                               count++;
                          }
@@ -343,6 +350,12 @@ $(document).ready(function(){
                }
                else if((direction == 'move right') || (direction == 'move left')){
                     for(var i = 0; i < this.fieldArray.length; i++){
+
+                         if(this.fieldArray[col][i] == this.fieldArray[col][0]){
+                              equalDigits++;
+                         }
+                         else equalDigits--;
+
                          if(this.fieldArray[col][i] != 0){
                               count++;
                               //alert(count);
@@ -355,7 +368,10 @@ $(document).ready(function(){
                }
 
                if(steps == 3) steps--;
-               if(arr.length == 2 && count == 4) steps--;
+               if(arr.length == 2 && count == 4){
+                    //steps--;
+                    if(equalDigits != 0) steps--;
+               }
                //alert(steps);
                return steps;
 
@@ -454,7 +470,7 @@ $(document).ready(function(){
                               if(((game.newRandomX == i) && (game.newRandomY == j))){
                                    container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
                                    $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
-                                   $('#' + game.newRandomX + '_' + game.newRandomY).css({'display',''});
+                                   //$('#' + game.newRandomX + '_' + game.newRandomY).css({'display':''});
                               }
                               else{
                                    container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
