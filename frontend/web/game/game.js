@@ -22,6 +22,11 @@ $(document).ready(function(){
           ];
 
           /*
+               [2, 4, 8, 16],
+               [32, 64, 128, 256],
+               [512, 1024, 2048, 0],
+               [0, 0, 0, 0],
+
                [4, 64, 4, 8],
                [8, 128, 8, 2],
                [2, 512, 1024, 16],
@@ -29,10 +34,10 @@ $(document).ready(function(){
           */
 
           this.tempFieldArray = [
-               [16, 2, 4, 4],
-               [4, 2, 2, 2],
-               [2, 2, 2, 0],
-               [4, 2, 2, 2],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
           ];
 
           this.keyMap = {
@@ -618,15 +623,49 @@ $(document).ready(function(){
                          }
                          else{
                               //alert(game.newRandomX);
+                              var style = '';
+                              switch (array[i][j]) {
+                                   case 4:
+                                        style='background: #ede0c8; color: #000000;';
+                                        break;
+                                   case 8:
+                                        style='background: #f2b179; color: #FFFFFF;';
+                                        break;
+                                   case 16:
+                                        style='background: #f59563; color: #FFFFFF;';
+                                        break;
+                                   case 32:
+                                        style='background: #f67c5f; color: #FFFFFF;';
+                                        break;
+                                   case 64:
+                                        style='background: #f65e3b; color: #FFFFFF;';
+                                        break;
+                                   case 128:
+                                        style='background: #edcf72; color: #FFFFFF; font-size: 50px;';
+                                        break;
+                                   case 256:
+                                        style='background: #edcc61; color: #FFFFFF; font-size: 50px;';
+                                        break;
+                                   case 512:
+                                        style='background: #edc850; color: #FFFFFF; font-size: 50px;';
+                                        break;
+                                   case 1024:
+                                        style='background: #edc53f; color: #FFFFFF; font-size: 40px;';
+                                        break;
+                                   case 2048:
+                                        style='background: #edc22e; color: #FFFFFF; font-size: 40px;';
+                                        break;
+                              }
+
                               if(((game.newRandomX == i) && (game.newRandomY == j))){
-                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none;" + style + "' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
                                    $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
                                    //$('#' + game.newRandomX + '_' + game.newRandomY).css({'display':''});
                                    game.newRandomX = -1;
                                    game.newRandomY = -1;
                               }
                               else{
-                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='" + style + "' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
                               }
                               //$('#' + i + '_' + j).fadeToggle('slow');
                          }
