@@ -15,11 +15,18 @@ $(document).ready(function(){
           this.showNewPermisson = true;
 
           this.fieldArray = [
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
+               [0, 0, 0, 0],
+          ];
+
+          /*
                [4, 64, 4, 8],
                [8, 128, 8, 2],
                [2, 512, 1024, 16],
                [4, 8, 4, 2],
-          ];
+          */
 
           this.tempFieldArray = [
                [16, 2, 4, 4],
@@ -49,10 +56,27 @@ $(document).ready(function(){
                this.gameOver = false;
                this.score = 0;
                this.readCookie();
-               //this.printGameScore();
+               this.printGameScore();
+               printField(this.fieldArray);
+
+          }
+
+          this.newGame = function(){
+               $('.game-container').css({'opacity':'1'});
+               this.gameOver = false;
+               this.score = 0;
+               this.printGameScore();
                this.newArray();
                this.randomPositions(2);
+               this.updateCookie();
                printField(this.fieldArray);
+          }
+
+          this.updateCookie = function(){
+
+               setCookie('yii-app-2048-fieldArray-user',this.fieldArray,{expires: 24000});
+               setCookie('yii-app-2048-score-user',this.score,{expires: 24000});
+               setCookie('yii-app-2048-best-score-user',this.best,{expires: 24000});
 
           }
 
@@ -61,8 +85,40 @@ $(document).ready(function(){
                if(!getCookie('yii-app-2048-best-score-user')){
                     setCookie('yii-app-2048-best-score-user',0,{expires: 24000});
                }
+               if(!getCookie('yii-app-2048-score-user')){
+                    setCookie('yii-app-2048-score-user',0,{expires: 24000});
+               }
+               if(!getCookie('yii-app-2048-fieldArray-user')){
+                    this.newGame();
+               }
 
-               this.best = getCookie('yii-app-2048-best-score-user');
+               this.best = parseInt(getCookie('yii-app-2048-best-score-user'));
+               this.score = parseInt(getCookie('yii-app-2048-score-user'));
+
+               var fieldArray = getCookie('yii-app-2048-fieldArray-user');
+               //alert(fieldArray);
+               var tempArray = [];
+               var tempArrayCounter = 0;
+               for(var i = 0; i < fieldArray.length; i++){
+                    if(fieldArray[i] != ','){
+                         var tempDigit = '';
+                         while(fieldArray[i] != ','){
+                              tempDigit = tempDigit + fieldArray[i];
+                              if(i >= fieldArray.length) break;
+                              i++;
+                         }
+                         tempArray[tempArrayCounter] = parseInt(tempDigit);
+                         //alert(fieldArray + ' ' + i + ' ' + tempDigit + ' ' + tempArray[tempArrayCounter]);
+                         tempArrayCounter++;
+                    }
+               }
+               var position = 0;
+               for(var i = 0; i < this.fieldArray.length; i++){
+                    for(var j = 0; j < this.fieldArray.length; j++){
+                         this.fieldArray[i][j] = tempArray[position];
+                         position++;
+                    }
+               }
 
           }
 
@@ -98,18 +154,8 @@ $(document).ready(function(){
                          this.finishGame('Game Over!');
                     }
                }
-               /*
-               if(this.getChanges()){
-                    sleep(100);    // wait until animation not finished
-                    alert('new digit');
-                    this.showNewPermisson = true;
-                    this.randomPositions(1);
-               }
 
-               if(this.printPermission){
-                    printField(this.fieldArray);
-               }
-               */
+               game.updateCookie();
 
           }
 
@@ -555,7 +601,6 @@ $(document).ready(function(){
           }
 
           this.getRandomValue = function(){
-               //alert('hi');
                return Math.random() < 0.9 ? 2 : 4;
           }
 
@@ -594,24 +639,22 @@ $(document).ready(function(){
 
                if(this.best < this.score){
                     this.best = this.score;
-                    setCookie('yii-app-2048-best-score-user',this.best,{expires: 24000});
                }
+
                $('#gameScore').empty();
-               $('#gameScore').append('Score: ' + this.score);
+               $('#gameScore').append('<div class="game-container-results-title">score</div><div class="game-container-results-value">' + this.score + '</div>');
 
                $('#gameBest').empty();
-               $('#gameBest').append('Best: ' + this.best);
+               $('#gameBest').append('<div class="game-container-results-title">best</div><div class="game-container-results-value">' + this.best + '</div>');
 
           }
 
           this.printNewDigits = function(){
                if(game.getChanges()){
-                    //alert('new digit');
                     game.showNewPermisson = true;
                     game.randomPositions(1);
                }
                game.threadsFinished = 0;
-               //if(game.printPermission){
                printField(game.fieldArray);
           }
 
@@ -641,16 +684,13 @@ $(document).ready(function(){
                callPrintFunction();
                changePrintPermission();
                game.threadsFinished++;
-               //alert(game.threadsFinished);
                if(game.threadsFinished == 12){    // 16 - one row or column
                     if(game.getChanges()){
-                         //alert('new digit');
                          game.showNewPermisson = true;
                          game.randomPositions(1);
+                         game.updateCookie();
                     }
-                    //if(game.printPermission){
-                         printField(game.fieldArray);
-                    //}
+                    printField(game.fieldArray);
                     game.threadsFinished = 0;
                }
 
@@ -753,7 +793,7 @@ $(document).ready(function(){
 
      $('#newGameButton').click(function(){
 
-          game.initial();
+          game.newGame();
 
      });
 

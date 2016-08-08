@@ -53,12 +53,12 @@ $this->registerCssFile('../game/game.css');
                          <hr/>
                          <div style='width: 500px; margin: auto;'>
                               <div style='width:50%; float:left'>
-                                   <?= Html::button('New game',['class' => 'btn btn-default', 'id' => 'newGameButton']) ?>
+                                   <?= Html::button('New game',['class' => 'game-container-results-button', 'id' => 'newGameButton']) ?>
                               </div>
                               <div style='width:50%;float:left; text-align:right;'>
-                                   <h4> <div id='gameScore' class='game-container-results'> <div class='game-container-results-title'>SCORE</div> 0 </div><div id='gameBest' class='game-container-results'> Best: 0 </div></h4>
+                                   <h4> <div id='gameScore' class='game-container-results'> <div class='game-container-results-title'>score</div><div class='game-container-results-value'> 0</div> </div><div id='gameBest' class='game-container-results'> <div class='game-container-results-title'>best</div><div class='game-container-results-value'> 0</div> </div></h4>
                               </div><br/><br/>
-                         </div><br/>
+                         </div><br/><br/>
                          <div class='game-container'>
                               <!--<div class='game-container-cell'></div>
                               <div class='game-container-cell'></div>

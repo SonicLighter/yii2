@@ -68,12 +68,34 @@
      margin-left: 5px;
      width: 48%;
      float: left;
-     border-radius: 3px;
+     border-radius: 5px;
      background-color: rgb(187,173,160);
 }
 
 .game-container-results-title{
+     padding-top: 5px;
+     padding-bottom: 5px;
      font-size: 15px;
      color: rgb(238,228,218);
      font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.game-container-results-value{
+     padding-top: 5px;
+     padding-bottom: 5px;
+     font-size: 20px;
+     color: #FFFFFF;
+     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.game-container-results-button{
+     text-align: center;
+     width: 100%;
+     height: 58px;
+     margin-top: 10px;
+     float: left;
+     border-radius: 5px;
+     background-color: rgb(187,173,160);
+     font-size: 25px;
+     color: #FFFFFF;
 }
