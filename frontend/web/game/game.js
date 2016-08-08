@@ -3,6 +3,7 @@ $(document).ready(function(){
      function Game(){
 
           this.score = 0;
+          this.best = 0;
           this.printPermission = true;
 
           this.threadsFinished = 0;
@@ -44,10 +45,21 @@ $(document).ready(function(){
           this.initial = function(){
 
                this.score = 0;
+               this.readCookie();
                this.printGameScore();
                this.newArray();
                this.randomPositions(2);
                printField(this.fieldArray);
+
+          }
+
+          this.readCookie = function(){
+
+               if(!getCookie('yii-app-2048-best-score-user')){
+                    setCookie('yii-app-2048-best-score-user',0,{expires: 24000});
+               }
+
+               this.best = getCookie('yii-app-2048-best-score-user');
 
           }
 
@@ -456,12 +468,28 @@ $(document).ready(function(){
                          this.newRandomY = y;
                          this.setValue(x, y, this.getRandomValue());
                     }
+                    else{
+                         this.checkGameOver();
+                    }
                }
 
           }
 
           this.setValue = function(x, y, value){
                this.fieldArray[x][y] = value;
+          }
+
+          this.checkGameOver = function(){
+
+               var gameOver = false;
+               for(var i = 0; i < this.fieldArray.length; i++){
+                    for(var j = 0; j < this.fieldArray.length; j++){
+                         if(i != 0 && j != 0 && j != this.fieldArray.length){
+
+                         }
+                    }
+               }
+
           }
 
           // empty positons left, will help us with random
@@ -524,8 +552,15 @@ $(document).ready(function(){
 
           this.printGameScore = function(){
 
+               if(this.best < this.score){
+                    this.best = this.score;
+                    setCookie('yii-app-2048-best-score-user',this.best,{expires: 24000});
+               }
                $('#gameScore').empty();
                $('#gameScore').append('Score: ' + this.score);
+
+               $('#gameBest').empty();
+               $('#gameBest').append('Best: ' + this.best);
 
           }
 
@@ -609,6 +644,44 @@ $(document).ready(function(){
                          break;
                     }
                }
+          }
+
+          // FUNCTIONS
+
+          function setCookie(name, value, options) {
+                 options = options || {};
+
+                 var expires = options.expires;
+
+                 if (typeof expires == "number" && expires) {
+                      var d = new Date();
+                      d.setTime(d.getTime() + expires * 1000);
+                      expires = options.expires = d;
+                 }
+                 if (expires && expires.toUTCString) {
+                      options.expires = expires.toUTCString();
+                 }
+
+                 value = encodeURIComponent(value);
+
+                 var updatedCookie = name + "=" + value;
+
+                 for (var propName in options) {
+                      updatedCookie += "; " + propName;
+                      var propValue = options[propName];
+                      if (propValue !== true) {
+                           updatedCookie += "=" + propValue;
+                      }
+                 }
+
+                 document.cookie = updatedCookie;
+          }
+
+          function getCookie(name) {
+                 var matches = document.cookie.match(new RegExp(
+                   "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                 ));
+                 return matches ? decodeURIComponent(matches[1]) : undefined;
           }
 
      }

@@ -56,7 +56,7 @@ $this->registerCssFile('../game/game.css');
                                    <?= Html::button('New game',['class' => 'btn btn-default', 'id' => 'newGameButton']) ?>
                               </div>
                               <div style='width:50%;float:left; text-align:right;'>
-                                   <h4> <div id='gameScore'> Score: 0 </div></h4>
+                                   <h4> <div id='gameScore' style='float:left; width:50%;'> Score: 0 </div><div id='gameBest' style='float:left; width:50%;'> Best: 0 </div></h4>
                               </div><br/><br/>
                          </div><br/>
                          <div class='game-container'>
