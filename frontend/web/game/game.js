@@ -5,6 +5,7 @@ $(document).ready(function(){
           this.score = 0;
           this.best = 0;
           this.printPermission = true;
+          this.gameOver = false;
 
           this.threadsFinished = 0;
 
@@ -14,10 +15,10 @@ $(document).ready(function(){
           this.showNewPermisson = true;
 
           this.fieldArray = [
-               [0, 0, 0, 4],
-               [0, 0, 0, 4],
-               [0, 0, 0, 0],
-               [0, 0, 0, 0],
+               [4, 64, 4, 8],
+               [8, 128, 8, 2],
+               [2, 512, 1024, 16],
+               [4, 8, 4, 2],
           ];
 
           this.tempFieldArray = [
@@ -44,9 +45,11 @@ $(document).ready(function(){
 
           this.initial = function(){
 
+               $('.game-container').css({'opacity':'1'});
+               this.gameOver = false;
                this.score = 0;
                this.readCookie();
-               this.printGameScore();
+               //this.printGameScore();
                this.newArray();
                this.randomPositions(2);
                printField(this.fieldArray);
@@ -86,6 +89,15 @@ $(document).ready(function(){
                          break;
                }
 
+               if(this.checkWin()){
+                    this.gameOver = true;
+                    this.finishGame('You win!');
+               }
+               else if(this.emptyCount() == 0){
+                    if(this.checkGameOver()){
+                         this.finishGame('Game Over!');
+                    }
+               }
                /*
                if(this.getChanges()){
                     sleep(100);    // wait until animation not finished
@@ -468,9 +480,11 @@ $(document).ready(function(){
                          this.newRandomY = y;
                          this.setValue(x, y, this.getRandomValue());
                     }
-                    else{
-                         this.checkGameOver();
+                    /*
+                    else if(this.checkGameOver()){
+                         this.finishGame();
                     }
+                    */
                }
 
           }
@@ -479,16 +493,48 @@ $(document).ready(function(){
                this.fieldArray[x][y] = value;
           }
 
-          this.checkGameOver = function(){
+          this.checkWin = function(){
 
-               var gameOver = false;
                for(var i = 0; i < this.fieldArray.length; i++){
                     for(var j = 0; j < this.fieldArray.length; j++){
-                         if(i != 0 && j != 0 && j != this.fieldArray.length){
-
+                         if(this.fieldArray[i][j] == 2048){
+                              return true;
                          }
                     }
                }
+
+               return false;
+
+          }
+
+          this.checkGameOver = function(){
+
+               this.gameOver = true;
+               var arr = this.fieldArray;
+               // border positions
+               if(arr[0][0] == arr[0][1] || arr[0][0] == arr[1][0]) this.gameOver = false;
+               if(arr[3][0] == arr[3][1] || arr[3][0] == arr[2][0]) this.gameOver = false;
+               if(arr[0][3] == arr[0][2] || arr[0][3] == arr[1][3]) this.gameOver = false;
+               if(arr[3][3] == arr[2][3] || arr[3][3] == arr[3][2]) this.gameOver = false;
+
+               // border lines
+               for(var i = 1; i < arr.length-1; i++){
+                    if(arr[0][i] == arr[0][i-1] || arr[0][i] == arr[0][i+1]) this.gameOver = false;
+                    if(arr[3][i] == arr[3][i-1] || arr[3][i] == arr[3][i+1]) this.gameOver = false;
+               }
+               for(var i = 1; i < arr.length-1; i++){
+                    if(arr[i][0] == arr[i-1][0] || arr[i][0] == arr[i+1][0]) this.gameOver = false;
+                    if(arr[i][3] == arr[i-1][3] || arr[i][3] == arr[i+1][3]) this.gameOver = false;
+               }
+
+               // middle
+               for(var i = 1; i < this.fieldArray.length-1; i++){
+                    for(var j = 1; j < this.fieldArray.length-1; j++){
+                         if(arr[i][j] == arr[i][j+1] || arr[i][j] == arr[i][j-1] || arr[i][j] == arr[i-1][j] || arr[i][j] == arr[i+1][j]) this.gameOver = false;
+                    }
+               }
+
+               return this.gameOver;
 
           }
 
@@ -542,12 +588,6 @@ $(document).ready(function(){
                     }
                }
 
-               //if(game.newRandomX != -1 && game.printPermission){
-                    //alert('sdasdas');
-               //     $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
-               //       game.newRandomX = -1;
-               //}
-
           }
 
           this.printGameScore = function(){
@@ -573,6 +613,16 @@ $(document).ready(function(){
                game.threadsFinished = 0;
                //if(game.printPermission){
                printField(game.fieldArray);
+          }
+
+          this.finishGame = function(content){
+
+               $('.game-container').animate({'opacity':'0.6'}, 3000, function(){
+                    $('.game-container').animate({'opacity':'0.6'}, 3000);
+                    $('.game-container').append('<div class="game-container-finish">' + content + '</div>');
+                    $('.game-container-finish').animate({'opacity':'0.8','line-height':'200px'}, 3000);
+               });
+
           }
 
           // ANIMATION
@@ -693,7 +743,9 @@ $(document).ready(function(){
 
      $('body').keydown(function(eventObject){
 
-          game.move(game.keyMap[eventObject.which]);
+          if(!game.gameOver){
+               game.move(game.keyMap[eventObject.which]);
+          }
 
      });
 

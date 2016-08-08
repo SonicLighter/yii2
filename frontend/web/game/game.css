@@ -10,6 +10,23 @@
      line-height: 500px;
 }
 
+.game-container-finish{
+     width: 500px;
+     height: 500px;
+     padding-top: 15px;
+     padding-left: 15px;
+     padding-bottom: 15px;
+     background: rgb(187,173,160);
+     border-radius: 7px;
+     line-height: 500px;
+     font-size: 70px;
+     position: absolute;
+     text-align: center;
+     margin-left: -15px;
+     margin-top: -15px;
+     opacity: 0.6;
+}
+
 .game-container-row{
      float: left;
      margin: auto;
@@ -40,4 +57,23 @@
      font-weight: bold;
      font-size: 60px;
      opacity: 0.9;
+}
+
+.btn-game{
+     font-size: 30px;
+}
+
+.game-container-results{
+     text-align: center;
+     margin-left: 5px;
+     width: 48%;
+     float: left;
+     border-radius: 3px;
+     background-color: rgb(187,173,160);
+}
+
+.game-container-results-title{
+     font-size: 15px;
+     color: rgb(238,228,218);
+     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
