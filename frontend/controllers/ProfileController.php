@@ -56,6 +56,11 @@ class ProfileController extends Controller{
         ];
     }
 
+    public function beforeAction($action){
+         Yii::$app->view->params['userModel'] = Yii::$app->user->identity;
+         return true;
+    }
+
     public function actionIndex($id){
          //throw new NotFoundHttpException('User does not exist!');
          if(is_numeric($id)){
@@ -65,7 +70,7 @@ class ProfileController extends Controller{
 
                    $searchModel = new PostsSearch($id);
                    $dataProvider = $searchModel->search(Yii::$app->request->get());
-
+                   Yii::$app->view->params['userModel'] = $model;
                    //$dataProvider = Posts::getPagePosts($id);
                    return $this->render('index',[
                         'searchModel' => $searchModel,
@@ -249,7 +254,7 @@ class ProfileController extends Controller{
               if($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()){
                    return $this->redirect([Url::previous()]);
               }
-
+              Yii::$app->view->params['userModel'] = $modelPosts->user;
               return $this->render('comment', [
                    'model' => $model,
                    'modelPosts' => $modelPosts,

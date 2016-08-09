@@ -25,7 +25,6 @@ use yii\web\NotFoundHttpException;
 class MessagesController extends Controller{
 
     public $layout = 'profile';
-    public $userModel;
 
     public function behaviors()
     {
@@ -56,14 +55,6 @@ class MessagesController extends Controller{
         ];
     }
 
-    public function beforeAction($action){
-
-         $this->userModel = Yii::$app->user->identity;
-
-         return true;
-
-    }
-
     public function actionIndex(){
 
          Url::remember();
@@ -71,6 +62,7 @@ class MessagesController extends Controller{
          $searchModel = new UserSearch($pageType);
          $dataProvider = $searchModel->search(Yii::$app->request->get());
 
+         Yii::$app->view->params['userModel'] = Yii::$app->user->identity;
          return $this->render('index', [
               'dataProvider' => $dataProvider,
               'searchModel' => $searchModel,
@@ -87,6 +79,7 @@ class MessagesController extends Controller{
               $model = new Messages();
               $dataProvider = Messages::getUserMessages($id);
               Messages::setMessagesOpened($id);
+              Yii::$app->view->params['userModel'] = $modelUser;
               return $this->render('view',[
                    'modelUser' => $modelUser,
                    'model' => $model,

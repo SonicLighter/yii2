@@ -55,6 +55,11 @@ class GamesController extends Controller{
         ];
     }
 
+    public function beforeAction($action){
+         Yii::$app->view->params['userModel'] = Yii::$app->user->identity;
+         return true;
+    }
+
     public function actionIndex(){
 
          return $this->render('index');

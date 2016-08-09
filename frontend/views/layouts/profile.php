@@ -35,6 +35,8 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
 
+
+
         <div class='col-md-2 col-sm-3 hidden-xs profile-column'>
              <div class='profile-left_column'>
                   <?=
@@ -55,7 +57,7 @@ AppAsset::register($this);
                        <div class='profile-middle_column'>
                             <?=
                                  $this->render('profile/_picture', [
-                                      'model' => Yii::$app->user->identity,
+                                      'model' => $this->params['userModel'],
                                  ]);
                             ?>
                        </div>
