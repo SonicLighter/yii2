@@ -624,7 +624,7 @@ $(document).ready(function(){
           }
 
           this.getRandomValue = function(){
-               return Math.random() < 0.9 ? 2048 : 4;
+               return Math.random() < 0.9 ? 2 : 4;
           }
 
 
@@ -645,6 +645,9 @@ $(document).ready(function(){
                               //alert(game.newRandomX);
                               var style = '';
                               switch (array[i][j]) {
+                                   case 2:
+                                        style='';
+                                        break;
                                    case 4:
                                         style='background: #ede0c8; color: #000000;';
                                         break;
@@ -674,6 +677,9 @@ $(document).ready(function(){
                                         break;
                                    case 2048:
                                         style='background: #edc22e; color: #FFFFFF; font-size: 40px;';
+                                        break;
+                                   default:
+                                        style='background: #3d3a33; color: #FFFFFF; font-size: 25px;';
                                         break;
                               }
 
