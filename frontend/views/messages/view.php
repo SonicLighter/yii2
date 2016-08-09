@@ -18,115 +18,86 @@ use dosamigos\tinymce\TinyMce;
 $this->title = 'Dialog with '.$modelUser->username;
 ?>
 
-<div class="site-about">
-     <div class='col-md-2 col-sm-3 hidden-xs profile-column'>
-          <div class='profile-left_column'>
-               <?=
-                    $this->render('../profile/user/menu', [
-                         'id' => Yii::$app->user->id,
-                         'myMessages' => Yii::$app->user->identity->myMessages,
-                         'waitingCount' => $waitingCount,
-                         'notAcceptedCount' => $notAcceptedCount,
-                    ]);
-               ?>
-         </div>
+<div class='profile-right_item'>
+     <div class='profile-right_item-username'>
+          Dialog with <?= Html::a($modelUser->username, Url::toRoute(['profile/index', 'id' => $modelUser->id])); ?>
      </div>
-     <div class='col-md-10 col-sm-8 profile-column-without-paddings'>
-          <div class='row'>
-               <div class='col-md-3 col-sm-12 profile-column'>
-                    <div class='profile-middle_column'>
-                         <?=
-                              $this->render('../profile/user/picture', [
-                                   'model' => $modelUser,
-                              ]);
-                         ?>
-                    </div>
-               </div>
-               <div class='col-md-9 col-sm-12 profile-column'>
-                    <div class='profile-right_item'>
-                         <div class='profile-right_item-username'>
-                              Dialog with <?= Html::a($modelUser->username, Url::toRoute(['profile/index', 'id' => $modelUser->id])); ?>
-                         </div>
-                         <div class='profile-right_item-active'>
-                         </div>
-                         <br/>
-                         <br/>
-                    </div>
-                    <hr/>
-                    <div class='profile-right_item'>
+     <div class='profile-right_item-active'>
+     </div>
+     <br/>
+     <br/>
+</div>
+<hr/>
+<div class='profile-right_item'>
 
-                         <div class='sendForm'>
+     <div class='sendForm'>
 
-                              <?php $form = ActiveForm::begin([
-                                   'id' => 'messages-form',
-                                   'action' => ['messages/add', 'id' => $modelUser->id],
-                                   'method' => 'post',
-                              ]); ?>
-                                   <?= $form->field($model, 'message')->widget(TinyMce::className(), [
-                                    'options' => ['rows' => 5],
-                                    'language' => 'en_GB',
-                                    'clientOptions' => [
-                                        'plugins' => [
-                                             "advlist autolink lists link charmap print preview anchor",
-                                             "searchreplace visualblocks code fullscreen",
-                                             "insertdatetime media table contextmenu paste"
-                                        ],
-                                        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                                   ],
-                                  ]); ?>
-                                   <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button']) ?>
+          <?php $form = ActiveForm::begin([
+               'id' => 'messages-form',
+               'action' => ['messages/add', 'id' => $modelUser->id],
+               'method' => 'post',
+          ]); ?>
+               <?= $form->field($model, 'message')->widget(TinyMce::className(), [
+                'options' => ['rows' => 5],
+                'language' => 'en_GB',
+                'clientOptions' => [
+                    'plugins' => [
+                         "advlist autolink lists link charmap print preview anchor",
+                         "searchreplace visualblocks code fullscreen",
+                         "insertdatetime media table contextmenu paste"
+                    ],
+                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+               ],
+              ]); ?>
+               <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button']) ?>
 
-                              <?php ActiveForm::end(); ?>
+          <?php ActiveForm::end(); ?>
 
-                              <hr/>
-                                   <?= GridView::widget([
-                                       'dataProvider' => $dataProvider,
-                                       'summary' => false,
-                                       //'layout' => "{pager}\n{items}\n{pager}",
-                                       'tableOptions' => [
-                                            'class' => 'myGridView', /*table table-striped table-bordered*/
-                                       ],
+          <hr/>
+               <?= GridView::widget([
+                   'dataProvider' => $dataProvider,
+                   'summary' => false,
+                   //'layout' => "{pager}\n{items}\n{pager}",
+                   'tableOptions' => [
+                        'class' => 'myGridView', /*table table-striped table-bordered*/
+                   ],
 
-                                       'pager' => [
-                                              'class' => ScrollPager::className(),
-                                              'container' => '.grid-view tbody',
-                                              'item' => 'tr',
-                                              'paginationSelector' => '.grid-view .pagination',
-                                              'triggerText' => 'Load more messages...',
-                                              'noneLeftText' => '',
-                                              'triggerOffset' => $loadPage,
-                                              'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer"><div class="btn btn-content">{text}</div></a></td></tr>',
-                                       ],
+                   'pager' => [
+                         'class' => ScrollPager::className(),
+                         'container' => '.grid-view tbody',
+                         'item' => 'tr',
+                         'paginationSelector' => '.grid-view .pagination',
+                         'triggerText' => 'Load more messages...',
+                         'noneLeftText' => '',
+                         'triggerOffset' => $loadPage,
+                         'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer"><div class="btn btn-content">{text}</div></a></td></tr>',
+                   ],
 
-                                       'columns' => [
-                                            [
-                                                 'format' => 'html',
-                                                 'value' => function($model){
-                                                      if($model->senderId == Yii::$app->user->id){$wrapper = 'myMessageWrapper';}
-                                                      else{$wrapper = 'otherMessageWrapper';}
-                                                      $profilePicture = Html::img(Url::toRoute($model->sender->profilePicture), ['width' => '30px']);
-                                                      $resultString = "
-                                                            <div class='".$wrapper."'>
-                                                                 <div class='messageImage'>
-                                                                      ".$profilePicture."
-                                                                 </div>
-                                                                 <div class='messageContent'>
-                                                                      ".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."
-                                                                      | ".$model->date."<br/>
-                                                                      ".$model->message."
-                                                                 </div>
-                                                                 <hr/>
-                                                            </div>
-                                                      ";
+                   'columns' => [
+                        [
+                             'format' => 'html',
+                             'value' => function($model){
+                                  if($model->senderId == Yii::$app->user->id){$wrapper = 'myMessageWrapper';}
+                                  else{$wrapper = 'otherMessageWrapper';}
+                                  $profilePicture = Html::img(Url::toRoute($model->sender->profilePicture), ['width' => '30px']);
+                                  $resultString = "
+                                        <div class='".$wrapper."'>
+                                             <div class='messageImage'>
+                                                  ".$profilePicture."
+                                             </div>
+                                             <div class='messageContent'>
+                                                  ".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."
+                                                  | ".$model->date."<br/>
+                                                  ".$model->message."
+                                             </div>
+                                             <hr/>
+                                        </div>
+                                  ";
 
-                                                      return $resultString;
-                                                 },
-                                            ],
-                                       ],
-                                   ]);?>
-                         </div>
-                    </div>
-               </div>
-          </div>
+                                  return $resultString;
+                             },
+                        ],
+                   ],
+               ]);?>
      </div>
 </div>

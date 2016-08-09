@@ -16,6 +16,7 @@ use yii\helpers\Url;
 
 class PostsController extends Controller{
 
+    public $layout = 'profile';
 
     public function behaviors()
     {
@@ -65,9 +66,6 @@ class PostsController extends Controller{
          return $this->render('create', [
               'model' => $model,
               'date' => Yii::$app->getFormatter()->asDateTime(time()),
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
          ]);
 
     }
@@ -80,9 +78,6 @@ class PostsController extends Controller{
                  return $this->render('update', [
                       'model' => $model,
                       'date' => Yii::$app->getFormatter()->asDateTime(time()),
-                      'notAcceptedCount' => User::getNotAcceptedCount(),
-                      'waitingCount' => User::getWaitingCount(),
-                      'userModel' => User::findIdentity(Yii::$app->user->id),
                  ]);
              }
          }

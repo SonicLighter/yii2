@@ -196,11 +196,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
          return $this->hasOne(Friends::className(),['senderId' => 'id'])->where(['receiverId' => Yii::$app->user->id]);
     }
 
-    public static function getNotAcceptedCount(){
+    public function getNotAcceptedCount(){
          return Friends::find()->where(['senderId' => Yii::$app->user->id, 'accepted' => 0])->count();
     }
 
-    public static function getWaitingCount(){
+    public function getWaitingCount(){
          return Friends::find()->where(['receiverId' => Yii::$app->user->id, 'accepted' => 0])->count();
     }
 

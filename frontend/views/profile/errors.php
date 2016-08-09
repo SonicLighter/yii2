@@ -13,9 +13,9 @@ $this->title = 'Error';
 ?>
 <div class="site-about">
 
-    <div class="row">
-         <h1>Something went wrong!</h1>
-         <h1>Why do you see this page? The answer is:</h1><br/>
+   <div class='profile-right_item'>
+         <h4>Something went wrong!</h4>
+         <h4>Why do you see this page? The answer is:</h4><br/>
          <p>
               1. User does not exist.
          </p>

@@ -24,6 +24,8 @@ use yii\web\NotFoundHttpException;
 
 class GamesController extends Controller{
 
+    public $layout = 'profile';
+
     public function behaviors()
     {
         return [
@@ -55,21 +57,13 @@ class GamesController extends Controller{
 
     public function actionIndex(){
 
-         return $this->render('index',[
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
-         ]);
+         return $this->render('index');
 
     }
 
     public function actionGame(){
 
-         return $this->render('game',[
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
-         ]);
+         return $this->render('game');
 
     }
 

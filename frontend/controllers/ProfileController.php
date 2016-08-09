@@ -25,6 +25,8 @@ use yii\helpers\ArrayHelper;
 
 class ProfileController extends Controller{
 
+    public $layout = 'profile';
+
     public function behaviors()
     {
         return [
@@ -68,8 +70,6 @@ class ProfileController extends Controller{
                    return $this->render('index',[
                         'searchModel' => $searchModel,
                         'dataProvider' => $dataProvider,
-                        'notAcceptedCount' => User::getNotAcceptedCount(),
-                        'waitingCount' => User::getWaitingCount(),
                         'model' => $model,
                         'loadCount' => Posts::getLoadCount($id),
                    ]);
@@ -91,9 +91,6 @@ class ProfileController extends Controller{
 
          return $this->render('edit', [
               'model' => $model,
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
          ]);
 
     }
@@ -110,9 +107,6 @@ class ProfileController extends Controller{
 
          return $this->render('edit', [
               'model' => $model,
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
          ]);
 
     }
@@ -127,9 +121,6 @@ class ProfileController extends Controller{
 
          return $this->render('edit', [
               'model' => $model,
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
          ]);
 
     }
@@ -146,9 +137,6 @@ class ProfileController extends Controller{
               'searchModel' => $searchModel,
               'pageType' => $pageType,
               'loadPage' => User::find()->where(['id' => ArrayHelper::getColumn(Profile::find()->where(['active' => 1])->all(), 'userId')])->count(),
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
               'page' => 'Search',
          ]);
 
@@ -166,9 +154,6 @@ class ProfileController extends Controller{
               'searchModel' => $searchModel,
               'pageType' => $pageType,
               'loadPage' => count(Friends::getUserFriends(1)),
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
               'page' => 'My friends',
          ]);
 
@@ -186,9 +171,6 @@ class ProfileController extends Controller{
               'searchModel' => $searchModel,
               'pageType' => $pageType,
               'loadPage' => count(Friends::getUserRequests()),
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
               'page' => 'My requests',
          ]);
 
@@ -206,9 +188,6 @@ class ProfileController extends Controller{
               'searchModel' => $searchModel,
               'pageType' => $pageType,
               'loadPage' => count(Friends::getUserWaiting()),
-              'notAcceptedCount' => User::getNotAcceptedCount(),
-              'waitingCount' => User::getWaitingCount(),
-              'userModel' => User::findIdentity(Yii::$app->user->id),
               'page' => 'New friends',
          ]);
 
@@ -275,9 +254,6 @@ class ProfileController extends Controller{
                    'model' => $model,
                    'modelPosts' => $modelPosts,
                    'loadCount' => Comments::find()->where(['postId' => $id])->count(),
-                   'notAcceptedCount' => User::getNotAcceptedCount(),
-                   'waitingCount' => User::getWaitingCount(),
-                   'userModel' => $modelPosts->user,
               ]);
          }
 

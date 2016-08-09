@@ -18,67 +18,38 @@ Yii::$app->view->registerJsFile('../game/game.js', ['depends' => [\yii\web\Jquer
 $this->registerCssFile('../game/game.css');
 ?>
 
-<div class="site-about">
-     <div class='col-md-2 col-sm-3 hidden-xs profile-column'>
-          <div class='profile-left_column'>
-               <?=
-                    $this->render('../profile/user/menu', [
-                         'id' => Yii::$app->user->id,
-                         'myMessages' => Yii::$app->user->identity->myMessages,
-                         'waitingCount' => $waitingCount,
-                         'notAcceptedCount' => $notAcceptedCount,
-                    ]);
-               ?>
-         </div>
+<div class='profile-right_item'>
+     <div class='profile-right_item-username'>
+          <?= Html::encode($this->title); ?>
      </div>
-     <div class='col-md-10 col-sm-8 profile-column-without-paddings'>
-          <div class='row'>
-               <div class='col-md-3 col-sm-12 profile-column'>
-                    <div class='profile-middle_column'>
-                         <?=
-                              $this->render('../profile/user/picture', [
-                                   'model' => $userModel,
-                              ]);
-                         ?>
-                    </div>
-               </div>
-               <div class='col-md-9 col-sm-12 profile-column'>
-                    <div class='profile-right_item'>
-                         <div class='profile-right_item-username'>
-                              <?= Html::encode($this->title); ?>
-                         </div>
-                         <div class='profile-right_item-active'>
-                         </div>
-                         <br/>
-                         <hr/>
-                         <div style='width: 500px; margin: auto;'>
-                              <div style='width:50%; float:left'>
-                                   <?= Html::button('New game',['class' => 'game-container-results-button', 'id' => 'newGameButton']) ?>
-                              </div>
-                              <div style='width:50%;float:left; text-align:right;'>
-                                   <h4> <div id='gameScore' class='game-container-results'> <div class='game-container-results-title'>score</div><div class='game-container-results-value'> 0</div> </div><div id='gameBest' class='game-container-results'> <div class='game-container-results-title'>best</div><div class='game-container-results-value'> 0</div> </div></h4>
-                              </div><br/><br/>
-                         </div><br/><br/>
-                         <div class='game-container'>
-                              <!--<div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell-digit'>2</div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>
-                              <div class='game-container-cell'></div>-->
-                         </div>
-                    </div>
-               </div>
+     <div class='profile-right_item-active'>
+     </div>
+     <br/>
+     <hr/>
+     <div style='width: 500px; margin: auto;'>
+          <div style='width:50%; float:left'>
+               <?= Html::button('New game',['class' => 'game-container-results-button', 'id' => 'newGameButton']) ?>
           </div>
+          <div style='width:50%;float:left; text-align:right;'>
+               <h4> <div id='gameScore' class='game-container-results'> <div class='game-container-results-title'>score</div><div class='game-container-results-value'> 0</div> </div><div id='gameBest' class='game-container-results'> <div class='game-container-results-title'>best</div><div class='game-container-results-value'> 0</div> </div></h4>
+          </div><br/><br/>
+     </div><br/><br/>
+     <div class='game-container'>
+          <!--<div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell-digit'>2</div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>
+          <div class='game-container-cell'></div>-->
      </div>
 </div>
