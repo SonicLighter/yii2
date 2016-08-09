@@ -18,7 +18,7 @@
      padding-bottom: 15px;
      background: rgb(187,173,160);
      border-radius: 7px;
-     line-height: 500px;
+     line-height: 150px;
      font-size: 70px;
      position: absolute;
      text-align: center;
@@ -98,4 +98,13 @@
      background-color: rgb(187,173,160);
      font-size: 25px;
      color: #FFFFFF;
+}
+
+.game-container-results-button-finish{
+     text-align: center;
+     width: 60%;
+     margin-top: 10px;
+     border-radius: 5px;
+     background-color: rgb(238,228,218);
+     color: #000000;
 }

@@ -6,6 +6,8 @@ $(document).ready(function(){
           this.best = 0;
           this.printPermission = true;
           this.gameOver = false;
+          this.gameContinue = false;
+          this.cookiesTime = 24000;
 
           this.threadsFinished = 0;
 
@@ -79,19 +81,25 @@ $(document).ready(function(){
 
           this.updateCookie = function(){
 
-               setCookie('yii-app-2048-fieldArray-user',this.fieldArray,{expires: 24000});
-               setCookie('yii-app-2048-score-user',this.score,{expires: 24000});
-               setCookie('yii-app-2048-best-score-user',this.best,{expires: 24000});
+               setCookie('yii-app-2048-fieldArray-user',this.fieldArray,{expires: getCookiesTime()});
+               setCookie('yii-app-2048-score-user',this.score,{expires: getCookiesTime()});
+               setCookie('yii-app-2048-best-score-user',this.best,{expires: getCookiesTime()});
+
+          }
+
+          var getCookiesTime = function(){
+
+               return this.cookiesTime;
 
           }
 
           this.readCookie = function(){
 
                if(!getCookie('yii-app-2048-best-score-user')){
-                    setCookie('yii-app-2048-best-score-user',0,{expires: 24000});
+                    setCookie('yii-app-2048-best-score-user',0,{expires: getCookiesTime()});
                }
                if(!getCookie('yii-app-2048-score-user')){
-                    setCookie('yii-app-2048-score-user',0,{expires: 24000});
+                    setCookie('yii-app-2048-score-user',0,{expires: getCookiesTime()});
                }
                if(!getCookie('yii-app-2048-fieldArray-user')){
                     this.newGame();
@@ -549,7 +557,9 @@ $(document).ready(function(){
                for(var i = 0; i < this.fieldArray.length; i++){
                     for(var j = 0; j < this.fieldArray.length; j++){
                          if(this.fieldArray[i][j] == 2048){
-                              return true;
+                              if(!this.gameContinue){
+                                   return true;
+                              }
                          }
                     }
                }
@@ -606,7 +616,7 @@ $(document).ready(function(){
           }
 
           this.getRandomValue = function(){
-               return Math.random() < 0.9 ? 2 : 4;
+               return Math.random() < 0.9 ? 2048 : 4;
           }
 
 
@@ -701,8 +711,15 @@ $(document).ready(function(){
 
                $('.game-container').animate({'opacity':'0.6'}, 3000, function(){
                     $('.game-container').animate({'opacity':'0.6'}, 3000);
-                    $('.game-container').append('<div class="game-container-finish">' + content + '</div>');
-                    $('.game-container-finish').animate({'opacity':'0.8','line-height':'200px'}, 3000);
+                    var addButtons = '';
+                    if(content == 'Gave Over!'){
+                         addButtons = '<a id="tryAgain" type="button" class="btn game-container-results-button-finish btn-lg">Try again</a>';
+                    }
+                    else{
+                         addButtons = '<a id="tryAgain" type="button" class="btn game-container-results-button-finish btn-lg">Try again</a><a id="tryContinue" type="button" class="btn game-container-results-button-finish btn-lg">Continue</a>';
+                    }
+                    $('.game-container').append('<div class="game-container-finish">' + content + '<br/>' + addButtons +'</div>');
+                    $('.game-container-finish').animate({'opacity':'0.8','line-height':'100px','position':'absolute'}, 3000);
                });
 
           }
@@ -831,6 +848,14 @@ $(document).ready(function(){
      // New game button
 
      $('#newGameButton').click(function(){
+
+          game.newGame();
+
+     });
+
+     // Try again button
+
+     $(document).on("click", "#tryAgain", function () {
 
           game.newGame();
 
