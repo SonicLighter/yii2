@@ -147,8 +147,6 @@ class UsersController extends Controller{
                $user->profile->save();
           }
 
-          return $this->redirect(['users/index']);
-
      }
 
 }
