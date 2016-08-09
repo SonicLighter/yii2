@@ -59,8 +59,8 @@ $(document).ready(function(){
 
           this.initial = function(){
 
-               $('.game-container').css({'opacity':'1'});
                this.gameOver = false;
+               this.gameContinue = false;
                this.score = 0;
                this.readCookie();
                this.printGameScore();
@@ -69,14 +69,16 @@ $(document).ready(function(){
           }
 
           this.newGame = function(){
-               $('.game-container').css({'opacity':'1'});
+
                this.gameOver = false;
+               this.gameContinue = false;
                this.score = 0;
                this.printGameScore();
                this.newArray();
                this.randomPositions(2);
                this.updateCookie();
                printField(this.fieldArray);
+
           }
 
           this.updateCookie = function(){
@@ -84,6 +86,7 @@ $(document).ready(function(){
                setCookie('yii-app-2048-fieldArray-user',this.fieldArray,{expires: getCookiesTime()});
                setCookie('yii-app-2048-score-user',this.score,{expires: getCookiesTime()});
                setCookie('yii-app-2048-best-score-user',this.best,{expires: getCookiesTime()});
+               setCookie('yii-app-2048-gameContinue-user',this.gameContinue,{expires: getCookiesTime()});
 
           }
 
@@ -104,9 +107,14 @@ $(document).ready(function(){
                if(!getCookie('yii-app-2048-fieldArray-user')){
                     this.newGame();
                }
+               if(!getCookie('yii-app-2048-gameContinue-user')){
+                    setCookie('yii-app-2048-gameContinue-user','false',{expires: getCookiesTime()});
+               }
 
                this.best = parseInt(getCookie('yii-app-2048-best-score-user'));
                this.score = parseInt(getCookie('yii-app-2048-score-user'));
+               this.gameContinue = (getCookie('yii-app-2048-gameContinue-user') == 'true')?(true):(false);
+               //alert(this.gameContinue);
 
                var fieldArray = getCookie('yii-app-2048-fieldArray-user');
                //alert(fieldArray);
@@ -624,7 +632,9 @@ $(document).ready(function(){
 
           var printField = function(array){
                //alert('print | printPermission: ' + game.printPermission);
+               $('.game-container').css({'opacity':'1'});
                $('.game-container').empty();
+
                for(var i = 0; i < array.length; i++){
                     for(var j = 0; j < array[i].length; j++){
                          var container = $('.game-container');
@@ -710,16 +720,15 @@ $(document).ready(function(){
           this.finishGame = function(content){
 
                $('.game-container').animate({'opacity':'0.6'}, 3000, function(){
-                    $('.game-container').animate({'opacity':'0.6'}, 3000);
                     var addButtons = '';
-                    if(content == 'Gave Over!'){
+                    if(content == 'Game Over!'){
                          addButtons = '<a id="tryAgain" type="button" class="btn game-container-results-button-finish btn-lg">Try again</a>';
                     }
                     else{
-                         addButtons = '<a id="tryAgain" type="button" class="btn game-container-results-button-finish btn-lg">Try again</a><a id="tryContinue" type="button" class="btn game-container-results-button-finish btn-lg">Continue</a>';
+                         addButtons = '<a id="tryContinue" type="button" class="btn game-container-results-button-finish btn-lg">Continue</a><a id="tryAgain" type="button" class="btn game-container-results-button-finish btn-lg">Try again</a>';
                     }
                     $('.game-container').append('<div class="game-container-finish">' + content + '<br/>' + addButtons +'</div>');
-                    $('.game-container-finish').animate({'opacity':'0.8','line-height':'100px','position':'absolute'}, 3000);
+                    $('.game-container-finish').animate({'opacity':'0.8','line-height':'100px','position':'absolute'}, 500);
                });
 
           }
@@ -858,6 +867,16 @@ $(document).ready(function(){
      $(document).on("click", "#tryAgain", function () {
 
           game.newGame();
+
+     });
+
+     // Continue button
+
+     $(document).on("click", "#tryContinue", function(){
+
+          game.gameContinue = true;
+          game.updateCookie();
+          game.initial();
 
      });
 
