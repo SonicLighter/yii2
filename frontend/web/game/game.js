@@ -2,6 +2,12 @@ $(document).ready(function(){
 
      function Game(){
 
+          // DIRECTIONS
+          this.MOVE_UP = 0;
+          this.MOVE_RIGHT = 1;
+          this.MOVE_DOWN = 2;
+          this.MOVE_LEFT = 3;
+
           this.score = 0;
           this.best = 0;
           this.printPermission = true;
@@ -43,18 +49,18 @@ $(document).ready(function(){
           ];
 
           this.keyMap = {
-            38: 'move up', // Up
-            39: 'move right', // Right
-            40: 'move down', // Down
-            37: 'move left', // Left
-            75: 'move up', // Vim up
-            76: 'move right', // Vim right
-            74: 'move down', // Vim down
-            72: 'move left', // Vim left
-            87: 'move up', // W
-            68: 'move right', // D
-            83: 'move down', // S
-            65: 'move left'  // A
+            38: 0, // Up
+            39: 1, // Right
+            40: 2, // Down
+            37: 3, // Left
+            75: 0, // Vim up
+            76: 1, // Vim right
+            74: 2, // Vim down
+            72: 3, // Vim left
+            87: 0, // W
+            68: 1, // D
+            83: 2, // S
+            65: 3  // A
           };
 
           this.initial = function(){
@@ -150,16 +156,16 @@ $(document).ready(function(){
                this.getTempArray();
                this.threadsFinished = 0;
                switch (direction) {
-                    case 'move up':
+                    case this.MOVE_UP:
                          this.moveUp(direction);
                          break;
-                    case 'move right':
+                    case this.MOVE_RIGHT:
                          this.moveRight(direction);
                          break;
-                    case 'move down':
+                    case this.MOVE_DOWN:
                          this.moveDown(direction);
                          break;
-                    case 'move left':
+                    case this.MOVE_LEFT:
                          this.moveLeft(direction);
                          break;
                     default:
@@ -453,7 +459,7 @@ $(document).ready(function(){
                var count = 0;
                var arr = [];
 
-               if((direction == 'move up') || (direction == 'move down')){
+               if((direction == this.MOVE_UP) || (direction == this.MOVE_DOWN)){
                     for(var i = 0; i < this.fieldArray.length; i++){
 
                          if(this.fieldArray[i][col] == this.fieldArray[0][col]){
@@ -470,7 +476,7 @@ $(document).ready(function(){
                          }
                     }
                }
-               else if((direction == 'move right') || (direction == 'move left')){
+               else if((direction == this.MOVE_RIGHT) || (direction == this.MOVE_LEFT)){
                     for(var i = 0; i < this.fieldArray.length; i++){
 
                          if(this.fieldArray[col][i] == this.fieldArray[col][0]){
@@ -644,54 +650,15 @@ $(document).ready(function(){
                          else{
                               //alert(game.newRandomX);
                               var style = '';
-                              switch (array[i][j]) {
-                                   case 2:
-                                        style='';
-                                        break;
-                                   case 4:
-                                        style='background: #ede0c8; color: #000000;';
-                                        break;
-                                   case 8:
-                                        style='background: #f2b179; color: #FFFFFF;';
-                                        break;
-                                   case 16:
-                                        style='background: #f59563; color: #FFFFFF;';
-                                        break;
-                                   case 32:
-                                        style='background: #f67c5f; color: #FFFFFF;';
-                                        break;
-                                   case 64:
-                                        style='background: #f65e3b; color: #FFFFFF;';
-                                        break;
-                                   case 128:
-                                        style='background: #edcf72; color: #FFFFFF; font-size: 50px;';
-                                        break;
-                                   case 256:
-                                        style='background: #edcc61; color: #FFFFFF; font-size: 50px;';
-                                        break;
-                                   case 512:
-                                        style='background: #edc850; color: #FFFFFF; font-size: 50px;';
-                                        break;
-                                   case 1024:
-                                        style='background: #edc53f; color: #FFFFFF; font-size: 40px;';
-                                        break;
-                                   case 2048:
-                                        style='background: #edc22e; color: #FFFFFF; font-size: 40px;';
-                                        break;
-                                   default:
-                                        style='background: #3d3a33; color: #FFFFFF; font-size: 25px;';
-                                        break;
-                              }
-
                               if(((game.newRandomX == i) && (game.newRandomY == j))){
-                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='display:none;" + style + "' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' data-digit='" + ((array[i][j] > 2048)?(4096):(array[i][j])) + "' style='display:none;" + style + "' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
                                    $('#' + game.newRandomX + '_' + game.newRandomY).fadeToggle('slow');
                                    //$('#' + game.newRandomX + '_' + game.newRandomY).css({'display':''});
                                    game.newRandomX = -1;
                                    game.newRandomY = -1;
                               }
                               else{
-                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' style='" + style + "' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
+                                   container.append("<div class='game-container-cell'><div class='game-container-cell-digit' data-digit='" + ((array[i][j] > 2048)?(4096):(array[i][j])) + "' style='" + style + "' id='"+ i + "_" + j +"'>" + array[i][j] + "</div></div>");
                               }
                               //$('#' + i + '_' + j).fadeToggle('slow');
                          }
@@ -771,22 +738,22 @@ $(document).ready(function(){
                var id = "#" + x + "_" + y +"";
                var distance = 121 * count;
                switch (direction) {
-                    case 'move up':
+                    case this.MOVE_UP:
                          $(id).animate({'margin-top':'-='+ distance +'px'}, 100, (function(){
                               afterAnimation();
                          }));
                          break;
-                    case 'move right':
+                    case this.MOVE_RIGHT:
                          $(id).animate({'margin-left':'+='+ distance +'px'}, 100, (function(){
                               afterAnimation();
                          }));
                          break;
-                    case 'move down':
+                    case this.MOVE_DOWN:
                          $(id).animate({'margin-top':'+='+ distance +'px'}, 100, (function(){
                               afterAnimation();
                          }));
                          break;
-                    case 'move left':
+                    case this.MOVE_LEFT:
                          $(id).animate({'margin-left':'-='+ distance +'px'}, 100, (function(){
                               afterAnimation();
                          }));

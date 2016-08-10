@@ -108,3 +108,49 @@
      background-color: rgb(238,228,218);
      color: #000000;
 }
+
+/*data-digits*/
+
+.game-container-cell-digit[data-digit='4']{
+     background: #ede0c8; color: #000000;
+}
+
+.game-container-cell-digit[data-digit='8']{
+     background: #f2b179; color: #FFFFFF;
+}
+
+.game-container-cell-digit[data-digit='16']{
+     background: #f59563; color: #FFFFFF;
+}
+
+.game-container-cell-digit[data-digit='32']{
+     background: #f67c5f; color: #FFFFFF;
+}
+
+.game-container-cell-digit[data-digit='64']{
+     background: #f65e3b; color: #FFFFFF;
+}
+
+.game-container-cell-digit[data-digit='128']{
+     background: #edcf72; color: #FFFFFF; font-size: 50px;
+}
+
+.game-container-cell-digit[data-digit='256']{
+     background: #edcc61; color: #FFFFFF; font-size: 50px;
+}
+
+.game-container-cell-digit[data-digit='512']{
+     background: #edc850; color: #FFFFFF; font-size: 50px;
+}
+
+.game-container-cell-digit[data-digit='1024']{
+     background: #edc53f; color: #FFFFFF; font-size: 40px;
+}
+
+.game-container-cell-digit[data-digit='2048']{
+     background: #edc22e; color: #FFFFFF; font-size: 40px;
+}
+
+.game-container-cell-digit[data-digit='4096']{
+     background: #3d3a33; color: #FFFFFF; font-size: 25px;
+}
