@@ -16,6 +16,7 @@ use yii\widgets\Pjax;
 use dosamigos\tinymce\TinyMce;
 
 $this->title = 'Dialog with '.$modelUser->username;
+Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class='profile-right_item'>
@@ -38,7 +39,7 @@ $this->title = 'Dialog with '.$modelUser->username;
                'method' => 'post',
           ]); ?>
                <?= $form->field($model, 'message')->widget(TinyMce::className(), [
-                'options' => ['rows' => 5],
+                'options' => ['rows' => 1],
                 'language' => 'en_GB',
                 'clientOptions' => [
                     'plugins' => [
