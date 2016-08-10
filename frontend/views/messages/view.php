@@ -55,6 +55,7 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
           <?php ActiveForm::end(); ?>
 
           <hr/>
+          <div class='messagesContent'>
                <?= GridView::widget([
                    'dataProvider' => $dataProvider,
                    'summary' => false,
@@ -100,5 +101,6 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
                         ],
                    ],
                ]);?>
+          </div>
      </div>
 </div>

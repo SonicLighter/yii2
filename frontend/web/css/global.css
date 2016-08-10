@@ -420,6 +420,15 @@
 }
 
 /*
+     MESSAGES
+*/
+
+.messagesContent{
+     height: 300px;
+     overflow: auto;
+}
+
+/*
      COMMENTS
 */
 

@@ -10,6 +10,7 @@ $(document).ready(function(){
                   var getVar = __GET[i].split("=");
                   $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1];
                }
+
                return $_GET;
 
           }
@@ -18,7 +19,6 @@ $(document).ready(function(){
 
                var count = 0;
                for(var key in object){
-                    //alert('key: ' + key + ' value: ' + object[key]);
                     count++;
                }
 
@@ -34,10 +34,10 @@ $(document).ready(function(){
           var url = window.location.href;
 
           if(webPage.getUrlParamsCount(webPage.getUrlParams()) > 1){
-               alert('DO NOT UPDATE!');
+               //alert('DO NOT UPDATE!');
           }
           else{
-               alert('UPDATE!');
+               //alert('UPDATE!');
           }
 
      });
