@@ -39,11 +39,11 @@ $(document).ready(function(){
      $('body').click(function(){
           var url = window.location.href;
 
-          if(webPage.getElemsCount() == 10){
-               alert('update');
+          if(webPage.getElemsCount() <= 10){
+               //alert('update');
           }
           else{
-               alert('do not update');
+               //alert('do not update');
           }
 
           /*

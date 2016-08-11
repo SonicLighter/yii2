@@ -15,13 +15,28 @@ use \kop\y2sp\ScrollPager;
 use yii\widgets\Pjax;
 use dosamigos\tinymce\TinyMce;
 
+/*
+<?= $form->field($model, 'message')->widget(TinyMce::className(), [
+ 'options' => ['rows' => 1],
+ 'language' => 'en_GB',
+ 'clientOptions' => [
+     'plugins' => [
+          "advlist autolink lists link charmap print preview anchor",
+          "searchreplace visualblocks code fullscreen",
+          "insertdatetime media table contextmenu paste"
+     ],
+     'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+],
+]); ?>
+*/
+
 $this->title = 'Dialog with '.$modelUser->username;
 Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class='profile-right_item'>
      <h5> Dialog with <?= Html::a($modelUser->username, Url::toRoute(['profile/index', 'id' => $modelUser->id])); ?> </h5>
-     <hr/>
+
      <div class='messagesContent scrollbar-inner'>
           <?= GridView::widget([
               'dataProvider' => $dataProvider,
@@ -56,7 +71,7 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
                                              ".$profilePicture."
                                         </div>
                                         <div class='messageContent'>
-                                             ".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."
+                                             <div class='message-user-name'>".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."</div>
                                              <div class='messages-date'>".$model->date."</div>
                                              <div class='messageText'>".$model->message."</div>
                                         </div>
@@ -69,30 +84,20 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
               ],
           ]);?>
      </div>
-     <hr/>
 
-     <div class='sendForm'>
+
+
 
           <?php $form = ActiveForm::begin([
                'id' => 'messages-form',
                'action' => ['messages/add', 'id' => $modelUser->id],
                'method' => 'post',
           ]); ?>
-               <?= $form->field($model, 'message')->widget(TinyMce::className(), [
-                'options' => ['rows' => 1],
-                'language' => 'en_GB',
-                'clientOptions' => [
-                    'plugins' => [
-                         "advlist autolink lists link charmap print preview anchor",
-                         "searchreplace visualblocks code fullscreen",
-                         "insertdatetime media table contextmenu paste"
-                    ],
-                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-               ],
-              ]); ?>
-               <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button']) ?>
+
+          <?= $form->field($model, 'message')->textArea(['rows' => 2]); ?>
+
+          <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button']) ?>
 
           <?php ActiveForm::end(); ?>
 
-     </div>
 </div>

@@ -225,6 +225,14 @@
      word-break: break-all;
 }
 
+.message-user-name{
+     font-weight: bold;
+}
+
+.message-user-name a{
+     color: rgb(60,100,139);
+}
+
 .messageText{
      /*padding: 5px;
      background: #ededed;*/
@@ -444,6 +452,12 @@
 .messagesContent{
      height: 300px;
      overflow: auto;
+     /*border-top: 1px solid rgb(243,243,243);
+     border-bottom: 1px solid rgb(243,243,243);*/
+     border-left: 1px solid rgb(224,224,224);
+     border-radius: 8px;
+     padding-top: 10px;
+     padding-bottom: 10px;
 }
 
 /*
