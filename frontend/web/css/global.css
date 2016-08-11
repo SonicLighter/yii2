@@ -201,27 +201,45 @@
 }
 
 .myMessageWrapper{
-     width: 70%;
+     width: 98%;
+     padding: 10px;
 }
 
 .otherMessageWrapper{
-     margin-left: 30%;
-     width: 70%;
+     width: 98%;
+     padding: 10px;
 }
 
 .messageImage{
      float: left;
      display: inline-block;
-     width: 10%;
+     width: 13%;
      vertical-align: top;
 }
 
 .messageContent{
      display: inline-block;
-     width: 90%;
+     width: 87%;
      vertical-align: top;
      overflow-x: hidden;
      word-break: break-all;
+}
+
+.messageText{
+     /*padding: 5px;
+     background: #ededed;*/
+     padding-top: 5px;
+     border-radius: 5px;
+}
+
+.imageWidth{
+     width: 80%;
+     border-radius: 100px;
+}
+
+.messages-date{
+     font-size: 10px;
+     color: rgba(196,194,194,1);
 }
 
 .registerButton{
@@ -427,6 +445,24 @@
      height: 300px;
      overflow: auto;
 }
+
+/*
+.messagesContent::-webkit-scrollbar-track
+{
+	background-color: #FFFFFF;
+}
+
+.messagesContent::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #FFFFFF;
+}
+
+.messagesContent::-webkit-scrollbar-thumb
+{
+	background-color: #DDDDDD;
+}
+*/
 
 /*
      COMMENTS

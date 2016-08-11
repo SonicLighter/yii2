@@ -52,7 +52,7 @@ class Messages extends \yii\db\ActiveRecord
             'id' => 'ID',
             'senderId' => 'Sender ID',
             'receiverId' => 'Receiver ID',
-            'message' => 'Message',
+            'message' => '',
             'opened' => 'Opened',
         ];
     }

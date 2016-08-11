@@ -26,6 +26,12 @@ $(document).ready(function(){
 
           }
 
+          this.getElemsCount = function(){
+
+               return $('.myMessageWrapper').length + $('.otherMessageWrapper').length;
+
+          }
+
      }
 
      var webPage = new WebPage();
@@ -33,13 +39,24 @@ $(document).ready(function(){
      $('body').click(function(){
           var url = window.location.href;
 
+          if(webPage.getElemsCount() == 10){
+               alert('update');
+          }
+          else{
+               alert('do not update');
+          }
+
+          /*
           if(webPage.getUrlParamsCount(webPage.getUrlParams()) > 1){
                //alert('DO NOT UPDATE!');
           }
           else{
                //alert('UPDATE!');
           }
+          */
 
      });
+
+     $('.messagesContent').scrollbar();
 
 });

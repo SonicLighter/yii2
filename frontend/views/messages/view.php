@@ -20,16 +20,56 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
 ?>
 
 <div class='profile-right_item'>
-     <div class='profile-right_item-username'>
-          Dialog with <?= Html::a($modelUser->username, Url::toRoute(['profile/index', 'id' => $modelUser->id])); ?>
+     <h5> Dialog with <?= Html::a($modelUser->username, Url::toRoute(['profile/index', 'id' => $modelUser->id])); ?> </h5>
+     <hr/>
+     <div class='messagesContent scrollbar-inner'>
+          <?= GridView::widget([
+              'dataProvider' => $dataProvider,
+              'summary' => false,
+              //'layout' => "{pager}\n{items}\n{pager}",
+              'tableOptions' => [
+                   'class' => 'myGridView', /*table table-striped table-bordered*/
+              ],
+
+              'pager' => [
+                    'class' => ScrollPager::className(),
+                    'overflowContainer' => '.messagesContent',
+                    'container' => '.grid-view tbody',
+                    'item' => 'tr',
+                    'paginationSelector' => '.grid-view .pagination',
+                    'triggerText' => 'Load more messages...',
+                    'noneLeftText' => '',
+                    'triggerOffset' => $loadPage,
+                    'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer"><div class="btn btn-content">{text}</div></a></td></tr>',
+              ],
+
+              'columns' => [
+                   [
+                        'format' => 'html',
+                        'value' => function($model){
+                             if($model->senderId == Yii::$app->user->id){$wrapper = 'myMessageWrapper';}
+                             else{$wrapper = 'otherMessageWrapper';}
+                             $profilePicture = Html::img(Url::toRoute($model->sender->profilePicture), ['class' => 'imageWidth']);
+                             $resultString = "
+                                   <div class='".$wrapper."'>
+                                        <div class='messageImage'>
+                                             ".$profilePicture."
+                                        </div>
+                                        <div class='messageContent'>
+                                             ".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."
+                                             <div class='messages-date'>".$model->date."</div>
+                                             <div class='messageText'>".$model->message."</div>
+                                        </div>
+                                   </div>
+                             ";
+
+                             return $resultString;
+                        },
+                   ],
+              ],
+          ]);?>
      </div>
-     <div class='profile-right_item-active'>
-     </div>
-     <br/>
-     <br/>
-</div>
-<hr/>
-<div class='profile-right_item'>
+     <hr/>
 
      <div class='sendForm'>
 
@@ -54,53 +94,5 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
 
           <?php ActiveForm::end(); ?>
 
-          <hr/>
-          <div class='messagesContent'>
-               <?= GridView::widget([
-                   'dataProvider' => $dataProvider,
-                   'summary' => false,
-                   //'layout' => "{pager}\n{items}\n{pager}",
-                   'tableOptions' => [
-                        'class' => 'myGridView', /*table table-striped table-bordered*/
-                   ],
-
-                   'pager' => [
-                         'class' => ScrollPager::className(),
-                         'container' => '.grid-view tbody',
-                         'item' => 'tr',
-                         'paginationSelector' => '.grid-view .pagination',
-                         'triggerText' => 'Load more messages...',
-                         'noneLeftText' => '',
-                         'triggerOffset' => $loadPage,
-                         'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer"><div class="btn btn-content">{text}</div></a></td></tr>',
-                   ],
-
-                   'columns' => [
-                        [
-                             'format' => 'html',
-                             'value' => function($model){
-                                  if($model->senderId == Yii::$app->user->id){$wrapper = 'myMessageWrapper';}
-                                  else{$wrapper = 'otherMessageWrapper';}
-                                  $profilePicture = Html::img(Url::toRoute($model->sender->profilePicture), ['width' => '30px']);
-                                  $resultString = "
-                                        <div class='".$wrapper."'>
-                                             <div class='messageImage'>
-                                                  ".$profilePicture."
-                                             </div>
-                                             <div class='messageContent'>
-                                                  ".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."
-                                                  | ".$model->date."<br/>
-                                                  ".$model->message."
-                                             </div>
-                                             <hr/>
-                                        </div>
-                                  ";
-
-                                  return $resultString;
-                             },
-                        ],
-                   ],
-               ]);?>
-          </div>
      </div>
 </div>
