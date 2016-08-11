@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use common\models\User;
+use yii\helpers\HtmlPurifier;
 /**
  * This is the model class for table "messages".
  *
@@ -55,6 +56,14 @@ class Messages extends \yii\db\ActiveRecord
             'message' => '',
             'opened' => 'Opened',
         ];
+    }
+
+    public function beforeSave($insert){
+
+         $this->message = HtmlPurifier::process($this->message);
+
+         return parent::beforeSave($insert);
+
     }
 
     /**

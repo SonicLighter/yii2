@@ -102,13 +102,13 @@ class MessagesController extends Controller{
               $model->date = Yii::$app->getFormatter()->asDateTime(time());
               $model->opened = 0;
               if(($model->load(Yii::$app->request->post()) && $model->validate() && $model->save())){
-                    //return $this->redirect(Url::toRoute(['view', 'id' => $id]));
-                    echo 'OK';
+                    echo 1;
+                    return $this->redirect(Url::toRoute(['messages/view', 'id' => $id]));
               }
          }
 
-         echo 'NE OK';
-         //return $this->redirect(Url::toRoute('profile/errors'));
+          echo 2;
+          return $this->redirect(Url::toRoute('profile/errors'));
 
     }
 

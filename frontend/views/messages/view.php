@@ -46,73 +46,61 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
 <div class='profile-right_item'>
      <h5> Dialog with <?= Html::a($modelUser->username, Url::toRoute(['profile/index', 'id' => $modelUser->id])); ?> </h5>
 
-     <div class='messagesContent scrollbar-inner'>
-          <?= GridView::widget([
-              'dataProvider' => $dataProvider,
-              'summary' => false,
-              //'layout' => "{pager}\n{items}\n{pager}",
-              'tableOptions' => [
-                   'class' => 'myGridView', /*table table-striped table-bordered*/
-              ],
-
-              'pager' => [
-                    'class' => ScrollPager::className(),
-                    'overflowContainer' => '.messagesContent',
-                    'container' => '.grid-view tbody',
-                    'item' => 'tr',
-                    'paginationSelector' => '.grid-view .pagination',
-                    'triggerText' => 'Load more messages...',
-                    'noneLeftText' => '',
-                    'triggerOffset' => $loadPage,
-                    'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer"><div class="btn btn-content">{text}</div></a></td></tr>',
-              ],
-
-              'columns' => [
-                   [
-                        'format' => 'html',
-                        'value' => function($model){
-                             if($model->senderId == Yii::$app->user->id){$wrapper = 'myMessageWrapper';}
-                             else{$wrapper = 'otherMessageWrapper';}
-                             $profilePicture = Html::img(Url::toRoute($model->sender->profilePicture), ['class' => 'imageWidth']);
-                             $resultString = "
-                                   <div class='".$wrapper."'>
-                                        <div class='messageImage'>
-                                             ".$profilePicture."
-                                        </div>
-                                        <div class='messageContent'>
-                                             <div class='message-user-name'>".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."</div>
-                                             <div class='messages-date'>".$model->date."</div>
-                                             <div class='messageText'>".$model->message."</div>
-                                        </div>
-                                   </div>
-                             ";
-
-                             return $resultString;
-                        },
+     <div id='messagesContainer'>
+     <div class='messagesContent scrollbar-inner'> <!-- scrollbar-inner -->
+          <?php Pjax::begin(['id' => 'messages-container']) ?>
+               <?= GridView::widget([
+                   'dataProvider' => $dataProvider,
+                   'summary' => false,
+                   //'layout' => "{pager}\n{items}\n{pager}",
+                   'tableOptions' => [
+                        'class' => 'myGridView', /*table table-striped table-bordered*/
                    ],
-              ],
-          ]);?>
+
+                   'pager' => [
+                         'class' => ScrollPager::className(),
+                         'overflowContainer' => '.messagesContent',
+                         'container' => '.grid-view tbody',
+                         'item' => 'tr',
+                         'paginationSelector' => '.grid-view .pagination',
+                         'triggerText' => 'Load more messages...',
+                         'noneLeftText' => '',
+                         'triggerOffset' => $loadPage,
+                         'triggerTemplate' => '<tr class="ias-trigger"><td colspan="100%" style="text-align: center"><a style="cursor: pointer"><div class="btn btn-content">{text}</div></a></td></tr>',
+                   ],
+
+                   'columns' => [
+                        [
+                             'format' => 'html',
+                             'value' => function($model){
+                                  if($model->senderId == Yii::$app->user->id){$wrapper = 'myMessageWrapper';}
+                                  else{$wrapper = 'otherMessageWrapper';}
+                                  $profilePicture = Html::img(Url::toRoute($model->sender->profilePicture), ['class' => 'imageWidth']);
+                                  $resultString = "
+                                        <div class='".$wrapper."'>
+                                             <div class='messageImage'>
+                                                  ".$profilePicture."
+                                             </div>
+                                             <div class='messageContent'>
+                                                  <div class='message-user-name'>".Html::a($model->sender->username, Url::toRoute(['profile/index', 'id' => $model->sender->id]))."</div>
+                                                  <div class='messages-date'>".$model->date."</div>
+                                                  <div class='messageText'>".$model->message."</div>
+                                             </div>
+                                        </div>
+                                  ";
+
+                                  return $resultString;
+                             },
+                        ],
+                   ],
+               ]);?>
+          <?php Pjax::end(); ?>
      </div>
 
      <?php $form = ActiveForm::begin([
           'id' => 'messages-form',
           'enableClientValidation' => false,
-          //'action' => ['messages/add', 'id' => $modelUser->id],
-          'beforeSubmit' => new \yii\web\JsExpression('function(form) {
-              jQuery.ajax({
-                  url: "'. Url::toRoute(['messages/add', 'id' => $modelUser->id]) .'",
-                  type: "POST",
-                  dataType: "json",
-                  data: form.serialize(),
-                  success: function(response) {
-                      alert(response);
-                  },
-                  error: function(response) {
-                      alert(response);
-                  }
-              });
-              return false;
-         }'),
+          'action' => ['messages/add', 'id' => $modelUser->id],
      ]); ?>
 
      <?= $form->field($model, 'message')->textArea(['id' => 'messageInput']); ?>

@@ -28,27 +28,6 @@ $(document).ready(function(){
 
      var webPage = new WebPage();
 
-     $('body').click(function(){
-          var url = window.location.href;
-
-          if(webPage.getElemsCount() <= 10){
-               //alert('update');
-          }
-          else{
-               //alert('do not update');
-          }
-
-          /*
-          if(webPage.getUrlParamsCount(webPage.getUrlParams()) > 1){
-               //alert('DO NOT UPDATE!');
-          }
-          else{
-               //alert('UPDATE!');
-          }
-          */
-
-     });
-
      // ENTER BUTTON
 
      $('#messageInput').keydown(function(eventObject){
@@ -59,10 +38,29 @@ $(document).ready(function(){
 
      // SUBMIT BUTTON
 
-     $('#messageSubmitButton').click(function(){
+     $(document).on('beforeSubmit', '#messages-form', function(){
           if($('#messageInput').val().length > 1){
-               alert($('#messageInput').val() + ' ' + $('#messageInput').val().length);
+               var form = $(this);
+               if(form.find('.has-error').length){
+                    return false;
+               }
+               // submit form
+               $.ajax({
+                    url: form.attr('action'),
+                    type: 'post',
+                    data: form.serialize(),
+                    success: function(response){
+                         if(response == 1){
+                              form.trigger('reset');
+                              $.pjax.reload({container: '#messages-container'});
+                         }
+                         else{
+                              alert('Error: we can\'t add your message to database, sorry.');
+                         }
+                    }
+               });
           }
+          return false;  // if <else> then form will not be submited after ajax request
      });
 
      // SCROLL BAR
