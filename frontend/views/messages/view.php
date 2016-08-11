@@ -16,10 +16,17 @@ use yii\widgets\Pjax;
 use dosamigos\tinymce\TinyMce;
 
 /*
+<?php $form = ActiveForm::begin([
+     'id' => 'messages-form',
+     'enableClientValidation' => false,
+     'action' => ['messages/add', 'id' => $modelUser->id],
+     'method' => 'post',
+]); ?>
+
 <?= $form->field($model, 'message')->widget(TinyMce::className(), [
- 'options' => ['rows' => 1],
- 'language' => 'en_GB',
- 'clientOptions' => [
+'options' => ['rows' => 1],
+'language' => 'en_GB',
+'clientOptions' => [
      'plugins' => [
           "advlist autolink lists link charmap print preview anchor",
           "searchreplace visualblocks code fullscreen",
@@ -28,6 +35,8 @@ use dosamigos\tinymce\TinyMce;
      'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
 ],
 ]); ?>
+
+<?php ActiveForm::end(); ?>
 */
 
 $this->title = 'Dialog with '.$modelUser->username;
@@ -85,19 +94,30 @@ Yii::$app->view->registerJsFile('../js/messages.js', ['depends' => [\yii\web\Jqu
           ]);?>
      </div>
 
+     <?php $form = ActiveForm::begin([
+          'id' => 'messages-form',
+          'enableClientValidation' => false,
+          //'action' => ['messages/add', 'id' => $modelUser->id],
+          'beforeSubmit' => new \yii\web\JsExpression('function(form) {
+              jQuery.ajax({
+                  url: "'. Url::toRoute(['messages/add', 'id' => $modelUser->id]) .'",
+                  type: "POST",
+                  dataType: "json",
+                  data: form.serialize(),
+                  success: function(response) {
+                      alert(response);
+                  },
+                  error: function(response) {
+                      alert(response);
+                  }
+              });
+              return false;
+         }'),
+     ]); ?>
 
+     <?= $form->field($model, 'message')->textArea(['id' => 'messageInput']); ?>
 
+     <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button', 'id' => 'messageSubmitButton']) ?>
 
-          <?php $form = ActiveForm::begin([
-               'id' => 'messages-form',
-               'action' => ['messages/add', 'id' => $modelUser->id],
-               'method' => 'post',
-          ]); ?>
-
-          <?= $form->field($model, 'message')->textArea(['rows' => 2]); ?>
-
-          <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button']) ?>
-
-          <?php ActiveForm::end(); ?>
-
+     <?php ActiveForm::end(); ?>
 </div>

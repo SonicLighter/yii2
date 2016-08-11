@@ -450,14 +450,17 @@
 */
 
 .messagesContent{
-     height: 300px;
+     height: 250px;
      overflow: auto;
      /*border-top: 1px solid rgb(243,243,243);
      border-bottom: 1px solid rgb(243,243,243);*/
      border-left: 1px solid rgb(224,224,224);
-     border-radius: 8px;
      padding-top: 10px;
      padding-bottom: 10px;
+}
+
+textarea:focus{
+     outline: none;
 }
 
 /*
