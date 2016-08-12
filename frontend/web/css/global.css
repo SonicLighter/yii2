@@ -451,8 +451,8 @@
 
 .messagesContent{
      height: 390px;
-     overflow: auto;
-     /*border-top: 1px solid rgb(243,243,243);
+     /*overflow: auto;
+     border-top: 1px solid rgb(243,243,243);
      border-bottom: 1px solid rgb(243,243,243);*/
      border-left: 1px solid rgb(224,224,224);
      padding-top: 10px;
@@ -461,6 +461,13 @@
 
 textarea:focus{
      outline: none;
+}
+
+.loadMore{
+     margin-left: 10px;
+     width: 95%;
+     background: #DDDDDD;
+     padding: 10px;
 }
 
 /*

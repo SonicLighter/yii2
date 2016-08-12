@@ -1,6 +1,14 @@
 $(document).ready(function(){
 
+     // SCROLL BAR
+
+     $('.scrollbar-inner').scrollbar();
+
      function WebPage(){
+
+          this.openLinkPermission = false;
+
+          this.linkArray = [];
 
           this.getUrlParams = function(){
                var $_GET = {};
@@ -22,6 +30,17 @@ $(document).ready(function(){
 
           this.getElemsCount = function(){
                return $('.myMessageWrapper').length + $('.otherMessageWrapper').length;
+          }
+
+          this.addToArray = function(link){
+               this.linkArray[this.linkArray.length] = link;
+          }
+
+          this.checkLink = function(link){
+               if(this.linkArray.indexOf(link) == -1){
+                    return true;
+               }
+               return false;
           }
 
      }
@@ -53,6 +72,7 @@ $(document).ready(function(){
                          if(response == 1){
                               form.trigger('reset');
                               $.pjax.reload({container: '#messages-container'});
+                              //$('#gridViewMessages').yiiGridView('update');
                          }
                          else{
                               alert('Error: we can\'t add your message to database, sorry.');
@@ -62,9 +82,5 @@ $(document).ready(function(){
           }
           return false;  // if <else> then form will not be submited after ajax request
      });
-
-     // SCROLL BAR
-
-     $('.messagesContent').scrollbar();
 
 });
