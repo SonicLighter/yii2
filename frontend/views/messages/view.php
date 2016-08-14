@@ -66,15 +66,28 @@ $this->title = 'Dialog with '.$modelUser->username;
                </div>
           </div>
      </div>
+     <br/>
      <?php $form = ActiveForm::begin([
           'id' => 'messages-form',
           'enableClientValidation' => false,
           'action' => ['messages/add', 'id' => $modelUser->id],
      ]); ?>
 
-     <?= $form->field($model, 'message')->textArea(['id' => 'messageInput']); ?>
+     <div class="sendMessageForm">
+         <div class="sendMessageFormPictureLeft">
+             <?= Html::img(Url::toRoute(Yii::$app->user->identity->profilePicture), ['class' => 'imageWidth']); ?>
+         </div>
+         <div class="sendMessageFormInput">
+             <?= $form->field($model, 'message')->textArea(['id' => 'messageInput']); ?>
+         </div>
+         <div class="sendMessageFormPictureRight">
+             <?= Html::img(Url::toRoute($modelUser->profilePicture), ['class' => 'imageWidth']); ?>
+         </div>
+     </div>
 
-     <?= Html::submitButton('Send', ['class' => 'btn btn-default', 'name' => 'posts-button', 'id' => 'messageSubmitButton']) ?>
+     <div class="sendMessageFormSubmit">
+        <?= Html::submitButton('Send message', ['class' => 'btn btn-default', 'name' => 'posts-button', 'id' => 'messageSubmitButton']) ?>
+     </div>
 
      <?php ActiveForm::end(); ?>
 </div>

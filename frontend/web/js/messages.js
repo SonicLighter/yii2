@@ -6,34 +6,7 @@ $(document).ready(function(){
 
      function WebPage(){
 
-          /*
-          this.openLinkPermission = false;
-
-          this.linkArray = [];
-
-          this.getUrlParamsCount = function(object){
-               var count = 0;
-               for(var key in object){
-                    count++;
-               }
-               return count;
-          }
-
-          this.getElemsCount = function(){
-               return $('.myMessageWrapper').length + $('.otherMessageWrapper').length;
-          }
-
-          this.addToArray = function(link){
-               this.linkArray[this.linkArray.length] = link;
-          }
-
-          this.checkLink = function(link){
-               if(this.linkArray.indexOf(link) == -1){
-                    return true;
-               }
-               return false;
-          }
-          */
+          this.updatePermisstion = true;
 
           this.getUrlParams = function(){
                var $_GET = {};
@@ -63,11 +36,32 @@ $(document).ready(function(){
 
      var webPage = new WebPage();
 
+
+     var timer = setInterval(function(){
+          if(webPage.updatePermisstion){
+               webPage.updateGrid(webPage.getUrlParams()['id']);
+          }
+     }, 10000);
+
+
+     // SCROLLING MESSAGES
+
+     $('.scrollbar-inner').scroll(function(){
+          if(this.scrollTop >= (this.scrollHeight-this.clientHeight-5)){
+               webPage.updatePermisstion = false;
+          }
+          if(this.scrollTop <= 10){
+               webPage.updatePermisstion = true;
+          }
+     });
+
+
      // ENTER BUTTON
 
      $('#messageInput').keydown(function(eventObject){
           if(eventObject.which == 13){
                //alert($('#messageInput').val());
+               //clearInterval(timer);
           }
      });
 

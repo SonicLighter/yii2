@@ -240,6 +240,40 @@
      border-radius: 5px;
 }
 
+.sendMessageForm{
+     margin: auto;
+     float: left;
+     width: 100%;
+     text-align: center;
+     border-left: 1px solid rgb(224,224,224);
+}
+
+.sendMessageFormPictureLeft{
+     margin-top: 15px;
+     margin-right: 10px;
+     float: left;
+     width: 10%;
+}
+
+.sendMessageFormPictureRight{
+     margin-top: 15px;
+     margin-left: 10px;
+     float: left;
+     width: 10%;
+}
+
+.sendMessageFormInput{
+     float: left;
+     width: 75%;
+}
+
+.sendMessageFormSubmit{
+     width: 100%;
+     text-align: right;
+     padding-right: 13.5%;
+     border-left: 1px solid rgb(224,224,224);
+}
+
 .imageWidth{
      width: 80%;
      border-radius: 100px;
