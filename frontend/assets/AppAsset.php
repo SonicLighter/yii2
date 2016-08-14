@@ -14,8 +14,13 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/global.css',
+        'js/jquery.scrollbar/includes/style.css',
+        'js/jquery.scrollbar/includes/prettify/prettify.css',
+        'js/jquery.scrollbar/jquery.scrollbar.css',
     ];
     public $js = [
+        'js/jquery.scrollbar/includes/prettify/prettify.js',
+        'js/jquery.scrollbar/jquery.scrollbar.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

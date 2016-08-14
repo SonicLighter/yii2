@@ -16,7 +16,7 @@ $this->title = 'SOCIALNETWORK.COM';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h2>WELCOME TO SOCIALNETWORK.COM!</h4><br/>
+        <h2>WELCOME TO SOCIALNETWORK.COM!</h2><br/>
         <div class='registerPage'>
              <center>
                    <p class="lead">We are suggest you to <?= HTML::a('login', Url::toRoute(['site/login']))?> or register:</p>

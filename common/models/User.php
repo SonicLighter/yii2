@@ -339,7 +339,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     }
 
-    public static function getDialogLoading(){
+    public function getDialogLoading(){
 
          return count(Messages::getUserDialogs())/10;
 

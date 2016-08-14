@@ -6,19 +6,10 @@ $(document).ready(function(){
 
      function WebPage(){
 
+          /*
           this.openLinkPermission = false;
 
           this.linkArray = [];
-
-          this.getUrlParams = function(){
-               var $_GET = {};
-               var __GET = window.location.search.substring(1).split("&");
-               for(var i=0; i<__GET.length; i++) {
-                  var getVar = __GET[i].split("=");
-                  $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1];
-               }
-               return $_GET;
-          }
 
           this.getUrlParamsCount = function(object){
                var count = 0;
@@ -41,6 +32,31 @@ $(document).ready(function(){
                     return true;
                }
                return false;
+          }
+          */
+
+          this.getUrlParams = function(){
+               var $_GET = {};
+               var __GET = window.location.search.substring(1).split("&");
+               for(var i=0; i<__GET.length; i++) {
+                    var getVar = __GET[i].split("=");
+                    $_GET[getVar[0]] = typeof(getVar[1])=="undefined" ? "" : getVar[1];
+               }
+               return $_GET;
+          }
+
+          this.updateGrid = function(id){
+
+               var url = 'update-messages?id=' + id;
+               $.ajax({
+                    url: url,
+                    type: 'get',
+                    success: function(response){
+                         $('#gridUpdateContainer').empty();
+                         $('#gridUpdateContainer').append(response);
+                    }
+               });
+
           }
 
      }
@@ -69,14 +85,9 @@ $(document).ready(function(){
                     type: 'post',
                     data: form.serialize(),
                     success: function(response){
-                         if(response == 1){
-                              form.trigger('reset');
-                              $.pjax.reload({container: '#messages-container'});
-                              //$('#gridViewMessages').yiiGridView('update');
-                         }
-                         else{
-                              alert('Error: we can\'t add your message to database, sorry.');
-                         }
+                         form.trigger('reset');
+                         //$.pjax.reload({container: '#messages-container'});
+                         webPage.updateGrid(webPage.getUrlParams()['id']);
                     }
                });
           }

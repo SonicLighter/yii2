@@ -60,7 +60,8 @@ class Messages extends \yii\db\ActiveRecord
 
     public function beforeSave($insert){
 
-         $this->message = HtmlPurifier::process($this->message);
+         //$this->message = HtmlPurifier::process($this->message);
+         $this->message = strip_tags($this->message, '<br><br/>');
 
          return parent::beforeSave($insert);
 

@@ -33,7 +33,7 @@ class MessagesController extends Controller{
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                         'actions' => ['index', 'view', 'add'],
+                         'actions' => ['index', 'view', 'add', 'update-messages'],
                          'allow' => !Yii::$app->user->isGuest,
                          'roles' => ['@'],
                     ],
@@ -67,7 +67,7 @@ class MessagesController extends Controller{
               'dataProvider' => $dataProvider,
               'searchModel' => $searchModel,
               'pageType' => $pageType,
-              'loadPage' => User::getDialogLoading(),
+              'loadPage' => Yii::$app->user->identity->dialogLoading,
          ]);
 
     }
@@ -94,21 +94,45 @@ class MessagesController extends Controller{
 
     public function actionAdd($id){
 
-         $modelUser = User::findIdentity($id);
-         if(!empty($modelUser) && (Yii::$app->user->id != $id)){
-              $model = new Messages();
-              $model->senderId = Yii::$app->user->id;
-              $model->receiverId = $id;
-              $model->date = Yii::$app->getFormatter()->asDateTime(time());
-              $model->opened = 0;
-              if(($model->load(Yii::$app->request->post()) && $model->validate() && $model->save())){
-                    echo 1;
-                    return $this->redirect(Url::toRoute(['messages/view', 'id' => $id]));
-              }
+         if(Yii::$app->request->isAjax) {
+             $modelUser = User::findIdentity($id);
+             if (!empty($modelUser) && (Yii::$app->user->id != $id)) {
+                 $model = new Messages();
+                 $model->senderId = Yii::$app->user->id;
+                 $model->receiverId = $id;
+                 $model->date = Yii::$app->getFormatter()->asDateTime(time());
+                 $model->opened = 0;
+                 if (($model->load(Yii::$app->request->post()) && $model->validate())) {
+                     $model->save();
+                     //return $this->redirect(Url::toRoute(['messages/view', 'id' => $id]));
+                 }
+             }
+         }
+         else {
+             return $this->redirect(Url::toRoute('profile/errors'));
          }
 
-          echo 2;
-          return $this->redirect(Url::toRoute('profile/errors'));
+    }
+
+    public function actionUpdateMessages($id){
+
+        if(Yii::$app->request->isAjax) {
+            $modelUser = User::findIdentity($id);
+            if(!empty($modelUser) && (Yii::$app->user->id != $id)){
+                $dataProvider = Messages::getUserMessages($id);
+                Messages::setMessagesOpened($id);
+                //Yii::$app->view->params['userModel'] = $modelUser;
+
+                echo $this->renderPartial('_grid',[
+                    'dataProvider' => $dataProvider,
+                    'loadPage' => Messages::getMessagePages($id),
+                ], false, true);
+
+            }
+        }
+        else {
+            return $this->redirect(Url::toRoute('profile/errors'));
+        }
 
     }
 
